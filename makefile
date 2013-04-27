@@ -8,7 +8,13 @@ OBJDIR=./obj
 
 # SDL 2.0
 SDL2-CFLAGS=`sdl2-config --cflags`
-SDL2-LDFLAGS=`sdl2-config --libs` -lSDL2_image -lSDL2_mixer
+#SDL2-LDFLAGS=`sdl2-config --libs` -lSDL2_image -lSDL2_mixer
+
+SDL2STATIC=/usr/local/lib/libSDL2.a /usr/local/lib/libSDL2_image.a \
+		/usr/local/lib/libSDL2_mixer.a /usr/local/lib/libSDL2_test.a \
+		/usr/local/lib/libSDL2_ttf.a /usr/local/lib/libSDL2main.a
+
+SDL2S-LDFLAGS=-liconv -Wl,-framework,OpenGL  -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-framework,AudioUnit -Wl,-framework,CoreServices
 
 # Base System Objects
 BASEOBJ=exceptions.o singletons.o base_system.o config.o config_map.o \
@@ -22,7 +28,7 @@ GAMEOBJ=game_system.o game_loop.o game_object.o screen.o sprite.o \
 		sound_effects_map.o
 
 # texture_map.o
-# TimeLord
+# LudumDare
 TLCFLAGS=-I$(INCDIR)
 TLLDFLAGS=-lm
 _TLOBJS=main.o $(BASEOBJ) $(GAMEOBJ)
@@ -33,19 +39,21 @@ _TESTOBJS=test.o
 TESTOBJS=$(patsubst %,$(OBJDIR)/%,$(_TESTOBJS))
 
 # All
-CFLAGS=$(SDL2-CFLAGS) $(TLCFLAGS) -g
-LDFLAGS=$(SDL2-LDFLAGS) $(TLLDFLAGS)
-OBJS=$(TL-OBJS)
+CFLAGS=$(SDL2-CFLAGS) $(TLCFLAGS)
+#LDFLAGS=$(SDL2-LDFLAGS) $(TLLDFLAGS)
+LDFLAGS=$(TLLDFLAGS) $(SDL2S-LDFLAGS)
+OBJS=$(TLOBJS)
+#$(SDL2STATIC)
 
 # All targets
-all: ld26
+all: PatoLoco
 
 # Obj Rule
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 # TimeLord target
-ld26: $(TLOBJS)
+PatoLoco: $(OBJS) $(SDL2STATIC)
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 test: $(TESTOBJS)
@@ -54,4 +62,4 @@ test: $(TESTOBJS)
 .PHONY: clean
 
 clean:
-	rm -f $(OBJDIR)/*.o core ld26 test
+	rm -f $(OBJDIR)/*.o core PatoLoco test
