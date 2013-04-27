@@ -59,14 +59,14 @@ Sprite* SpriteMap::Get(const char* spriteId) {
 	return it->second;
 }
 
-void SpriteMap::LoadSprite(const char* name, const Texture* texture, const Sint16 x, const Sint16 y, const Uint16 w, const Uint16 h, const int frames) {
+void SpriteMap::LoadSprite(const char* spriteId, const Texture* texture, const Sint16 x, const Sint16 y, const Uint16 w, const Uint16 h, const int frames) {
 	
 	SpriteMap::const_iterator it;
-	it = this->find(name);
+	it = this->find(spriteId);
 	if(it != this->end()) {
 		
-		cerr << "Invalid sprite object -> [" << name << "] sprite already loaded.";
-		THROWINFO(Exception::BadObject, name);		
+		cerr << "Invalid sprite object -> [" << spriteId << "] sprite already loaded.";
+		THROWINFO(Exception::BadObject, spriteId);		
 	}
 	
 	if(x + frames * w > texture->w || y + h > texture->h) {
@@ -75,9 +75,9 @@ void SpriteMap::LoadSprite(const char* name, const Texture* texture, const Sint1
 			<< "[x:" << x << " y:" << y << " w:" << w << " h:" << h << "]"
 			<< " in a texture of "
 			<< "[w:" << texture->w << " h:" << texture->h << "]" << endl;
-		THROWINFO(Exception::BadObject, name);
+		THROWINFO(Exception::BadObject, spriteId);
 	}
 	
-	Sprite* sprite = new Sprite(name, texture->texture, x, y, w, h, frames);
-	(*this)[name] = sprite;
+	Sprite* sprite = new Sprite(spriteId, texture->texture, x, y, w, h, frames);
+	(*this)[spriteId] = sprite;
 }

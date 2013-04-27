@@ -19,7 +19,7 @@ public:
 	
 	Sprite* Get(const char* spriteId);
 private:
-	void LoadSprite(const char* name, const Texture* texture,
+	void LoadSprite(const char* spriteId, const Texture* texture,
 	 				const Sint16 x, const Sint16 y,
 	 				const Uint16 w, const Uint16 h, const int frames);
 };
