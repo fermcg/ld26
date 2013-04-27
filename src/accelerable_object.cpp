@@ -121,6 +121,11 @@ void AccelerableObject::HandleLogic() {
 		}
 	}
 	
+	if(xSpeed == 0.0 && xAcceleration == 0.0) {
+		
+		spriteFace->ChangeFace(SpriteFace::front);
+	}
+	
 	x += xSpeed;
 	y += ySpeed;
 	
