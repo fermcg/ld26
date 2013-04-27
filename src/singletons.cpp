@@ -26,6 +26,7 @@ namespace Singleton {
 		screen = NULL;
 		textureMap = NULL;
 		spriteMap = NULL;
+		soundEffectsMap = NULL;
 		allFriends = NULL;
 		allEnemies = NULL;
 		player = NULL;
@@ -38,6 +39,7 @@ namespace Singleton {
 		screen = new Screen();
 		textureMap = new TextureMap();
 		spriteMap = new SpriteMap();
+		soundEffectsMap = new SoundEffectsMap();
 		allFriends = new AllObjects();
 		allEnemies = new AllObjects();
 		player = new Player();
@@ -48,6 +50,7 @@ namespace Singleton {
 		screen->Init();
 		textureMap->Init();
 		spriteMap->Init();
+		soundEffectsMap->Init();
 		allFriends->Init();
 		allEnemies->Init();
 		player->Init();
@@ -66,6 +69,7 @@ namespace Singleton {
 		player->Terminate();
 		allEnemies->Terminate();
 		allFriends->Terminate();
+		soundEffectsMap->Terminate();
 		spriteMap->Terminate();
 		textureMap->Terminate();
 		screen->Terminate();
@@ -76,6 +80,7 @@ namespace Singleton {
 		DELETENULL(player);
 		DELETENULL(allEnemies);
 		DELETENULL(allFriends);
+		DELETENULL(soundEffectsMap);
 		DELETENULL(spriteMap);
 		DELETENULL(textureMap);
 		DELETENULL(screen);

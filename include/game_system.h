@@ -9,4 +9,6 @@ public:
 	
 	void Init() throw();
 	void Terminate();
+	
+	static const int MaxMixChannels;
 };

@@ -15,11 +15,13 @@ namespace Exception {
 		bad_config_value = 3,
 		config_section_not_found = 4,
 		config_key_not_found = 5,
-		texture_not_found = 6,
-		sprite_not_found = 7,
-		face_not_found = 8,
-		object_not_found = 9,
-		bad_render = 10,
+		object_not_found = 6,
+		texture_not_found = 7,
+		sprite_not_found = 8,
+		face_not_found = 9,
+		sound_not_found = 10,
+		bad_render = 20,
+		bad_audio_play = 30,
 		overflow = 96,
 		game_loop_end = 97,
 		bad_object = 98,
@@ -110,7 +112,13 @@ namespace Exception {
 	public:
 		FaceNotFound() : Base(face_not_found, "Face Not Found") {};
 		FaceNotFound(const char* faceId) : Base(face_not_found, "Face Not Found", faceId) {};
-	};	
+	};
+	
+	class SoundNotFound : public Base {
+	public:
+		SoundNotFound() : Base(sound_not_found, "Sound Not Found") {};
+		SoundNotFound(const char* soundId) : Base(sound_not_found, "Sound Not Found", soundId) {};
+	};
 		
 	class ObjectNotFound : public Base {
 	public:
@@ -121,7 +129,13 @@ namespace Exception {
 	class BadRender : public Base {
 	public:
 		BadRender() : Base(bad_render, "Error Rendering Object") {};
-		BadRender(const char* sprite) : Base(texture_not_found, "Texture Not Found", sprite) {};
+		BadRender(const char* spriteId) : Base(bad_render, "Texture Not Found", spriteId) {};
+	};
+	
+	class BadAudioPlay : public Base {
+	public:
+		BadAudioPlay() : Base(bad_audio_play, "Error Playing Audio") {};
+		BadAudioPlay(const char* soundId) : Base(bad_audio_play, "Texture Not Found", soundId) {};
 	};
 
 }

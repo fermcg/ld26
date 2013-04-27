@@ -37,6 +37,9 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	
 	energy = 2000;
 	damage = 2000;
+	
+	sfxStep = NULL;
+	walking = false;
 }
 
 Player::~Player() {
@@ -46,6 +49,8 @@ Player::~Player() {
 void Player::Init() throw() {
 
 	this->AccelerableObject::Init();
+	
+	sfxStep = Singleton::soundEffectsMap->Get("PLAYER+STEP");
 	
 	SetNeverLeaveScreen(true);
 	x = minX + (maxX - minX) / 2.0;
@@ -66,6 +71,19 @@ void Player::OnCollision() {
 	}
 }
 
+void Player::HandleLogic() {
+
+	this->AccelerableObject::HandleLogic();
+	if(xAcceleration != 0.0 && !walking) {
+		
+		walking = true;
+		sfxStep->Start(1);
+	} else if (xAcceleration == 0.0 && walking) {
+		
+		walking = false;
+		sfxStep->Stop(1);
+	}
+}
 SpriteFace* Player::CreateSpriteFace() {
 	
 	SpriteFace* face = new SpriteFace("Player Face");

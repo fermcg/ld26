@@ -1,6 +1,7 @@
 #pragma once
 
 #include "accelerable_object.h"
+#include "sound_effect.h"
 
 class Player : public AccelerableObject {
 public:
@@ -26,6 +27,8 @@ public:
 	
 	void OnCollision();
 	
+	void HandleLogic();
+	
 	friend class PlayerShot;
 protected:
 	SpriteFace* CreateSpriteFace();
@@ -39,6 +42,9 @@ private:
 	bool upIsOn;
 	bool downIsOn;
 	
+	bool walking;
+	
 	bool accelerationChanged;
-	bool fireChanged;	
+	bool fireChanged;
+	SoundEffect* sfxStep;
 };
