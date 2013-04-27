@@ -5,7 +5,7 @@
 
 using namespace std;
 
-AccelerableObject::AccelerableObject(const char* name, const char* objectId, const char* spriteId) : GameObject(name, objectId, spriteId) {
+AccelerableObject::AccelerableObject(const char* name, const char* objectId) : GameObject(name, objectId) {
 	
 	xMinSpeed = 0.0;
 	xMaxSpeed = 0.0;
@@ -46,6 +46,8 @@ void AccelerableObject::HandleLogic() {
 				xSpeed = xMinSpeed;
 			}
 		}
+		spriteFace->ChangeFace(SpriteFace::right);
+		
 	} else if(xAcceleration < 0.0) {
 		
 		if(xSpeed > -xMaxSpeed) {
@@ -57,6 +59,8 @@ void AccelerableObject::HandleLogic() {
 				xSpeed = -xMinSpeed;
 			}
 		}
+		spriteFace->ChangeFace(SpriteFace::left);
+		
 	} else if(xBreaking > 0.0) {
 		
 		if(xSpeed > xMinSpeed) {

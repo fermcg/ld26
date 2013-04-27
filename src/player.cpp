@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Player::Player() : AccelerableObject("Player", "Player", "PLAYER") {
+Player::Player() : AccelerableObject("Player", "Player") {
 	
 	bAcceleration = 0.0005;
 	
@@ -66,6 +66,20 @@ void Player::OnCollision() {
 	}
 }
 
+SpriteFace* Player::CreateSpriteFace() {
+	
+	SpriteFace* face = new SpriteFace("Player Face");
+	
+	face->RegisterFace(SpriteFace::front, "PLAYER+FRONT");
+	face->RegisterFace(SpriteFace::left, "PLAYER+LEFT");
+	face->RegisterFace(SpriteFace::right, "PLAYER+RIGHT");
+	face->RegisterFace(SpriteFace::jumping_front, "PLAYER+JUMP+FRONT");
+	face->RegisterFace(SpriteFace::jumping_left, "PLAYER+JUMP+LEFT");
+	face->RegisterFace(SpriteFace::jumping_right, "PLAYER+JUMP+RIGHT");
+	
+	return face;
+}
+
 void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 
 	bool changed = false;
@@ -122,14 +136,14 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 			
 			xAcceleration = (leftIsOn ? -bAcceleration : 0.0) + (rightIsOn ? bAcceleration : 0.0);
 			yAcceleration = (upIsOn ? -bAcceleration : 0.0) + (downIsOn ? bAcceleration : 0.0);
-			accelerationChanged = false;		
+			accelerationChanged = false;
 		}
 		if(fireChanged) {
 			fireChanged = false;
 			
-			PlayerShot *shot = new PlayerShot(*this);
+		/*	PlayerShot *shot = new PlayerShot(*this);
 			shot->Init();
-			Singleton::allFriends->RegisterObject(shot);
+			Singleton::allFriends->RegisterObject(shot);*/
 		}
 	}
 	

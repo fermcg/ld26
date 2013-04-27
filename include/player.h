@@ -27,6 +27,8 @@ public:
 	void OnCollision();
 	
 	friend class PlayerShot;
+protected:
+	SpriteFace* CreateSpriteFace();
 	
 private:
 	double bAcceleration;

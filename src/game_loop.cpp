@@ -44,12 +44,12 @@ void GameLoop::Loop() throw() {
 
 void GameLoop::LoopStart() {
 	
-	if(loopCount % 500 == 0 && Enemy::objectCount < 10) {
+/*	if(loopCount % 500 == 0 && Enemy::objectCount < 10) {
 		
 		Enemy *enemy = new Enemy();
 		enemy->Init();
 		Singleton::allEnemies->RegisterObject(enemy);		
-	}
+	}*/
 }
 
 void GameLoop::HandleEvents() {

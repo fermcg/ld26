@@ -10,11 +10,10 @@ using namespace std;
 // constants
 const int GameObject::BigDamage = 100000;
 
-GameObject::GameObject(const char* name, const char* objectId, const char* spriteId) : BaseSystem(name) {
+GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name) {
 	
 	this->objectId = objectId;
-	this->spriteId = spriteId;
-	this->sprite = NULL;
+	this->spriteFace = NULL;
 	this->x = 0.0;
 	this->y = 0.0;
 	this->w = 0;
@@ -38,8 +37,9 @@ GameObject::~GameObject() {
 
 void GameObject::Init() throw() {
 	
-	sprite = Singleton::spriteMap->Get(spriteId.c_str());
+	spriteFace = CreateSpriteFace();
 	
+	Sprite* sprite = spriteFace->GetSequence()->GetSprite();
 	w = sprite->rect.w;
 	h = sprite->rect.h;
 	
@@ -66,6 +66,9 @@ void GameObject::Terminate() {
 			THROWINFO(Exception::ObjectNotFound, fullName.c_str());
 		}
 	}
+	spriteFace->Terminate();
+	delete spriteFace;
+	spriteFace = NULL;
 	this->BaseSystem::Terminate();
 }
 
@@ -77,7 +80,7 @@ void GameObject::Render() {
 	rect.w = w;
 	rect.h = h;
 	
-	this->sprite->RenderCopy(&rect);
+	this->spriteFace->RenderCopy(&rect);
 }
 
 void GameObject::HandleLogic() {

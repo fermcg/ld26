@@ -17,8 +17,9 @@ namespace Exception {
 		config_key_not_found = 5,
 		texture_not_found = 6,
 		sprite_not_found = 7,
-		object_not_found = 8,
-		bad_render = 9,
+		face_not_found = 8,
+		object_not_found = 9,
+		bad_render = 10,
 		overflow = 96,
 		game_loop_end = 97,
 		bad_object = 98,
@@ -105,12 +106,18 @@ namespace Exception {
 		SpriteNotFound(const char* spriteId) : Base(sprite_not_found, "Sprite Not Found", spriteId) {};
 	};
 	
+	class FaceNotFound : public Base {
+	public:
+		FaceNotFound() : Base(face_not_found, "Face Not Found") {};
+		FaceNotFound(const char* faceId) : Base(face_not_found, "Face Not Found", faceId) {};
+	};	
+		
 	class ObjectNotFound : public Base {
 	public:
 		ObjectNotFound() : Base(object_not_found, "Object Not Found") {};
 		ObjectNotFound(const char* objectId) : Base(object_not_found, "Object Not Found", objectId) {};	
 	};
-		
+	
 	class BadRender : public Base {
 	public:
 		BadRender() : Base(bad_render, "Error Rendering Object") {};

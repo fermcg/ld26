@@ -5,7 +5,7 @@
 class Projectile : public AccelerableObject {
 
 public:	
-	Projectile(const char* name, const char* objectId, const char* spriteId);
+	Projectile(const char* name, const char* objectId);
 	~Projectile();
 	
 	virtual void HandleLogic();

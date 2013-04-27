@@ -1,6 +1,6 @@
 #include "player_shot.h"
 
-PlayerShot::PlayerShot(Player& father) : Projectile("PlayerShot", "shot", "PLAYER+SHOT") {
+PlayerShot::PlayerShot(Player& father) : Projectile("PlayerShot", "shot") {
 	
 	yAcceleration = -0.01;
 	xAcceleration = 0.0;

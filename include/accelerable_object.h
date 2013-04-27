@@ -5,7 +5,7 @@
 class AccelerableObject : public GameObject {
 
 public:	
-	AccelerableObject(const char* name, const char* objectId, const char* spriteId);
+	AccelerableObject(const char* name, const char* objectId);
 	~AccelerableObject();
 	
 	virtual void HandleLogic();

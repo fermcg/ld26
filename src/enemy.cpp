@@ -2,7 +2,7 @@
 
 unsigned long Enemy::objectCount = 0;
 
-Enemy::Enemy() : AccelerableObject("Enemy", "Enemy", "ENEMY") {
+Enemy::Enemy() : AccelerableObject("Enemy", "Enemy") {
 
 	bAcceleration = 0.0002;
 	// Accelerable vars

@@ -1,6 +1,6 @@
 #include "projectile.h"
 
-Projectile::Projectile(const char* name, const char* objectId, const char* spriteId) : AccelerableObject(name, objectId, spriteId) {
+Projectile::Projectile(const char* name, const char* objectId) : AccelerableObject(name, objectId) {
 	
 }
 Projectile::~Projectile() {

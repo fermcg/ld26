@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <iostream>
 #include "sprite.h"
+#include "sprite_sequence.h"
 #include "exceptions.h"
 #include "macros.h"
 #include "singletons.h"
@@ -17,26 +18,10 @@ Sprite::Sprite(const char* spriteId, SDL_Texture* texture, const Sint16 x, const
 	this->texture = texture;
 	this->spriteId = spriteId;
 	this->frames = frames;
-	currentFrame = 0;
-	renderingMode = Sprite::sequence;
 }
 
 Sprite::~Sprite() {
 	
-}
-
-void Sprite::RenderCopy(const SDL_Rect* destinyRect) throw() {
-
-	RenderCopy(destinyRect, currentFrame);
-	
-	if(renderingMode == Sprite::sequence) {
-		
-		currentFrame++;
-		if(currentFrame >= frames) {
-			
-			currentFrame = 0;
-		}
-	}
 }
 
 void Sprite::RenderCopy(const SDL_Rect* destinyRect, const int frame) throw() {
@@ -50,4 +35,10 @@ void Sprite::RenderCopy(const SDL_Rect* destinyRect, const int frame) throw() {
 		cerr << "Error rendering Sprite copy -> " << SDL_GetError() << endl;
 		THROWINFO(Exception::BadRender, spriteId.c_str());
 	}
+}
+
+SpriteSequence* Sprite::InstanceSequence() {
+	
+	SpriteSequence* sequence = new SpriteSequence(this);
+	return sequence;
 }

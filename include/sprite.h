@@ -5,27 +5,25 @@
 
 using namespace std;
 
+class SpriteSequence;
+
 class Sprite {
 public:
-	enum RenderingMode {
-		single_frame = 0,
-		sequence
-	};
-	
+
 	Sprite(const char* spriteId, SDL_Texture* texture, const Sint16 x, const Sint16 y, const Uint16 w, const Uint16 h, const int frames);
 	~Sprite();
 	
-	void RenderCopy(const SDL_Rect* destinyRect) throw();
 	void RenderCopy(const SDL_Rect* destinyRect, const int frame) throw();
+	SpriteSequence* InstanceSequence();
 	
+	
+	friend class SpriteSequence;
 	friend class GameObject;
 protected:
 	SDL_Rect rect;
-	RenderingMode renderingMode;
-	int currentFrame;
+	int frames;
 			
 private:
 	SDL_Texture* texture;
 	string spriteId;
-	int frames;
 };

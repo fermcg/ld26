@@ -3,14 +3,14 @@
 #include <string>
 #include <SDL.h>
 #include "base_system.h"
-#include "sprite.h"
+#include "sprite_face.h"
 
 using namespace std;
 
 class GameObject : public BaseSystem {
 public:
 	
-	GameObject(const char* name, const char* objectId, const char* spriteId);
+	GameObject(const char* name, const char* objectId);
 	~GameObject();
 	
 	virtual void Init() throw();
@@ -27,14 +27,15 @@ public:
 	friend class AllObjects;
 protected:
 	
+	virtual SpriteFace* CreateSpriteFace() = 0;
+	
 	Uint16 w;
 	Uint16 h;
 	double x;
 	double y;
 	
 	SDL_Rect boundingBox;
-	string spriteId;
-	Sprite* sprite;
+	SpriteFace* spriteFace;
 	unsigned long gameObjectId;
 	
 	int energy;
