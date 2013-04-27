@@ -1,0 +1,9 @@
+Ludum Dare 26
+Theme: Minimalism
+Author: @fermcg
+
+Game Idea (version 0.1 - first commitment)
+
+- Game will be a platformer
+- Main character wanted to be something that resembles a walking duck. At first he was naked, but then he got a green thing to cover its parts.
+
