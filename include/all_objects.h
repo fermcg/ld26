@@ -7,6 +7,7 @@
 
 using namespace std;
 
+class AccelerableObject;
 class AllObjects : public BaseSystem {
 	public:
 		AllObjects();
@@ -22,7 +23,8 @@ class AllObjects : public BaseSystem {
 
 		bool LoopCheckForCollision(GameObject& gameObject);
 
-		static GameObject* CreateObject(const string& objectClass);
+		virtual GameObject* CreateObject(const string& objectClass);
+		void HoldMeBack(AccelerableObject& other);
 
 		friend class GameObject;
 

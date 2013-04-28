@@ -8,15 +8,19 @@ using namespace std;
 
 class Stage : public AllObjects {
 	public:
-		Stage(const char* stageId, const Sint16 x, const Sint16 y, const Uint16 w, const Uint16 h);
+		Stage(const char* stageId, const int xPos, const int yPos, const int xSize, const int ySize);
 		~Stage();
 
 		virtual void Init() throw();
 		virtual void Terminate();
 
 		void SetBackground(const char* spriteId) throw();
+		void SetPlayerStartPosition(const int x, const int y);
+		void PositionPlayer();
 
 		void Render();
+
+		GameObject* CreateObject(const string& objectClass);
 
 		typedef map< char, string > Dictionary;
 		Dictionary dictionary;
@@ -25,6 +29,14 @@ class Stage : public AllObjects {
 	protected:
 
 		SDL_Rect rect;
+		int xPos;
+		int yPos;
+		int xSize;
+		int ySize;
+
+		int playerStartX;
+		int playerStartY;
+
 		string stageId;	
 		Sprite* background;
 };

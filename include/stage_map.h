@@ -13,13 +13,13 @@ using namespace std;
 class StageMap : public BaseSystem, map< string, Stage* > {
 
 	public:
-		StageMap(const char* fileName);
+		StageMap();
 		~StageMap();
 
 		void Init();
 		void Terminate();
 
-		Stage* Get(const char* stageId);
+		Stage* Get(const char* stageId) throw();
 
 
 		void ReadStageLine(const string& line);

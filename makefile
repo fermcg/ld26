@@ -26,7 +26,8 @@ GAMEOBJ=game_system.o game_loop.o game_object.o screen.o sprite.o \
 		aux_functions.o accelerable_object.o enemy.o player_shot.o \
 		projectile.o sprite_sequence.o sprite_face.o sound_effect.o \
 		sound_effects_map.o stage.o stage_map.o brick_object.o \
-		empty_block.o door_object.o
+		empty_block.o door_object.o teal_brick.o teal_cracked_brick.o \
+		lethal_block.o lethal_empty_block.o spike_block.o
 
 # texture_map.o
 # LudumDare
@@ -40,7 +41,7 @@ _TESTOBJS=test.o
 TESTOBJS=$(patsubst %,$(OBJDIR)/%,$(_TESTOBJS))
 
 # All
-CFLAGS=$(SDL2-CFLAGS) $(TLCFLAGS)
+CFLAGS=$(SDL2-CFLAGS) $(TLCFLAGS) -g
 #LDFLAGS=$(SDL2-LDFLAGS) $(TLLDFLAGS)
 LDFLAGS=$(TLLDFLAGS) $(SDL2S-LDFLAGS)
 OBJS=$(TLOBJS)

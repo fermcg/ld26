@@ -126,9 +126,14 @@ void AccelerableObject::HandleLogic() {
 		spriteFace->ChangeFace(SpriteFace::front);
 	}
 
-	x += xSpeed;
-	y += ySpeed;
+	newX = x + xSpeed;
+	newY = y + ySpeed;
 
+	Singleton::gameLoop->currentStage->HoldMeBack(*this);
+
+	x = newX;
+	y = newY;
+		
 	if(neverLeaveScreen) {
 
 		if(x < minX) {
@@ -164,4 +169,12 @@ void AccelerableObject::SetNeverLeaveScreen(const bool neverLeaveScreen) {
 		maxX = (double)width - (double)this->w;
 		maxY = (double)height - (double)this->h;
 	}
+}
+
+void AccelerableObject::GetNewCollisionBox(Sint16& x0, Sint16& y0, Sint16& xf, Sint16& yf) const {
+
+	x0 = (Sint16)newX + boundingBox.x;
+	xf = x0 + boundingBox.w;
+	y0 = (Sint16)newY + boundingBox.y;
+	yf = y0 + boundingBox.h;	
 }

@@ -7,6 +7,8 @@
 
 using namespace std;
 
+class Stage;
+class AccelerableObject;
 class GameObject : public BaseSystem {
 	public:
 
@@ -20,6 +22,7 @@ class GameObject : public BaseSystem {
 		virtual void HandleLogic();
 		virtual void OnCollision();
 
+		void HoldMeBack(AccelerableObject& other);
 		bool CheckCollision(const GameObject& other);
 		void TakeThisHit(const int damage);
 
@@ -27,6 +30,8 @@ class GameObject : public BaseSystem {
 
 		static const int BigDamage;	
 		friend class AllObjects;
+		friend class StageMap;
+		friend class Stage;
 	protected:
 
 		virtual SpriteFace* CreateSpriteFace() = 0;
@@ -38,14 +43,16 @@ class GameObject : public BaseSystem {
 
 		SDL_Rect boundingBox;
 		SpriteFace* spriteFace;
+		Stage* stage;
 		unsigned long gameObjectId;
 
 		int energy;
 		int damage;
-		bool enemy;
 
 		bool dead;
 		bool unbreakable;
+		bool lethal;
+		bool solid;
 	private:
 
 		void GetCollisionBox(Sint16& x0, Sint16& y0, Sint16& xf, Sint16& yf) const;

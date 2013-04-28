@@ -6,6 +6,10 @@
 
 #include "empty_block.h"
 #include "door_object.h"
+#include "teal_brick.h"
+#include "teal_cracked_brick.h"
+#include "lethal_empty_block.h"
+#include "spike_block.h"
 
 using namespace std;
 
@@ -50,6 +54,8 @@ void AllObjects::RegisterObject(GameObject* gameObject) {
 }
 
 void AllObjects::HandleLogic() {
+
+	return;
 	AllObjects::ObjectMap::iterator it;
 
 	it = objectMap.begin();
@@ -80,6 +86,16 @@ void AllObjects::Render() {
 
 		it->second->Render();
 	}	
+}
+
+void AllObjects::HoldMeBack(AccelerableObject& other) {
+
+	AllObjects::ObjectMap::iterator it;
+
+	for(it = objectMap.begin(); it != objectMap.end(); it++) {
+
+		it->second->HoldMeBack(other);
+	}
 }
 
 bool AllObjects::LoopCheckForCollision(GameObject& gameObject) {
@@ -120,36 +136,41 @@ bool AllObjects::UnregisterObject(unsigned long gameObjectId) {
 
 GameObject* AllObjects::CreateObject(const string& objectClass) {
 
+	GameObject* object = NULL;
 	if(objectClass == "EMPTY") {
 
-		return new EmptyBlock();
+		object = new EmptyBlock();
 	} else if(objectClass.substr(0, 5) == "DOOR>") {
 
-		return new DoorObject(objectClass.substr(5).c_str());
-	} /*
-		 } else if(objectClass == "BRICK+TEAL") {
+		object = new DoorObject(objectClass.substr(5).c_str());
+	} else if(objectClass == "BRICK+TEAL") {
 
-		 return new TealBrick();
-		 } else if(objectClass == "CRACK+TEAL") {
+		object = new TealBrick();
+	} else if(objectClass == "CRACK+TEAL") {
 
-		 return new TealCrackedBrick();
-		 } else if(objectClass == "DEATH") {
+		object = new TealCrackedBrick();
+	} else if(objectClass == "DEATH") {
 
-		 return new EmptyLethalBlock();
-		 } else if(objectClass == "SPIKES") {
+		object = new LethalEmptyBlock();
+	} else if(objectClass == "SPIKES") {
 
-		 return new SpikesBlock;
-		 } else if(objectClass.substr(0, 9) == "B.NUMBER>") {
+		object = new SpikeBlock(); /*
+	} else if(objectClass.substr(0, 9) == "B.NUMBER>") {
 
-		 return new NumberPower(NumberPower::blue, objectClass.substr(9));
-		 } else if(objectClass.substr(0, 9) == "R.NUMBER>") {
+		object = new NumberPower(NumberPower::blue, objectClass.substr(9));
+	} else if(objectClass.substr(0, 9) == "R.NUMBER>") {
 
-		 return new NumberPower(NumberPower::red, objectClass.substr(9));
-		 } else if(objectClass.substr(0, 9) == "G.NUMBER>") {
+		object = new NumberPower(NumberPower::red, objectClass.substr(9));
+	} else if(objectClass.substr(0, 9) == "G.NUMBER>") {
 
-		 return new NumberPower(NumberPower::green, objectClass.substr(9));
-		 }*/
+		object = new NumberPower(NumberPower::green, objectClass.substr(9));*/
+	}
 
-return NULL;
+	if(object != NULL) {
+
+		object->Init();
+		RegisterObject(object);
+	}
+
+	return object;
 }
-

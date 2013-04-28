@@ -28,8 +28,13 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 	energy = 1;
 	damage = BigDamage;
 
-	enemy = true; // Since there will be more enemies than allies - enemy is default
 	dead = false;
+	solid = false;
+
+	unbreakable = false;
+	lethal = false;
+
+	stage = NULL;
 }
 GameObject::~GameObject() {
 
@@ -51,9 +56,9 @@ void GameObject::Terminate() {
 	if(gameObjectId != 0) {
 
 		bool unregistered = false;
-		if(enemy) {
+		if(stage != NULL) {
 
-			unregistered = Singleton::allEnemies->UnregisterObject(gameObjectId);
+			unregistered = stage->UnregisterObject(gameObjectId);
 		} else {
 
 			unregistered = Singleton::allFriends->UnregisterObject(gameObjectId);
@@ -62,13 +67,17 @@ void GameObject::Terminate() {
 
 			string fullName = GetFullName();
 			cerr << "Object Id not found [" << gameObjectId << "] -> can't unregister ["
-				<< fullName << "] from " << (enemy ? "allEnemies" : "allFriends") << " list";
+				<< fullName << "] from " << (stage != NULL ? "stage object" : "allFriends") << " list";
 			THROWINFO(Exception::ObjectNotFound, fullName.c_str());
 		}
 	}
-	spriteFace->Terminate();
-	delete spriteFace;
-	spriteFace = NULL;
+
+	if(spriteFace != NULL) {
+		spriteFace->Terminate();
+		delete spriteFace;
+		spriteFace = NULL;
+	}
+
 	this->BaseSystem::Terminate();
 }
 
@@ -85,7 +94,7 @@ void GameObject::Render() {
 
 void GameObject::HandleLogic() {
 
-	if(enemy) {
+	if(stage != NULL) {
 
 		Singleton::allFriends->LoopCheckForCollision(*this);
 	}
@@ -97,6 +106,96 @@ void GameObject::OnCollision() {
 
 		dead = true;
 	}
+}
+
+void GameObject::HoldMeBack(AccelerableObject& other) {
+
+	if(!solid) {
+
+		return;
+	}
+
+	Sint16 thisX0, thisY0, thisXf, thisYf;
+	Sint16 otherX0, otherY0, otherXf, otherYf;
+
+	this->GetCollisionBox(thisX0, thisY0, thisXf, thisYf);
+	other.GetNewCollisionBox(otherX0, otherY0, otherXf, otherYf);
+
+	if(thisYf <= otherY0) {
+
+		return;
+	}
+	if(thisY0 >= otherYf) {
+
+		return;
+	}
+	if(thisXf <= otherX0) {
+
+		return;
+	}
+	if(thisX0 >= otherXf) {
+
+		return;
+	}
+
+	bool zeroX = false;
+	bool zeroY = false;
+	if(other.xSpeed > 0.0) {
+	   
+		if(thisX0 < otherXf) {
+
+			other.newX--;
+		//	other.newX += (double)thisX0 - otherXf;
+		//	other.xSpeed = 0.0;
+		//	other.xAcceleration = 0.0;
+			zeroX = true;
+		}
+	} else if(other.xSpeed < 0.0) {
+
+		if(thisXf > otherX0) {
+
+			other.newX++;
+		//	other.newX += (double)thisXf - otherX0;
+		//	other.xSpeed = 0.0;
+		//	other.xAcceleration = 0.0;
+			zeroX = true;
+		}
+	}
+	if(other.ySpeed > 0.0) {
+
+		if(thisY0 < otherYf) {
+
+			other.newY--;
+		//	other.newY += (double)thisY0 - otherYf;
+		//	other.ySpeed = 0.0;
+		//	other.yAcceleration = 0.0;
+			zeroY = true;
+		}
+	} else if(other.ySpeed < 0.0) {
+		
+		if(thisYf > otherY0) {
+
+			other.newY++;
+		//	other.newY += (double)thisYf - otherY0;
+		//	other.ySpeed = 0.0;
+		//	other.yAcceleration = 0.0;
+			zeroY = true;
+		}
+	}
+
+	HoldMeBack(other);
+	if(zeroX) {
+	
+		other.xSpeed = 0.0;
+		other.xAcceleration = 0.0;
+	}
+	if(zeroY) {
+
+		other.ySpeed = 0.0;
+		other.yAcceleration = 0.0;
+	}
+	return;
+	
 }
 
 bool GameObject::CheckCollision(const GameObject& other) {

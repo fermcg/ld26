@@ -23,6 +23,6 @@ class BrickObject : public GameObject {
 
 	protected:
 
-		int nx;
-		int ny;
+		int xSize;
+		int ySize;
 };

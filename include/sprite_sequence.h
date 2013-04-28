@@ -19,8 +19,13 @@ class SpriteSequence {
 		Sprite* GetSprite();
 		void ResetFrame(const int frame = 0);
 
+		void LockSequence();
+		void UnlockSequence();
+		void IncrementSequence();
+
 	protected:
 		int currentFrame;
+		bool locked;
 		Sprite* sprite;
 		RenderingMode renderingMode;	
 };

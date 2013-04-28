@@ -8,6 +8,7 @@ using namespace std;
 
 GameLoop::GameLoop() : BaseSystem("GameLoop") {
 
+	currentStage = NULL;
 }
 
 GameLoop::~GameLoop() {
@@ -15,6 +16,9 @@ GameLoop::~GameLoop() {
 }
 
 void GameLoop::Init() throw() {
+
+//	currentStage = Singleton::stageMap->Get("MENU");
+	currentStage = Singleton::stageMap->Get("STAGE01");
 
 }
 
@@ -32,6 +36,7 @@ void GameLoop::Loop() throw() {
 	// sleep(5);
 	// Terminating
 	keepWalking = true;
+	currentStage->PositionPlayer();
 
 	for(loopCount = 0; keepWalking; loopCount++) {
 		LoopStart();
@@ -139,8 +144,9 @@ void GameLoop::HandleEvents() {
 void GameLoop::HandleLogic() {
 
 	Singleton::player->HandleLogic();
-	Singleton::allFriends->HandleLogic();
-	Singleton::allEnemies->HandleLogic();
+	currentStage->HandleLogic();
+//	Singleton::allFriends->HandleLogic();
+//	Singleton::allEnemies->HandleLogic();
 	return;
 }
 
@@ -149,10 +155,12 @@ void GameLoop::Render() {
 	SDL_SetRenderDrawColor(Singleton::screen->renderer, 0, 0, 0, 0);
 	SDL_RenderClear(Singleton::screen->renderer);
 
-	Singleton::allEnemies->Render();
-	Singleton::allFriends->Render();
-	Singleton::player->Render();
+//	Singleton::allEnemies->Render();
+//	Singleton::allFriends->Render();
 	//	Singleton::player->PrintStates();
+
+	currentStage->Render();
+	Singleton::player->Render();
 
 	SDL_RenderPresent(Singleton::screen->renderer);
 }
@@ -160,3 +168,4 @@ void GameLoop::Render() {
 void GameLoop::LoopEnd() {
 
 }
+

@@ -13,7 +13,7 @@ class Sprite {
 		Sprite(const char* spriteId, SDL_Texture* texture, const Sint16 x, const Sint16 y, const Uint16 w, const Uint16 h, const int frames);
 		~Sprite();
 
-		void RenderCopy(const SDL_Rect* destinyRect, const int frame) throw();
+		void RenderCopy(const SDL_Rect* destinyRect = NULL, const int frame = 0) throw();
 		SpriteSequence* InstanceSequence();
 
 

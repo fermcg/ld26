@@ -7,12 +7,12 @@ using namespace std;
 
 Player::Player() : AccelerableObject("Player", "Player") {
 
-	bAcceleration = 0.0005;
+	bAcceleration = 0.005;
 
 	// Accelerable vars
 
 	xMinSpeed = 0.0;
-	xMaxSpeed = 0.15;
+	xMaxSpeed = 0.5;
 	yMinSpeed = 0.0;
 	yMaxSpeed = 0.15;
 
@@ -28,12 +28,10 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	accelerationChanged = false;
 	fireChanged = false;
 
-	boundingBox.x = 8;
-	boundingBox.y = 0;
-	boundingBox.w = 16;
-	boundingBox.h = 32;
-
-	enemy = false;
+	boundingBox.x = 1;
+	boundingBox.y = 4;
+	boundingBox.w = 4;
+	boundingBox.h = 12;
 
 	energy = 2000;
 	damage = 2000;

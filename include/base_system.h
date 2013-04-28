@@ -11,11 +11,12 @@ class BaseSystem {
 		virtual void Init();
 		virtual void Terminate();
 
+		string GetFullName() const;
+
 	protected:
 		string name;
 		string objectId;
 
-		string GetFullName() const;
 	private:
 		bool initialized;
 };

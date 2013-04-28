@@ -21,10 +21,12 @@ void DoorObject::Terminate() {
 
 SpriteFace* DoorObject::CreateSpriteFace() {
 
-	SpriteFace* face = new SpriteFace("Player Face");
+	SpriteFace* face = new SpriteFace("Door Face");
 
 	face->RegisterFace(SpriteFace::closed, "DOOR+CLOSED");
 	face->RegisterFace(SpriteFace::opened, "DOOR+OPENED");
+
+	face->ChangeFace(SpriteFace::closed);
 
 	return face;
 }

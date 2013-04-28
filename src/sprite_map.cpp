@@ -18,17 +18,23 @@ void SpriteMap::Init() {
 
 	this->BaseSystem::Init();
 
+	Texture* menuTexture = Singleton::textureMap->Get("MENU");
+	LoadSprite("MENU", menuTexture, 0, 0, 640, 480, 1);
 	// Sprites from "SPRITES" texture map.
 	// This could be loaded from a file or resource...
 	Texture* spritesTexture = Singleton::textureMap->Get("SPRITES");
 	LoadSprite("PLAYER+RIGHT", spritesTexture, 0, 0, 8, 16, 4);
 	LoadSprite("PLAYER+LEFT", spritesTexture, 32, 0, 8, 16, 4);
 	LoadSprite("PLAYER+FRONT", spritesTexture, 64, 0, 8, 16, 1);
-	LoadSprite("PLAYER+JUMP+RIGHT", spritesTexture, 80, 0, 8, 16, 1);
-	LoadSprite("PLAYER+JUMP+LEFT", spritesTexture, 96, 0, 8, 16, 1);
-	LoadSprite("PLAYER+JUMP+FRONT", spritesTexture, 112, 0, 8, 16, 1);
+	LoadSprite("PLAYER+JUMP+RIGHT", spritesTexture, 72, 0, 8, 16, 1);
+	LoadSprite("PLAYER+JUMP+LEFT", spritesTexture, 80, 0, 8, 16, 1);
+	LoadSprite("PLAYER+JUMP+FRONT", spritesTexture, 88, 0, 8, 16, 1);
 	// Scene
 	LoadSprite("BRICK+TEAL", spritesTexture, 0, 16, 8, 8, 2);
+	LoadSprite("CRACK+TEAL", spritesTexture, 0, 24, 8, 8, 2);
+	LoadSprite("SPIKES", spritesTexture, 16, 16, 8, 8, 1);
+	LoadSprite("DOOR+CLOSED", spritesTexture, 96, 0, 8, 16, 1);
+	LoadSprite("DOOR+OPENED", spritesTexture, 104, 0, 8, 16, 1);
 	//	LoadSprite("PLAYER+SHOT", spritesTexture, 0, 32, 32, 32, 4);
 	//	LoadSprite("ENEMY", spritesTexture, 0, 64, 32, 32, 4);
 	//	LoadSprite("ENEMY+SHOT", spritesTexture, 0, 96, 32, 32, 4);

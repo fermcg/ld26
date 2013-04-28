@@ -25,8 +25,6 @@ PlayerShot::PlayerShot(Player& father) : Projectile("PlayerShot", "shot") {
 	this->x = father.x;
 	this->y = father.y;
 
-	enemy = false;
-
 	energy = 1;
 	damage = 300;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "base_system.h"
+#include "stage.h"
 
 class GameLoop : public BaseSystem {
 	public:
@@ -11,6 +12,9 @@ class GameLoop : public BaseSystem {
 		void Terminate();
 
 		void Loop() throw();
+
+		Stage* currentStage;
+		friend class StageMap;
 
 	private:
 		void LoopStart();

@@ -3,14 +3,14 @@
 #include "stage_map.h"
 #include "exceptions.h"
 #include "macros.h"
+#include "brick_object.h"
 
 #include <boost/lexical_cast.hpp>
 
 using namespace std;
 
-StageMap::StageMap(const char* fileName) : BaseSystem("StageMap") {
+StageMap::StageMap() : BaseSystem("StageMap") {
 
-	this->fileName = fileName;
 	this->stage = NULL;
 	this->lineNumber = 0;
 }
@@ -68,7 +68,7 @@ void StageMap::Terminate() {
 
 }
 
-Stage* StageMap::Get(const char* stageId) {
+Stage* StageMap::Get(const char* stageId) throw() {
 
 	StageMap::iterator it;
 	it = this->find(stageId);
@@ -96,7 +96,7 @@ void StageMap::ReadStageLine(const string& line) {
 		cerr << "Bad line at stage file: [" << lineNumber << "]: [" << line << "]" << endl;
 		THROW(Exception::BadConfig);				
 	}
-	currentStageId = line.substr(0, posToken - 1);
+	currentStageId = line.substr(0, posToken);
 
 	StageMap::iterator it = this->find(currentStageId);
 	if(it != this->end()) {
@@ -144,24 +144,25 @@ void StageMap::ReadStageLine(const string& line) {
 	//           [  ]
 	string strH = line.substr(posToken + 1);
 
-	int x = 0;
-	int y = 0;
-	int w = 0;
-	int h = 0;
+	int xPos = 0;
+	int yPos = 0;
+	int xSize = 0;
+	int ySize = 0;
 
 	try {
 
-		x = boost::lexical_cast<int>(strX);
-		y = boost::lexical_cast<int>(strY);
-		w = boost::lexical_cast<int>(strW);
-		h = boost::lexical_cast<int>(strH);
+		xPos = boost::lexical_cast<int>(strX);
+		yPos = boost::lexical_cast<int>(strY);
+		xSize = boost::lexical_cast<int>(strW);
+		ySize = boost::lexical_cast<int>(strH);
 	} catch(bad_cast& e) {
 
 		cerr << "Bad line at stage file: [" << lineNumber << "]: [" << line << "]" << endl;
 		THROW(Exception::BadConfig);				
 	}
 
-	stage = new Stage(currentStageId.c_str(), x, y, w, h);
+	stage = new Stage(currentStageId.c_str(), xPos, yPos, xSize, ySize);
+	stage->Init();
 }
 
 void StageMap::ReadProperty(const string& line) {
@@ -185,7 +186,7 @@ void StageMap::ReadProperty(const string& line) {
 
 void StageMap::ReadDictionaryWord(const string& line) {
 
-	if(line.size() < 4 || line[3] != '=') {
+	if(line.size() < 4 || line[2] != '=') {
 
 		cerr << "Bad line at stage file: [" << lineNumber << "]: [" << line << "]" << endl;
 		THROW(Exception::BadConfig);
@@ -215,36 +216,41 @@ void StageMap::LoadStage() {
 			break;
 		}
 
-		if(line.size() != stage->rect.w) {
+		if(line.size() != stage->xSize) {
 
 			cerr << "Bad line at stage file: [" << lineNumber << "]: [" << line << "]" << endl;
 			THROW(Exception::BadConfig);
 		}
 		strMap.push_back(line);
 	}
-	if(strMap.size() != stage->rect.h) {
+	if(strMap.size() != stage->ySize) {
 
 		cerr << "Bad count of lines at stage file: [" << lineNumber << "]" << endl;
 		THROW(Exception::BadConfig);
 	}
 
-	vector< vector< GameObject * > > objectMatrix;
+//	vector< vector< GameObject * > > objectMatrix;
+//	objectMatrix.reserve(stage->h);
+
+	GameObject*** objectMatrix;
+	objectMatrix = new GameObject**[stage->ySize];
+
 	int preMergeCount = 0;
 
 	size_t i, j;
-	for(j = 0; j < stage->rect.h; j++) {
+	for(j = 0; j < stage->ySize; j++) {
 
+//		objectMatrix[j].reserve(stage->w);
 		string nextColor;
+		objectMatrix[j] = new GameObject*[stage->xSize];
 
-		for(i = 0; i < stage->rect.w; i++) {
+		for(i = 0; i < stage->xSize; i++) {
 
 			objectMatrix[j][i] = NULL;
 			char c = strMap[j][i];
 
 			switch(c) {
 				case ' ':
-				case 'p':
-				case 'd':
 					continue;
 				case 'b':
 					nextColor = "B.NUMBER>";
@@ -255,6 +261,16 @@ void StageMap::LoadStage() {
 				case 'g':
 					nextColor = "G.NUMBER>";
 					continue;
+				case 'P':
+					stage->SetPlayerStartPosition(i, j);
+					continue;
+			}
+			if(c >= 'a' && c <= 'z' && j > 0) {
+
+				if(strMap[j - 1][i] == c - 'a' + 'A') {
+
+					continue; // cosmetic stuff for 8x16 sprites.
+				}
 			}
 
 			string objectClass;
@@ -275,13 +291,15 @@ void StageMap::LoadStage() {
 				objectClass = it->second;
 			}
 
-			GameObject *gameObject = AllObjects::CreateObject(objectClass);
+			GameObject *gameObject = stage->CreateObject(objectClass);
 
 			objectMatrix[j][i] = gameObject;
 
 			if(gameObject != NULL) {
 
 				preMergeCount++;
+				gameObject->y = stage->yPos * BrickObject::Height + j * BrickObject::Height;
+				gameObject->x = stage->xPos * BrickObject::Width + i * BrickObject::Width;
 			}
 		}
 	}
@@ -289,10 +307,10 @@ void StageMap::LoadStage() {
 	int postMergeCount = preMergeCount;
 	// try to merge blocks on x axis.
 
-	for(j = 0; j < stage->rect.h; j++) {
+	for(j = 0; j < stage->ySize; j++) {
 
 		int last_merge = -1;
-		for(i = 0; i < stage->rect.w; i++) {
+		for(i = 0; i < stage->xSize; i++) {
 
 			GameObject* gameObject = objectMatrix[j][i];
 			if(gameObject == NULL) {
@@ -308,6 +326,7 @@ void StageMap::LoadStage() {
 
 			if(objectMatrix[j][last_merge]->Merge(gameObject)) {
 
+				gameObject->Terminate();
 				delete gameObject;
 				objectMatrix[j][i] = NULL;
 				postMergeCount--;
@@ -320,10 +339,10 @@ void StageMap::LoadStage() {
 
 	// try to merge blocks on y axis.
 
-	for(i = 0; i < stage->rect.w; i++) {
+	for(i = 0; i < stage->xSize; i++) {
 
 		int last_merge = -1;
-		for(j = 0; j < stage->rect.h; j++) {
+		for(j = 0; j < stage->ySize; j++) {
 
 			GameObject* gameObject = objectMatrix[j][i];
 			if(gameObject == NULL) {
@@ -339,6 +358,7 @@ void StageMap::LoadStage() {
 
 			if(objectMatrix[last_merge][i]->Merge(gameObject)) {
 
+				gameObject->Terminate();
 				delete gameObject;
 				objectMatrix[j][i] = NULL;
 				postMergeCount--;
@@ -351,16 +371,14 @@ void StageMap::LoadStage() {
 
 	cout << "Merge result: [" << preMergeCount << "] > [" << postMergeCount << "]" << endl;
 
-	for(j = 0; j < stage->rect.h; j++) {
+	for(j = 0; j < stage->ySize; j++) {
 
-		for(i = 0; i < stage->rect.w; i++) {
-
-			stage->RegisterObject(objectMatrix[j][i]);
-			objectMatrix[j][i] = NULL;
-		}
+		delete[] objectMatrix[j];
 	}
+	delete[] objectMatrix;
 
 	(*this)[currentStageId] = stage;
+	stage = NULL;
 }
 
 
