@@ -1,5 +1,5 @@
 # Ignore at this project - the binary
 /obj/*.o
-ld26
+PatoLoco
 test
 *.swp
