@@ -19,6 +19,7 @@ class Sprite {
 
 		friend class SpriteSequence;
 		friend class GameObject;
+		friend class EnergyBar;
 	protected:
 		SDL_Rect rect;
 		int frames;

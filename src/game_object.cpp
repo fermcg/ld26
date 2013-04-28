@@ -97,14 +97,29 @@ void GameObject::HandleLogic() {
 	if(stage != NULL) {
 
 		Singleton::allFriends->LoopCheckForCollision(*this);
+		if(Singleton::player->CheckCollision(*this)) {
+
+			Singleton::player->TakeThisHit(this->damage);
+			this->TakeThisHit(Singleton::player->damage);
+
+			Singleton::player->OnCollision(*this);
+			this->OnCollision(*Singleton::player);
+		}
+
+//	} else {
+//
+//		stage->LoopCheckForCollision(*this);
 	}
 }
 
-void GameObject::OnCollision() {
+void GameObject::OnCollision(GameObject& other) {
 
-	if(energy < 0) {
+	if(energy < 0 || other.lethal) {
 
-		dead = true;
+		if(!unbreakable) {
+
+			dead = true;
+		}
 	}
 }
 
@@ -220,7 +235,7 @@ bool GameObject::AmIGrounded(const AccelerableObject& other) {
 	this->GetCollisionBox(thisX0, thisY0, thisXf, thisYf);
 	other.GetCollisionBox(otherX0, otherY0, otherXf, otherYf);
 
-	if(thisY0 == otherYf && thisX0 <= otherXf && thisXf >= otherX0) {
+	if(thisY0 == otherYf && thisX0 < otherXf && thisXf > otherX0) {
 
 		return true;
 	}
@@ -257,7 +272,7 @@ bool GameObject::CheckCollision(const GameObject& other) {
 
 void GameObject::TakeThisHit(const int damage) {
 
-	if(energy >= 0) {
+	if(!unbreakable && energy >= 0) {
 
 		energy -= damage;
 	}

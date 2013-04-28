@@ -23,6 +23,8 @@ class SpriteSequence {
 		void UnlockSequence();
 		void IncrementSequence();
 
+		void SetRenderingMode(const RenderingMode renderingMode);
+
 	protected:
 		int currentFrame;
 		bool locked;

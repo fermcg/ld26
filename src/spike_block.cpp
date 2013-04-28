@@ -6,6 +6,8 @@ SpikeBlock::SpikeBlock() : LethalBlock("SpikeBlock", "SpikeBlock") {
 	boundingBox.y = 2;
 	boundingBox.w = 6;
 	boundingBox.h = 6;
+
+	solid = false;
 }
 
 SpikeBlock::~SpikeBlock() {

@@ -114,8 +114,14 @@ void GameLoop::HandleEvents() {
 					case SDLK_ESCAPE:
 						keepWalking = false;
 						break;
-					case SDLK_SPACE:
+					case SDLK_x:
 						Singleton::player->CommandSetOrReset(Player::fire, event.type == SDL_KEYDOWN);
+						break;
+					case SDLK_z:
+						Singleton::player->CommandSetOrReset(Player::jump, event.type == SDL_KEYDOWN);
+						break;
+					default:
+						cout << "Symbol:" << event.key.keysym.sym << endl;
 						break;
 				}
 				break;

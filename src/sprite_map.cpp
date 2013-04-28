@@ -35,6 +35,14 @@ void SpriteMap::Init() {
 	LoadSprite("SPIKES", spritesTexture, 16, 16, 8, 8, 1);
 	LoadSprite("DOOR+CLOSED", spritesTexture, 96, 0, 8, 16, 1);
 	LoadSprite("DOOR+OPENED", spritesTexture, 104, 0, 8, 16, 1);
+	// Numbers
+	LoadSprite("NUMBERS+R", spritesTexture, 0, 32, 8, 8, 10);
+	LoadSprite("NUMBERS+G", spritesTexture, 0, 40, 8, 8, 10);
+	LoadSprite("NUMBERS+B", spritesTexture, 0, 48, 8, 8, 10);
+	// Health
+	LoadSprite("ENERGY+R", spritesTexture, 0, 56, 80, 4, 1);
+	LoadSprite("ENERGY+G", spritesTexture, 0, 60, 80, 4, 1);
+
 	//	LoadSprite("PLAYER+SHOT", spritesTexture, 0, 32, 32, 32, 4);
 	//	LoadSprite("ENEMY", spritesTexture, 0, 64, 32, 32, 4);
 	//	LoadSprite("ENEMY+SHOT", spritesTexture, 0, 96, 32, 32, 4);

@@ -10,6 +10,7 @@
 #include "teal_cracked_brick.h"
 #include "lethal_empty_block.h"
 #include "spike_block.h"
+#include "number_power.h"
 
 using namespace std;
 
@@ -55,7 +56,6 @@ void AllObjects::RegisterObject(GameObject* gameObject) {
 
 void AllObjects::HandleLogic() {
 
-	return;
 	AllObjects::ObjectMap::iterator it;
 
 	it = objectMap.begin();
@@ -124,8 +124,8 @@ bool AllObjects::LoopCheckForCollision(GameObject& gameObject) {
 			it->second->TakeThisHit(gameObject.damage);
 			gameObject.TakeThisHit(it->second->damage);
 
-			it->second->OnCollision();
-			gameObject.OnCollision();
+			it->second->OnCollision(gameObject);
+			gameObject.OnCollision(*it->second);
 			result = true;
 		}
 	}
@@ -169,16 +169,34 @@ GameObject* AllObjects::CreateObject(const string& objectClass) {
 		object = new LethalEmptyBlock();
 	} else if(objectClass == "SPIKES") {
 
-		object = new SpikeBlock(); /*
-	} else if(objectClass.substr(0, 9) == "B.NUMBER>") {
+		object = new SpikeBlock();
+	} else if(objectClass.substr(2, 7) == "NUMBER>") {
 
-		object = new NumberPower(NumberPower::blue, objectClass.substr(9));
-	} else if(objectClass.substr(0, 9) == "R.NUMBER>") {
+		if(objectClass.size() != 10) {
 
-		object = new NumberPower(NumberPower::red, objectClass.substr(9));
-	} else if(objectClass.substr(0, 9) == "G.NUMBER>") {
+			return NULL;
+		}
 
-		object = new NumberPower(NumberPower::green, objectClass.substr(9));*/
+		int number = objectClass[9] - '0';
+
+		if(number < 0 || number > 9) {
+
+			return NULL;
+		}
+
+		switch(objectClass[0]) {
+			case 'R':
+				object = new NumberPower(NumberPower::red, number);
+				break;
+			case 'G':
+				object = new NumberPower(NumberPower::green, number);
+				break;
+			case 'B':
+				object = new NumberPower(NumberPower::blue, number);
+				break;
+			default:
+				return NULL;
+		}
 	}
 
 	if(object != NULL) {

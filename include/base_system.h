@@ -13,8 +13,8 @@ class BaseSystem {
 
 		string GetFullName() const;
 
-	protected:
 		string name;
+	protected:
 		string objectId;
 
 	private:

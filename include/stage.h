@@ -15,6 +15,7 @@ class Stage : public AllObjects {
 		virtual void Terminate();
 
 		void SetBackground(const char* spriteId) throw();
+		void SetHideEnergyBar(const bool hideEnergyBar);
 		void SetPlayerStartPosition(const int x, const int y);
 		void PositionPlayer();
 
@@ -36,6 +37,8 @@ class Stage : public AllObjects {
 
 		int playerStartX;
 		int playerStartY;
+
+		bool hideEnergyBar;
 
 		string stageId;	
 		Sprite* background;

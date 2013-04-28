@@ -181,6 +181,9 @@ void StageMap::ReadProperty(const string& line) {
 	if(propertyName == "bg") {
 
 		stage->SetBackground(propertyValue.c_str());
+	} else if(propertyName == "hideEnergyBar") {
+
+		stage->SetHideEnergyBar(propertyValue == "1");
 	}
 }
 
@@ -275,7 +278,7 @@ void StageMap::LoadStage() {
 
 			string objectClass;
 
-			if(c >= '1' && c <= '9' && !nextColor.empty()) {
+			if(c >= '0' && c <= '9' && !nextColor.empty()) {
 
 				objectClass = nextColor;
 				objectClass.push_back(c);

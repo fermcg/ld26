@@ -2,6 +2,7 @@
 #include "player.h"
 #include "player_shot.h"
 #include "singletons.h"
+#include "number_power.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	rightIsOn = false;
 	upIsOn = false;
 	downIsOn = false;
+	jumpIsOn = false;
 
 	accelerationChanged = false;
 	fireChanged = false;
@@ -40,6 +42,14 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	sfxStep = NULL;
 	sfxStrongLaser = NULL;
 	walking = false;
+
+	power = 0;
+	distance = 0;
+	jumpHeight = 0;
+
+	maxPower = 0;
+	maxDistance = 0;
+	maxJumpHeight = 0;
 }
 
 Player::~Player() {
@@ -54,6 +64,7 @@ void Player::Init() throw() {
 	sfxStrongLaser = Singleton::soundEffectsMap->Get("STRONGLASER");
 	sfxJump = Singleton::soundEffectsMap->Get("PLAYER+JUMP");
 	sfxDeath = Singleton::soundEffectsMap->Get("PLAYER+DEATH");
+	sfxPowerup = Singleton::soundEffectsMap->Get("POWERUP");
 
 	SetNeverLeaveScreen(true);
 	x = minX + (maxX - minX) / 2.0;
@@ -65,8 +76,9 @@ void Player::Terminate() {
 	this->AccelerableObject::Terminate();
 }
 
-void Player::OnCollision() {
+void Player::OnCollision(GameObject& other) {
 
+	Singleton::energyBar->SetEnergy(energy);
 	if(energy < 0) {
 
 		dead = true;
@@ -87,6 +99,51 @@ void Player::HandleLogic() {
 		sfxStep->Stop(1);
 	}
 }
+
+void Player::GetNumberPower(NumberPower& other) {
+
+	switch(other.color) {
+
+		case NumberPower::red:
+			IncreasePower(other.number);
+			break;
+		case NumberPower::green:
+			IncreaseDistance(other.number);
+			break;
+		case NumberPower::blue:
+			IncreaseJump(other.number);
+			break;
+	}
+	sfxPowerup->Play(4);
+}
+
+void Player::IncreasePower(const int power) {
+
+	this->power += power;
+	if(this->power > maxPower) {
+
+		this->power = maxPower;
+	}
+}
+
+void Player::IncreaseDistance(const int distance) {
+
+	this->distance += distance;
+	if(this->distance > maxDistance) {
+
+		this->distance = maxDistance;
+	}
+}
+
+void Player::IncreaseJump(const int jumpHeight) {
+
+	this->jumpHeight += jumpHeight;
+	if(this->jumpHeight > maxJumpHeight) {
+
+		this->jumpHeight = maxJumpHeight;
+	}
+}
+
 SpriteFace* Player::CreateSpriteFace() {
 
 	SpriteFace* face = new SpriteFace("Player Face");
@@ -137,6 +194,13 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 
 			}
 			break;
+		case jump:
+			if(jumpIsOn != set) {
+
+				jumpIsOn = set;
+				changed = true;
+			}
+			break;
 		case fire:
 			if(fireIsOn != set) {
 
@@ -149,7 +213,7 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 
 	if(changed) {
 
-		if(upIsOn && grounded) {
+		if(jumpIsOn && grounded) {
 
 			ySpeed = -yMaxSpeed;
 			sfxJump->Play(3);

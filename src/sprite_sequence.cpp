@@ -49,3 +49,7 @@ void SpriteSequence::IncrementSequence() {
 	}
 }
 
+void SpriteSequence::SetRenderingMode(const RenderingMode renderingMode) {
+
+	this->renderingMode = renderingMode;
+}

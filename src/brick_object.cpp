@@ -56,10 +56,12 @@ void BrickObject::Render() {
 
 void BrickObject::HandleLogic() {
 
+	this->GameObject::HandleLogic();
 }
 
-void BrickObject::OnCollision() {
+void BrickObject::OnCollision(GameObject& other) {
 
+	this->GameObject::OnCollision(other);
 }
 
 bool BrickObject::Merge(GameObject* other) {

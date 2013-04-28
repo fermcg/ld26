@@ -27,7 +27,8 @@ GAMEOBJ=game_system.o game_loop.o game_object.o screen.o sprite.o \
 		projectile.o sprite_sequence.o sprite_face.o sound_effect.o \
 		sound_effects_map.o stage.o stage_map.o brick_object.o \
 		empty_block.o door_object.o teal_brick.o teal_cracked_brick.o \
-		lethal_block.o lethal_empty_block.o spike_block.o
+		lethal_block.o lethal_empty_block.o spike_block.o power_up.o \
+		number_power.o energy_bar.o
 
 # texture_map.o
 # LudumDare

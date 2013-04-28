@@ -20,6 +20,7 @@ Stage::Stage(const char* stageId, const int xPos, const int yPos, const int xSiz
 	playerStartX = 0;
 	playerStartY = 0;
 	background = NULL;
+	hideEnergyBar = false;
 }
 Stage::~Stage() {
 
@@ -40,6 +41,11 @@ void Stage::SetBackground(const char* spriteId) throw() {
 	background = Singleton::spriteMap->Get(spriteId);
 }
 
+void Stage::SetHideEnergyBar(const bool hideEnergyBar) {
+
+	this->hideEnergyBar = hideEnergyBar;
+}
+
 void Stage::SetPlayerStartPosition(const int x, const int y) {
 
 	playerStartX = (xPos + x) * BrickObject::Width;
@@ -58,6 +64,11 @@ void Stage::Render() {
 
 		//background->RenderCopy(&rect, 0);
 		background->RenderCopy();
+	}
+
+	if(!hideEnergyBar) {
+
+		Singleton::energyBar->Render();
 	}
 
 	this->AllObjects::Render();

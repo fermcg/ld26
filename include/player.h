@@ -3,6 +3,8 @@
 #include "accelerable_object.h"
 #include "sound_effect.h"
 
+class NumberPower;
+
 class Player : public AccelerableObject {
 	public:
 		enum Command {
@@ -11,6 +13,7 @@ class Player : public AccelerableObject {
 			right,
 			up,
 			down,
+			jump,
 			fire
 		};
 
@@ -25,15 +28,21 @@ class Player : public AccelerableObject {
 		void Init() throw();
 		void Terminate();
 
-		void OnCollision();
+		void OnCollision(GameObject& other);
 
 		void HandleLogic();
+
+		void GetNumberPower(NumberPower& other);
 
 		friend class PlayerShot;
 	protected:
 		SpriteFace* CreateSpriteFace();
 
 	private:
+		void IncreasePower(const int power);
+		void IncreaseDistance(const int distance);
+		void IncreaseJump(const int jumpHeight);
+
 		double bAcceleration;
 
 		bool fireIsOn;
@@ -41,6 +50,7 @@ class Player : public AccelerableObject {
 		bool rightIsOn;
 		bool upIsOn;
 		bool downIsOn;
+		bool jumpIsOn;
 
 		bool walking;
 
@@ -50,4 +60,13 @@ class Player : public AccelerableObject {
 		SoundEffect* sfxStrongLaser;
 		SoundEffect* sfxJump;
 		SoundEffect* sfxDeath;
+		SoundEffect* sfxPowerup;
+
+		int power;
+		int distance;
+		int jumpHeight;
+
+		int maxPower;
+		int maxDistance;
+		int maxJumpHeight;
 };

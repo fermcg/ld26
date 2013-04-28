@@ -21,6 +21,7 @@ void SoundEffectsMap::Init() {
 	LoadSound("STRONGLASER", "StrongLaser.wav");
 	LoadSound("PLAYER+JUMP", "Jump.wav");
 	LoadSound("PLAYER+DEATH", "Death.wav");
+	LoadSound("POWERUP", "GrabItem.wav");
 }
 
 void SoundEffectsMap::Terminate() {

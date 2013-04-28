@@ -20,7 +20,7 @@ class GameObject : public BaseSystem {
 
 		virtual void Render();
 		virtual void HandleLogic();
-		virtual void OnCollision();
+		virtual void OnCollision(GameObject& other);
 
 		void HoldMeBack(AccelerableObject& other);
 		bool AmIGrounded(const AccelerableObject& other);

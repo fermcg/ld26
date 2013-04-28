@@ -15,8 +15,8 @@ class BrickObject : public GameObject {
 		virtual void Terminate();
 
 		virtual void Render();
-		void HandleLogic();
-		void OnCollision();
+		virtual void HandleLogic();
+		virtual void OnCollision(GameObject& object);
 
 		bool Merge(GameObject* other);
 		bool Merge(BrickObject* other);
