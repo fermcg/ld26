@@ -26,8 +26,8 @@ void Screen::Init() throw() {
 	Singleton::config->Read(windowSection, "width", width, 640);
 	Singleton::config->Read(windowSection, "height", height, 480);
 
-//	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
-	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN;
+	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+//	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN;
 
 	window = SDL_CreateWindow(gameTitle, SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED, width, height, flags);

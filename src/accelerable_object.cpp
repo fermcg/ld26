@@ -21,12 +21,17 @@ AccelerableObject::AccelerableObject(const char* name, const char* objectId) : G
 	xAcceleration = 0.0;
 	yAcceleration = 0.0;
 
+	gAcceleration = 0.0;
+
 	neverLeaveScreen = false;
 
 	minX = 0.0;
 	minY = 0.0;
 	maxX = 0.0;
 	maxY = 0.0;
+
+	grounded = true;
+	gravity = true;
 }
 
 AccelerableObject::~AccelerableObject() {
@@ -34,6 +39,11 @@ AccelerableObject::~AccelerableObject() {
 }
 
 void AccelerableObject::HandleLogic() {
+
+	if(gravity && !grounded) {
+
+		yAcceleration = gAcceleration;
+	}
 
 	if(xAcceleration > 0.0) {
 
@@ -131,6 +141,9 @@ void AccelerableObject::HandleLogic() {
 
 	Singleton::gameLoop->currentStage->HoldMeBack(*this);
 
+	grounded = Singleton::gameLoop->currentStage->AmIGrounded(*this);
+
+	cout << "grounded = " << grounded << "   \r";
 	x = newX;
 	y = newY;
 		

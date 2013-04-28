@@ -25,6 +25,7 @@ class AllObjects : public BaseSystem {
 
 		virtual GameObject* CreateObject(const string& objectClass);
 		void HoldMeBack(AccelerableObject& other);
+		bool AmIGrounded(const AccelerableObject& other);
 
 		friend class GameObject;
 

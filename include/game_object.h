@@ -23,6 +23,7 @@ class GameObject : public BaseSystem {
 		virtual void OnCollision();
 
 		void HoldMeBack(AccelerableObject& other);
+		bool AmIGrounded(const AccelerableObject& other);
 		bool CheckCollision(const GameObject& other);
 		void TakeThisHit(const int damage);
 

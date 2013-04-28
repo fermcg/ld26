@@ -307,6 +307,7 @@ void StageMap::LoadStage() {
 	int postMergeCount = preMergeCount;
 	// try to merge blocks on x axis.
 
+#ifdef MERGE
 	for(j = 0; j < stage->ySize; j++) {
 
 		int last_merge = -1;
@@ -370,6 +371,7 @@ void StageMap::LoadStage() {
 	}
 
 	cout << "Merge result: [" << preMergeCount << "] > [" << postMergeCount << "]" << endl;
+#endif //MERGE
 
 	for(j = 0; j < stage->ySize; j++) {
 

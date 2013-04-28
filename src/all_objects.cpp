@@ -98,6 +98,21 @@ void AllObjects::HoldMeBack(AccelerableObject& other) {
 	}
 }
 
+bool AllObjects::AmIGrounded(const AccelerableObject& other) {
+
+	AllObjects::ObjectMap::iterator it;
+
+	for(it = objectMap.begin(); it != objectMap.end(); it++) {
+
+		if(it->second->AmIGrounded(other)) {
+			
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool AllObjects::LoopCheckForCollision(GameObject& gameObject) {
 	AllObjects::ObjectMap::iterator it;
 	bool result = false;

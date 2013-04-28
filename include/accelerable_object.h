@@ -28,6 +28,7 @@ class AccelerableObject : public GameObject {
 
 		double xAcceleration;
 		double yAcceleration;
+		double gAcceleration;
 
 		double minX;
 		double maxX;
@@ -36,6 +37,9 @@ class AccelerableObject : public GameObject {
 
 		double newX;
 		double newY;
+
+		bool grounded;
+		bool gravity;
 
 	private:
 		bool neverLeaveScreen;

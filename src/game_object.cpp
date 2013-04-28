@@ -144,47 +144,56 @@ void GameObject::HoldMeBack(AccelerableObject& other) {
 	   
 		if(thisX0 < otherXf) {
 
-			other.newX--;
-		//	other.newX += (double)thisX0 - otherXf;
-		//	other.xSpeed = 0.0;
-		//	other.xAcceleration = 0.0;
-			zeroX = true;
+		//	other.newX--;
+			double d = (double)(thisX0 - otherXf);
+			if(d > -4.0) {
+
+				other.newX += d;
+				zeroX = true;
+			}
 		}
 	} else if(other.xSpeed < 0.0) {
 
 		if(thisXf > otherX0) {
 
-			other.newX++;
-		//	other.newX += (double)thisXf - otherX0;
-		//	other.xSpeed = 0.0;
-		//	other.xAcceleration = 0.0;
-			zeroX = true;
+		//	other.newX++;
+			double d = (double)(thisXf - otherX0);
+			if(d < 4.0) {
+
+				other.newX += d;
+				zeroX = true;
+			}
 		}
 	}
 	if(other.ySpeed > 0.0) {
 
 		if(thisY0 < otherYf) {
 
-			other.newY--;
-		//	other.newY += (double)thisY0 - otherYf;
-		//	other.ySpeed = 0.0;
-		//	other.yAcceleration = 0.0;
-			zeroY = true;
+		//	other.newY--;
+			double d = (double)(thisY0 - otherYf);
+			if(d > -4.0) {
+
+				other.newY += d;
+				zeroY = true;
+			}
 		}
 	} else if(other.ySpeed < 0.0) {
 		
 		if(thisYf > otherY0) {
 
-			other.newY++;
-		//	other.newY += (double)thisYf - otherY0;
-		//	other.ySpeed = 0.0;
-		//	other.yAcceleration = 0.0;
-			zeroY = true;
+		//	other.newY++;
+			double d = (double)(thisYf - otherY0);
+			if(d < 4.0) {
+
+				other.newY += d;
+				zeroY = true;
+			}
 		}
 	}
 
-	HoldMeBack(other);
-	if(zeroX) {
+	//HoldMeBack(other);
+
+	if(zeroX && !zeroY) {
 	
 		other.xSpeed = 0.0;
 		other.xAcceleration = 0.0;
@@ -198,6 +207,26 @@ void GameObject::HoldMeBack(AccelerableObject& other) {
 	
 }
 
+bool GameObject::AmIGrounded(const AccelerableObject& other) {
+
+	if(!solid) {
+
+		return false;
+	}
+
+	Sint16 thisX0, thisY0, thisXf, thisYf;
+	Sint16 otherX0, otherY0, otherXf, otherYf;
+
+	this->GetCollisionBox(thisX0, thisY0, thisXf, thisYf);
+	other.GetCollisionBox(otherX0, otherY0, otherXf, otherYf);
+
+	if(thisY0 == otherYf && thisX0 <= otherXf && thisXf >= otherX0) {
+
+		return true;
+	}
+
+	return false;
+}
 bool GameObject::CheckCollision(const GameObject& other) {
 
 	Sint16 thisX0, thisY0, thisXf, thisYf;

@@ -2,6 +2,10 @@
 
 SpikeBlock::SpikeBlock() : LethalBlock("SpikeBlock", "SpikeBlock") {
 
+	boundingBox.x = 1;
+	boundingBox.y = 2;
+	boundingBox.w = 6;
+	boundingBox.h = 6;
 }
 
 SpikeBlock::~SpikeBlock() {
