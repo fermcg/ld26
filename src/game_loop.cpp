@@ -151,7 +151,7 @@ void GameLoop::HandleLogic() {
 
 	Singleton::player->HandleLogic();
 	currentStage->HandleLogic();
-//	Singleton::allFriends->HandleLogic();
+	Singleton::allFriends->HandleLogic();
 //	Singleton::allEnemies->HandleLogic();
 	return;
 }
@@ -162,10 +162,10 @@ void GameLoop::Render() {
 	SDL_RenderClear(Singleton::screen->renderer);
 
 //	Singleton::allEnemies->Render();
-//	Singleton::allFriends->Render();
 	//	Singleton::player->PrintStates();
 
 	currentStage->Render();
+	Singleton::allFriends->Render();
 	Singleton::player->Render();
 
 	SDL_RenderPresent(Singleton::screen->renderer);

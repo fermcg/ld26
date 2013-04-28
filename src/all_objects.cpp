@@ -11,6 +11,7 @@
 #include "lethal_empty_block.h"
 #include "spike_block.h"
 #include "number_power.h"
+#include "accelerable_object.h"
 
 using namespace std;
 
@@ -90,6 +91,10 @@ void AllObjects::Render() {
 
 void AllObjects::HoldMeBack(AccelerableObject& other) {
 
+	if(other.isProjectile) {
+
+		return;
+	}
 	AllObjects::ObjectMap::iterator it;
 
 	for(it = objectMap.begin(); it != objectMap.end(); it++) {

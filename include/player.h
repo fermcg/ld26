@@ -39,9 +39,13 @@ class Player : public AccelerableObject {
 		SpriteFace* CreateSpriteFace();
 
 	private:
-		void IncreasePower(const int power);
+		void IncreaseHealth(const int energy);
 		void IncreaseDistance(const int distance);
-		void IncreaseJump(const int jumpHeight);
+		void IncreaseJump(const int doubleJumps);
+
+
+		void ActionJump();
+		void ActionShot();
 
 		double bAcceleration;
 
@@ -62,11 +66,10 @@ class Player : public AccelerableObject {
 		SoundEffect* sfxDeath;
 		SoundEffect* sfxPowerup;
 
-		int power;
 		int distance;
-		int jumpHeight;
+		int doubleJumps;
 
-		int maxPower;
+		int maxEnergy;
 		int maxDistance;
-		int maxJumpHeight;
+		int maxDoubleJumps;
 };

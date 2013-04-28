@@ -16,7 +16,7 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	xMinSpeed = 0.0;
 	xMaxSpeed = 0.5;
 	yMinSpeed = 0.0;
-	yMaxSpeed = 0.5;
+	yMaxSpeed = 1.0;
 
 	xBreaking = 0.002;
 	yBreaking = 0.002;
@@ -36,20 +36,20 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	boundingBox.w = 4;
 	boundingBox.h = 12;
 
-	energy = 2000;
 	damage = 2000;
 
 	sfxStep = NULL;
 	sfxStrongLaser = NULL;
 	walking = false;
 
-	power = 0;
+	energy = EnergyBar::MaxEnergy;
 	distance = 0;
-	jumpHeight = 0;
+	doubleJumps = 0;
 
-	maxPower = 0;
-	maxDistance = 0;
-	maxJumpHeight = 0;
+	maxEnergy = EnergyBar::MaxEnergy;
+	maxDistance = 10;
+	maxDoubleJumps = 10;
+
 }
 
 Player::~Player() {
@@ -105,7 +105,7 @@ void Player::GetNumberPower(NumberPower& other) {
 	switch(other.color) {
 
 		case NumberPower::red:
-			IncreasePower(other.number);
+			IncreaseHealth(other.number);
 			break;
 		case NumberPower::green:
 			IncreaseDistance(other.number);
@@ -117,12 +117,12 @@ void Player::GetNumberPower(NumberPower& other) {
 	sfxPowerup->Play(4);
 }
 
-void Player::IncreasePower(const int power) {
+void Player::IncreaseHealth(const int energy) {
 
-	this->power += power;
-	if(this->power > maxPower) {
+	this->energy += energy;
+	if(this->energy > maxEnergy) {
 
-		this->power = maxPower;
+		this->energy = maxEnergy;
 	}
 }
 
@@ -135,13 +135,15 @@ void Player::IncreaseDistance(const int distance) {
 	}
 }
 
-void Player::IncreaseJump(const int jumpHeight) {
+void Player::IncreaseJump(const int doubleJumps) {
 
-	this->jumpHeight += jumpHeight;
-	if(this->jumpHeight > maxJumpHeight) {
+	this->doubleJumps += doubleJumps;
+	if(this->doubleJumps >= maxDoubleJumps) {
 
-		this->jumpHeight = maxJumpHeight;
+		this->doubleJumps = maxDoubleJumps - 1;
 	}
+
+	cout << "Jump = " << this->doubleJumps << endl;
 }
 
 SpriteFace* Player::CreateSpriteFace() {
@@ -213,10 +215,9 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 
 	if(changed) {
 
-		if(jumpIsOn && grounded) {
+		if(jumpIsOn) {
 
-			ySpeed = -yMaxSpeed;
-			sfxJump->Play(3);
+			ActionJump();
 		}
 		if(accelerationChanged) {
 
@@ -228,7 +229,8 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 			fireChanged = false;
 
 			if(!fireIsOn) {
-				sfxStrongLaser->Play(2);			
+
+				ActionShot();
 				/*	PlayerShot *shot = new PlayerShot(*this);
 					shot->Init();
 					Singleton::allFriends->RegisterObject(shot);*/
@@ -236,6 +238,49 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 		}
 	}
 
+}
+
+void Player::ActionJump() {
+
+	if(!grounded && doubleJumps <= 0) {
+
+		return;
+	}
+
+	ySpeed = -yMaxSpeed;
+	sfxJump->Play(3);
+
+	if(!grounded && doubleJumps > 1) {
+
+		doubleJumps--;
+	}
+}
+
+void Player::ActionShot() {
+
+	sfxStrongLaser->Play(2);
+
+	Projectile::Direction nextShotDirection;
+	if(upIsOn && !downIsOn) {
+
+		nextShotDirection = Projectile::up;
+	} else if(downIsOn && !upIsOn && !grounded) {
+
+		nextShotDirection = Projectile::down;
+	} else if(xSpeed > 0.0) {
+
+		nextShotDirection = Projectile::right;
+	} else if(xSpeed < 0.0) {
+
+		nextShotDirection = Projectile::left;
+	} else {
+
+		nextShotDirection = Projectile::down;
+	}
+
+	PlayerShot* shot = new PlayerShot(*this, nextShotDirection);
+	shot->Init();
+	Singleton::allFriends->RegisterObject(shot);
 }
 
 void Player::PrintStates() {

@@ -35,6 +35,7 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 	lethal = false;
 
 	stage = NULL;
+	isProjectile = false;
 }
 GameObject::~GameObject() {
 

@@ -65,6 +65,12 @@ void SpriteFace::RegisterFace(const Facing facing, const char* spriteId) throw()
 void SpriteFace::ChangeFace(const Facing facing) {
 	if(facing != this->facing) {
 
+		MapOfFaces::iterator it;
+		it = faces.find(facing);
+		if(it == faces.end()) {
+
+			return;
+		}
 		this->facing = facing;
 		this->GetSequence()->ResetFrame();
 	}

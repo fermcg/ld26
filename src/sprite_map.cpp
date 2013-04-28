@@ -29,6 +29,7 @@ void SpriteMap::Init() {
 	LoadSprite("PLAYER+JUMP+RIGHT", spritesTexture, 72, 0, 8, 16, 1);
 	LoadSprite("PLAYER+JUMP+LEFT", spritesTexture, 80, 0, 8, 16, 1);
 	LoadSprite("PLAYER+JUMP+FRONT", spritesTexture, 88, 0, 8, 16, 1);
+	LoadSprite("PLAYER+SHOT", spritesTexture, 24, 16, 8, 8, 8);
 	// Scene
 	LoadSprite("BRICK+TEAL", spritesTexture, 0, 16, 8, 8, 2);
 	LoadSprite("CRACK+TEAL", spritesTexture, 0, 24, 8, 8, 2);
@@ -43,7 +44,6 @@ void SpriteMap::Init() {
 	LoadSprite("ENERGY+R", spritesTexture, 0, 56, 80, 4, 1);
 	LoadSprite("ENERGY+G", spritesTexture, 0, 60, 80, 4, 1);
 
-	//	LoadSprite("PLAYER+SHOT", spritesTexture, 0, 32, 32, 32, 4);
 	//	LoadSprite("ENEMY", spritesTexture, 0, 64, 32, 32, 4);
 	//	LoadSprite("ENEMY+SHOT", spritesTexture, 0, 96, 32, 32, 4);
 }

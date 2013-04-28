@@ -5,8 +5,11 @@
 
 class PlayerShot : public Projectile {
 	public:
-		PlayerShot(Player& father);
+		PlayerShot(Player& father, Projectile::Direction direction);
 		~PlayerShot();
 
 		void HandleLogic();
+		void OnCollision(GameObject& other);
+	protected:
+		SpriteFace* CreateSpriteFace();
 };

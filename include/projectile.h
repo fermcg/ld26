@@ -4,11 +4,20 @@
 
 class Projectile : public AccelerableObject {
 
-	public:	
+	public:
+
+		enum Direction {
+			up = 0,
+			down,
+			left,
+			right
+		};
 		Projectile(const char* name, const char* objectId);
 		~Projectile();
 
 		virtual void HandleLogic();
 
 	protected:
+
+		Direction direction;
 };
