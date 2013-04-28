@@ -46,7 +46,7 @@ void SpriteMap::Terminate() {
 
 }
 
-Sprite* SpriteMap::Get(const char* spriteId) {
+Sprite* SpriteMap::Get(const char* spriteId) throw() {
 	
 	SpriteMap::iterator it;
 	it = this->find(spriteId);

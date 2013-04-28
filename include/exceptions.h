@@ -20,6 +20,7 @@ namespace Exception {
 		sprite_not_found = 8,
 		face_not_found = 9,
 		sound_not_found = 10,
+		stage_not_found = 11,
 		bad_render = 20,
 		bad_audio_play = 30,
 		overflow = 96,
@@ -118,6 +119,12 @@ namespace Exception {
 	public:
 		SoundNotFound() : Base(sound_not_found, "Sound Not Found") {};
 		SoundNotFound(const char* soundId) : Base(sound_not_found, "Sound Not Found", soundId) {};
+	};
+		
+	class StageNotFound : public Base {
+	public:
+		StageNotFound() : Base(stage_not_found, "Stage Not Found") {};
+		StageNotFound(const char* stageId) : Base(stage_not_found, "Stage Not Found", stageId) {};
 	};
 		
 	class ObjectNotFound : public Base {

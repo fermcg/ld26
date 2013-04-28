@@ -4,6 +4,9 @@
 #include "macros.h"
 #include "exceptions.h"
 
+#include "empty_block.h"
+#include "door_object.h"
+
 using namespace std;
 
 AllObjects::AllObjects() : BaseSystem("AllObjects") {
@@ -114,3 +117,39 @@ bool AllObjects::UnregisterObject(unsigned long gameObjectId) {
 	
 	return true;
 }
+
+GameObject* AllObjects::CreateObject(const string& objectClass) {
+
+	if(objectClass == "EMPTY") {
+
+		return new EmptyBlock();
+	} else if(objectClass.substr(0, 5) == "DOOR>") {
+
+		return new DoorObject(objectClass.substr(5).c_str());
+	} /*
+	} else if(objectClass == "BRICK+TEAL") {
+
+		return new TealBrick();
+	} else if(objectClass == "CRACK+TEAL") {
+
+		return new TealCrackedBrick();
+	} else if(objectClass == "DEATH") {
+
+		return new EmptyLethalBlock();
+	} else if(objectClass == "SPIKES") {
+
+		return new SpikesBlock;
+	} else if(objectClass.substr(0, 9) == "B.NUMBER>") {
+
+		return new NumberPower(NumberPower::blue, objectClass.substr(9));
+	} else if(objectClass.substr(0, 9) == "R.NUMBER>") {
+
+		return new NumberPower(NumberPower::red, objectClass.substr(9));
+	} else if(objectClass.substr(0, 9) == "G.NUMBER>") {
+
+		return new NumberPower(NumberPower::green, objectClass.substr(9));
+	}*/
+
+	return NULL;
+}
+

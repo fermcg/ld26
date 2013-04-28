@@ -17,7 +17,7 @@ public:
 	void Init();
 	void Terminate();
 	
-	Sprite* Get(const char* spriteId);
+	Sprite* Get(const char* spriteId) throw();
 private:
 	void LoadSprite(const char* spriteId, const Texture* texture,
 	 				const Sint16 x, const Sint16 y,

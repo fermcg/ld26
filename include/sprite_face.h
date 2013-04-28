@@ -16,7 +16,9 @@ public:
 		right,
 		jumping_front,
 		jumping_left,
-		jumping_right
+		jumping_right,
+		opened,
+		closed
 	};
 	SpriteFace(const char* objectId);
 	~SpriteFace();

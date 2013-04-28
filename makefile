@@ -25,7 +25,8 @@ GAMEOBJ=game_system.o game_loop.o game_object.o screen.o sprite.o \
 		sprite_map.o player.o texture.o texture_map.o all_objects.o \
 		aux_functions.o accelerable_object.o enemy.o player_shot.o \
 		projectile.o sprite_sequence.o sprite_face.o sound_effect.o \
-		sound_effects_map.o
+		sound_effects_map.o stage.o stage_map.o brick_object.o \
+		empty_block.o door_object.o
 
 # texture_map.o
 # LudumDare

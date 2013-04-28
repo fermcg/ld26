@@ -18,6 +18,7 @@ TextureMap::~TextureMap() {
 void TextureMap::Init() {
 
 	this->LoadFile("SPRITES", "ld26.png");
+	this->LoadFile("MENU", "menu.png");
 	this->BaseSystem::Init();
 }
 

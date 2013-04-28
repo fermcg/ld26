@@ -10,7 +10,7 @@ using namespace std;
 class AllObjects : public BaseSystem {
 public:
 	AllObjects();
-	~AllObjects();
+	virtual ~AllObjects();
 
 	void Init();
 	void Terminate();
@@ -18,9 +18,12 @@ public:
 	void RegisterObject(GameObject* gameObject);
 	
 	void HandleLogic();
-	void Render();
+	virtual void Render();
 
 	bool LoopCheckForCollision(GameObject& gameObject);
+
+	static GameObject* CreateObject(const string& objectClass);
+
 	friend class GameObject;
 	
 protected:

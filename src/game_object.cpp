@@ -135,6 +135,11 @@ void GameObject::TakeThisHit(const int damage) {
 	}
 }
 
+bool GameObject::Merge(GameObject* other) {
+
+	return false; // Not implemented by default.
+}
+
 void GameObject::GetCollisionBox(Sint16& x0, Sint16& y0, Sint16& xf, Sint16& yf) const {
 	
 	x0 = (Sint16)x + boundingBox.x;

@@ -39,6 +39,7 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	damage = 2000;
 	
 	sfxStep = NULL;
+	sfxStrongLaser = NULL;
 	walking = false;
 }
 
@@ -51,6 +52,7 @@ void Player::Init() throw() {
 	this->AccelerableObject::Init();
 	
 	sfxStep = Singleton::soundEffectsMap->Get("PLAYER+STEP");
+	sfxStrongLaser = Singleton::soundEffectsMap->Get("STRONGLASER");
 	
 	SetNeverLeaveScreen(true);
 	x = minX + (maxX - minX) / 2.0;
@@ -158,10 +160,13 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 		}
 		if(fireChanged) {
 			fireChanged = false;
-			
+
+			if(!fireIsOn) {
+				sfxStrongLaser->Play(2);			
 		/*	PlayerShot *shot = new PlayerShot(*this);
 			shot->Init();
 			Singleton::allFriends->RegisterObject(shot);*/
+			}
 		}
 	}
 	

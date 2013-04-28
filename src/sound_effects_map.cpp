@@ -18,6 +18,7 @@ void SoundEffectsMap::Init() {
 	this->BaseSystem::Init();
 
 	LoadSound("PLAYER+STEP", "Step.wav");
+	LoadSound("STRONGLASER", "StrongLaser.wav");
 }
 
 void SoundEffectsMap::Terminate() {

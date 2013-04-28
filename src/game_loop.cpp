@@ -68,43 +68,18 @@ void GameLoop::HandleEvents() {
 		case SDL_WINDOWEVENT:
 			switch(event.window.event) {
 			case SDL_WINDOWEVENT_SHOWN:
-				//cout << "SDL_WINDOWEVENT_SHOWN";
-				break;
 			case SDL_WINDOWEVENT_HIDDEN:
-				//cout << "SDL_WINDOWEVENT_HIDDEN";
-				break;
 			case SDL_WINDOWEVENT_EXPOSED:
-				//cout << "SDL_WINDOWEVENT_EXPOSED";
-				break;
 			case SDL_WINDOWEVENT_MOVED:
-				//cout << "SDL_WINDOWEVENT_MOVED";
-				break;
 			case SDL_WINDOWEVENT_RESIZED:
-				//cout << "SDL_WINDOWEVENT_RESIZED";
-				break;
 			case SDL_WINDOWEVENT_SIZE_CHANGED:
-				//cout << "SDL_WINDOWEVENT_SIZE_CHANGED";
-				break;
 			case SDL_WINDOWEVENT_MINIMIZED:
-				//cout << "SDL_WINDOWEVENT_MINIMIZED";
-				break;
 			case SDL_WINDOWEVENT_MAXIMIZED:
-				//cout << "SDL_WINDOWEVENT_MAXIMIZED";
-				break;
 			case SDL_WINDOWEVENT_RESTORED:
-				//cout << "SDL_WINDOWEVENT_RESTORED";
-				break;
 			case SDL_WINDOWEVENT_ENTER:
-				//cout << "SDL_WINDOWEVENT_ENTER";
-				break;
 			case SDL_WINDOWEVENT_LEAVE:
-				//cout << "SDL_WINDOWEVENT_LEAVE";
-				break;
 			case SDL_WINDOWEVENT_FOCUS_GAINED:
-				//cout << "SDL_WINDOWEVENT_FOCUS_GAINED";
-				break;
 			case SDL_WINDOWEVENT_FOCUS_LOST:
-				//cout << "SDL_WINDOWEVENT_FOCUS_LOST";
 				break;
 			case SDL_WINDOWEVENT_CLOSE:
 				cout << "SDL_WINDOWEVENT_CLOSE" << endl;
@@ -118,11 +93,6 @@ void GameLoop::HandleEvents() {
 		// Keyboard
 		case SDL_KEYDOWN:
 		case SDL_KEYUP:
-//			if(event.type == SDL_KEYDOWN){
-//				cout << "down " << event.key.keysym.sym << endl;
-//			} else {
-//				cout << "up " << event.key.keysym.sym << endl;
-//			}
 			switch(event.key.keysym.sym) {
 			case SDLK_LEFT:
 				Singleton::player->CommandSetOrReset(Player::left, event.type == SDL_KEYDOWN);
@@ -150,11 +120,8 @@ void GameLoop::HandleEvents() {
 			break;
 		// Mouse
 		case SDL_MOUSEMOTION:
-			break;
 		case SDL_MOUSEBUTTONDOWN:
-			break;
 		case SDL_MOUSEBUTTONUP:
-			break;
 		case SDL_MOUSEWHEEL:
 			break;
 		// Touch

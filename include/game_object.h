@@ -16,12 +16,14 @@ public:
 	virtual void Init() throw();
 	virtual void Terminate();
 
-	void Render();
+	virtual void Render();
 	virtual void HandleLogic();
 	virtual void OnCollision();
 	
 	bool CheckCollision(const GameObject& other);
 	void TakeThisHit(const int damage);
+
+	virtual bool Merge(GameObject* other);
 
 	static const int BigDamage;	
 	friend class AllObjects;
@@ -43,6 +45,7 @@ protected:
 	bool enemy;
 	
 	bool dead;
+	bool unbreakable;
 private:
 	
 	void GetCollisionBox(Sint16& x0, Sint16& y0, Sint16& xf, Sint16& yf) const;
