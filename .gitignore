@@ -2,3 +2,4 @@
 /obj/*.o
 ld26
 test
+*.swp
