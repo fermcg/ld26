@@ -8,16 +8,17 @@ using namespace std;
 Player::Player() : AccelerableObject("Player", "Player") {
 
 	bAcceleration = 0.005;
+	gAcceleration = 0.005;
 
 	// Accelerable vars
 
 	xMinSpeed = 0.0;
 	xMaxSpeed = 0.5;
 	yMinSpeed = 0.0;
-	yMaxSpeed = 0.15;
+	yMaxSpeed = 0.5;
 
-	xBreaking = 0.0002;
-	yBreaking = 0.0002;
+	xBreaking = 0.002;
+	yBreaking = 0.002;
 
 	fireIsOn = false;
 	leftIsOn = false;
@@ -51,6 +52,8 @@ void Player::Init() throw() {
 
 	sfxStep = Singleton::soundEffectsMap->Get("PLAYER+STEP");
 	sfxStrongLaser = Singleton::soundEffectsMap->Get("STRONGLASER");
+	sfxJump = Singleton::soundEffectsMap->Get("PLAYER+JUMP");
+	sfxDeath = Singleton::soundEffectsMap->Get("PLAYER+DEATH");
 
 	SetNeverLeaveScreen(true);
 	x = minX + (maxX - minX) / 2.0;
@@ -74,11 +77,11 @@ void Player::OnCollision() {
 void Player::HandleLogic() {
 
 	this->AccelerableObject::HandleLogic();
-	if(xAcceleration != 0.0 && !walking) {
+	if(xAcceleration != 0.0 && !walking && grounded) {
 
 		walking = true;
 		sfxStep->Start(1);
-	} else if (xAcceleration == 0.0 && walking) {
+	} else if (xAcceleration == 0.0 && walking || walking && !grounded) {
 
 		walking = false;
 		sfxStep->Stop(1);
@@ -127,15 +130,11 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 
 				upIsOn = set;
 				changed = true;
-				accelerationChanged = true;
 			}
 			break;
 		case down:
 			if(downIsOn != set) {
 
-				downIsOn = set;
-				changed = true;
-				accelerationChanged = true;
 			}
 			break;
 		case fire:
@@ -150,6 +149,11 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 
 	if(changed) {
 
+		if(upIsOn && grounded) {
+
+			ySpeed = -yMaxSpeed;
+			sfxJump->Play(3);
+		}
 		if(accelerationChanged) {
 
 			xAcceleration = (leftIsOn ? -bAcceleration : 0.0) + (rightIsOn ? bAcceleration : 0.0);

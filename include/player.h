@@ -48,4 +48,6 @@ class Player : public AccelerableObject {
 		bool fireChanged;
 		SoundEffect* sfxStep;
 		SoundEffect* sfxStrongLaser;
+		SoundEffect* sfxJump;
+		SoundEffect* sfxDeath;
 };
