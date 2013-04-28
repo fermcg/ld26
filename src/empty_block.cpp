@@ -10,7 +10,7 @@ void EmptyBlock::Init() throw() {
 
 	w = BrickObject::Width;
 	h = BrickObject::Height;
-	
+
 	this->BaseSystem::Init();
 }
 

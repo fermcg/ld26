@@ -14,9 +14,9 @@ namespace Singleton {
 	bool broken = false;
 
 	void Init() throw() {
-		
+
 		if (initialized) {
-			
+
 			cerr << "Singleton::Init - called after initializing" << endl;
 			THROWLOCATIONINFO(Exception::ShouldNotBeReached, "Singleton");
 		}
@@ -31,9 +31,9 @@ namespace Singleton {
 		allEnemies = NULL;
 		player = NULL;
 		gameLoop = NULL;
-		
+
 		broken = true; // Until initializes everything - we will consider it broken.
-		
+
 		config = new Config("game.cfg");
 		gameSystem = new GameSystem();
 		screen = new Screen();
@@ -44,7 +44,7 @@ namespace Singleton {
 		allEnemies = new AllObjects();
 		player = new Player();
 		gameLoop = new GameLoop();
-		
+
 		config->Init();
 		gameSystem->Init();
 		screen->Init();
@@ -55,16 +55,16 @@ namespace Singleton {
 		allEnemies->Init();
 		player->Init();
 		gameLoop->Init();
-		
+
 		// allFriends->RegisterObject(player);
 		// Since player is handled by allFriends list, it doesn't need to be deleted.
-		
+
 		broken = false;
 		initialized = true;
 	}
-	
+
 	void Terminate() {
-		
+
 		gameLoop->Terminate();
 		player->Terminate();
 		allEnemies->Terminate();
@@ -75,7 +75,7 @@ namespace Singleton {
 		screen->Terminate();
 		gameSystem->Terminate();
 		config->Terminate();
-		
+
 		DELETENULL(gameLoop);
 		DELETENULL(player);
 		DELETENULL(allEnemies);
@@ -86,7 +86,7 @@ namespace Singleton {
 		DELETENULL(screen);
 		DELETENULL(gameSystem);
 		DELETENULL(config);
-		
+
 		initialized = false;
 		broken = false;		
 	}

@@ -8,29 +8,29 @@
 using namespace std;
 
 class AllObjects : public BaseSystem {
-public:
-	AllObjects();
-	virtual ~AllObjects();
+	public:
+		AllObjects();
+		virtual ~AllObjects();
 
-	void Init();
-	void Terminate();
-	
-	void RegisterObject(GameObject* gameObject);
-	
-	void HandleLogic();
-	virtual void Render();
+		void Init();
+		void Terminate();
 
-	bool LoopCheckForCollision(GameObject& gameObject);
+		void RegisterObject(GameObject* gameObject);
 
-	static GameObject* CreateObject(const string& objectClass);
+		void HandleLogic();
+		virtual void Render();
 
-	friend class GameObject;
-	
-protected:
-	bool UnregisterObject(unsigned long gameObjectId);
-	
-private:
-	typedef map< unsigned long, GameObject* > ObjectMap;
-	ObjectMap objectMap;
-	unsigned long currentId;
+		bool LoopCheckForCollision(GameObject& gameObject);
+
+		static GameObject* CreateObject(const string& objectClass);
+
+		friend class GameObject;
+
+	protected:
+		bool UnregisterObject(unsigned long gameObjectId);
+
+	private:
+		typedef map< unsigned long, GameObject* > ObjectMap;
+		ObjectMap objectMap;
+		unsigned long currentId;
 };

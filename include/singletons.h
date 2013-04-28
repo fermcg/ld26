@@ -19,7 +19,7 @@
 namespace Singleton {
 	void Init() throw();
 	void Terminate();
-	
+
 	SINGLETON Config* config;
 	SINGLETON GameSystem* gameSystem;
 	SINGLETON Screen* screen;
@@ -30,6 +30,6 @@ namespace Singleton {
 	SINGLETON AllObjects* allEnemies;
 	SINGLETON Player* player;
 	SINGLETON GameLoop* gameLoop;
-	
+
 	extern bool broken;
 }

@@ -15,7 +15,7 @@ Stage::~Stage() {
 }
 
 void Stage::Init() throw() {
-	
+
 	this->AllObjects::Init();
 }
 

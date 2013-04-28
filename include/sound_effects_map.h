@@ -9,14 +9,14 @@
 using namespace std;
 
 class SoundEffectsMap : public BaseSystem, map< string, SoundEffect* > {
-public:
-	SoundEffectsMap();
-	~SoundEffectsMap();
+	public:
+		SoundEffectsMap();
+		~SoundEffectsMap();
 
-	void Init();
-	void Terminate();
-	
-	SoundEffect* Get(const char* soundId);
-private:
-	void LoadSound(const char* soundId, const char* fileName);
+		void Init();
+		void Terminate();
+
+		SoundEffect* Get(const char* soundId);
+	private:
+		void LoadSound(const char* soundId, const char* fileName);
 };

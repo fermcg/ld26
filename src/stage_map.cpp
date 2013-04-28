@@ -86,7 +86,7 @@ void StageMap::ReadStageLine(const string& line) {
 	//MENU:10,10-10x10
 	size_t posBegin;
 	size_t posToken;
-   
+
 	// MENU:10,10-10x10
 	//[     ]
 	posToken = line.find(':');
@@ -196,7 +196,7 @@ void StageMap::ReadDictionaryWord(const string& line) {
 }
 
 void StageMap::LoadStage() {
-	
+
 	vector<string> strMap;
 
 	while(ifs.good()) {
@@ -265,7 +265,7 @@ void StageMap::LoadStage() {
 				objectClass.push_back(c);
 				nextColor = "";
 			} else {
-				
+
 				Stage::Dictionary::iterator it = stage->dictionary.find(c);
 				if(it == stage->dictionary.end()) {
 
@@ -276,7 +276,7 @@ void StageMap::LoadStage() {
 			}
 
 			GameObject *gameObject = AllObjects::CreateObject(objectClass);
-			
+
 			objectMatrix[j][i] = gameObject;
 
 			if(gameObject != NULL) {
@@ -296,7 +296,7 @@ void StageMap::LoadStage() {
 
 			GameObject* gameObject = objectMatrix[j][i];
 			if(gameObject == NULL) {
-				
+
 				continue;
 			}
 
@@ -317,7 +317,7 @@ void StageMap::LoadStage() {
 			last_merge = i;
 		}
 	}
-			
+
 	// try to merge blocks on y axis.
 
 	for(i = 0; i < stage->rect.w; i++) {
@@ -327,7 +327,7 @@ void StageMap::LoadStage() {
 
 			GameObject* gameObject = objectMatrix[j][i];
 			if(gameObject == NULL) {
-				
+
 				continue;
 			}
 

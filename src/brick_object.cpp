@@ -11,7 +11,7 @@ BrickObject::BrickObject(const char* name, const char* objectId) : GameObject(na
 
 BrickObject::~BrickObject() {
 }
-	
+
 void BrickObject::Init() throw() {
 
 	this->GameObject::Init();

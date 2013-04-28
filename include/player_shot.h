@@ -4,9 +4,9 @@
 #include "player.h"
 
 class PlayerShot : public Projectile {
-public:
-	PlayerShot(Player& father);
-	~PlayerShot();
-	
-	void HandleLogic();
+	public:
+		PlayerShot(Player& father);
+		~PlayerShot();
+
+		void HandleLogic();
 };
