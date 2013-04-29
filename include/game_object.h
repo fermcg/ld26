@@ -38,6 +38,8 @@ class GameObject : public BaseSystem {
 		bool lethal;
 		bool solid;
 		bool isProjectile;
+		bool isDoor;
+		bool isPlayer;
 	protected:
 
 		virtual SpriteFace* CreateSpriteFace() = 0;

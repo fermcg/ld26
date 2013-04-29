@@ -3,6 +3,7 @@
 #include "player_shot.h"
 #include "singletons.h"
 #include "number_power.h"
+#include "door_object.h"
 
 using namespace std;
 
@@ -40,7 +41,13 @@ Player::Player() : AccelerableObject("Player", "Player") {
 
 	sfxStep = NULL;
 	sfxStrongLaser = NULL;
+	sfxJump = NULL;
+	sfxDeath = NULL;
+	sfxPowerup = NULL;
+	sfxPortal = NULL;
+	door = NULL;
 	walking = false;
+	isPlayer = true;
 
 	energy = EnergyBar::MaxEnergy;
 	distance = 0;
@@ -56,6 +63,12 @@ Player::~Player() {
 
 }
 
+void Player::Ressurrect() {
+
+	energy = EnergyBar::MaxEnergy;
+	dead = false;
+}
+
 void Player::Init() throw() {
 
 	this->AccelerableObject::Init();
@@ -65,6 +78,7 @@ void Player::Init() throw() {
 	sfxJump = Singleton::soundEffectsMap->Get("PLAYER+JUMP");
 	sfxDeath = Singleton::soundEffectsMap->Get("PLAYER+DEATH");
 	sfxPowerup = Singleton::soundEffectsMap->Get("POWERUP");
+	sfxPortal = Singleton::soundEffectsMap->Get("PORTAL");
 
 	SetNeverLeaveScreen(true);
 	x = minX + (maxX - minX) / 2.0;
@@ -82,12 +96,29 @@ void Player::OnCollision(GameObject& other) {
 	if(energy < 0) {
 
 		dead = true;
+		sfxDeath->Play(7);
 		cout << "Game Over" << endl;
+		Stage* nextStage = Singleton::stageMap->Get("MENU");
+		if(nextStage != NULL) {
+
+			Singleton::gameLoop->currentStage = nextStage;
+			nextStage->PositionPlayer();
+			Ressurrect();
+		} else {
+
+			cerr << "Error" << endl;
+		}
+		return;
+	}
+	if(other.isDoor) {
+
+		door = reinterpret_cast< DoorObject* >(&other);
 	}
 }
 
 void Player::HandleLogic() {
 
+	door = NULL;
 	this->AccelerableObject::HandleLogic();
 	if(xAcceleration != 0.0 && !walking && grounded) {
 
@@ -215,6 +246,10 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 
 	if(changed) {
 
+		if(upIsOn) {
+
+			ActionDoor();
+		}
 		if(jumpIsOn) {
 
 			ActionJump();
@@ -240,6 +275,19 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 
 }
 
+void Player::ActionDoor() {
+
+	if(door != NULL) {
+
+		if(door->Enter(this)) {
+		
+			sfxPortal->Play(6);	
+		}
+		return;
+	}
+
+}
+
 void Player::ActionJump() {
 
 	if(!grounded && doubleJumps <= 0) {
@@ -250,7 +298,7 @@ void Player::ActionJump() {
 	ySpeed = -yMaxSpeed;
 	sfxJump->Play(3);
 
-	if(!grounded && doubleJumps > 1) {
+	if(!grounded && doubleJumps >= 1) {
 
 		doubleJumps--;
 	}

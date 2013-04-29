@@ -122,6 +122,7 @@ bool AllObjects::LoopCheckForCollision(GameObject& gameObject) {
 	AllObjects::ObjectMap::iterator it;
 	bool result = false;
 
+	static bool only_one_time = true;
 	for(it = objectMap.begin(); it != objectMap.end(); it++) {
 
 		if(it->second->CheckCollision(gameObject)) {
@@ -132,8 +133,14 @@ bool AllObjects::LoopCheckForCollision(GameObject& gameObject) {
 			it->second->OnCollision(gameObject);
 			gameObject.OnCollision(*it->second);
 			result = true;
+
+		}
+		if(only_one_time) {
+
+			cout << "name: " << it->second->name << endl;
 		}
 	}
+	only_one_time = false;
 
 	return result;
 }

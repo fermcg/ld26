@@ -36,6 +36,8 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 
 	stage = NULL;
 	isProjectile = false;
+	isDoor = false;
+	isPlayer = false;
 }
 GameObject::~GameObject() {
 

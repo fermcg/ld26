@@ -2,6 +2,7 @@
 
 #include "game_object.h"
 
+class Player;
 class DoorObject : public GameObject {
 
 	public:
@@ -12,6 +13,9 @@ class DoorObject : public GameObject {
 		virtual void Init() throw();
 		virtual void Terminate();
 
+		virtual void OnCollision(GameObject& other);
+		virtual void HandleLogic();
+		virtual bool Enter(Player* player);
 		SpriteFace* CreateSpriteFace();
 
 	protected:

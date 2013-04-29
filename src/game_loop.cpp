@@ -17,8 +17,8 @@ GameLoop::~GameLoop() {
 
 void GameLoop::Init() throw() {
 
-//	currentStage = Singleton::stageMap->Get("MENU");
-	currentStage = Singleton::stageMap->Get("STAGE01");
+	currentStage = Singleton::stageMap->Get("MENU");
+//	currentStage = Singleton::stageMap->Get("STAGE01");
 
 }
 

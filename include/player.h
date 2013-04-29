@@ -1,9 +1,10 @@
 #pragma once
 
 #include "accelerable_object.h"
+#include "door_object.h"
+#include "number_power.h"
 #include "sound_effect.h"
 
-class NumberPower;
 
 class Player : public AccelerableObject {
 	public:
@@ -31,6 +32,7 @@ class Player : public AccelerableObject {
 		void OnCollision(GameObject& other);
 
 		void HandleLogic();
+		void Ressurrect();
 
 		void GetNumberPower(NumberPower& other);
 
@@ -44,6 +46,7 @@ class Player : public AccelerableObject {
 		void IncreaseJump(const int doubleJumps);
 
 
+		void ActionDoor();
 		void ActionJump();
 		void ActionShot();
 
@@ -65,6 +68,7 @@ class Player : public AccelerableObject {
 		SoundEffect* sfxJump;
 		SoundEffect* sfxDeath;
 		SoundEffect* sfxPowerup;
+		SoundEffect* sfxPortal;
 
 		int distance;
 		int doubleJumps;
@@ -72,4 +76,5 @@ class Player : public AccelerableObject {
 		int maxEnergy;
 		int maxDistance;
 		int maxDoubleJumps;
+		DoorObject* door;
 };

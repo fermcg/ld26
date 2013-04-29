@@ -22,6 +22,7 @@ void SoundEffectsMap::Init() {
 	LoadSound("PLAYER+JUMP", "Jump.wav");
 	LoadSound("PLAYER+DEATH", "Death.wav");
 	LoadSound("POWERUP", "GrabItem.wav");
+	LoadSound("PORTAL", "Portal.wav");
 }
 
 void SoundEffectsMap::Terminate() {
