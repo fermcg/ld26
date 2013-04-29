@@ -43,6 +43,7 @@ void Screen::Init() throw() {
 		cerr << "SDL_CreateRenderer error: " << SDL_GetError() << endl;
 		THROW(Exception::InitializationFailure);
 	}
+	SDL_ShowCursor(SDL_DISABLE);
 	this->BaseSystem::Init();	
 }
 void Screen::Terminate() {
