@@ -9,6 +9,7 @@ BrickObject::BrickObject(const char* name, const char* objectId) : GameObject(na
 	ySize = 1;
 	unbreakable = true;
 	solid = true;
+	damage = 0;
 
 	boundingBox.x = 0;
 	boundingBox.y = 0;

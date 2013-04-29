@@ -7,7 +7,7 @@ PlayerShot::PlayerShot(Player& father, Projectile::Direction direction) : Projec
 	yAcceleration = 0.0;
 	xAcceleration = 0.0;
 
-	double bAcceleration = 0.1;
+	double bAcceleration = 1.0;
 
 	switch(direction) {
 
@@ -28,12 +28,12 @@ PlayerShot::PlayerShot(Player& father, Projectile::Direction direction) : Projec
 	// Accelerable vars
 
 	xMinSpeed = 0.0;
-	xMaxSpeed = 2.0;
+	xMaxSpeed = 3.5;
 	yMinSpeed = 0.0;
-	yMaxSpeed = 2.0;
+	yMaxSpeed = 3.5;
 
-	xBreaking = 0.0002;
-	yBreaking = 0.0002;
+	xBreaking = 0.002;
+	yBreaking = 0.002;
 
 	boundingBox.x = 3;
 	boundingBox.y = 3;

@@ -3,6 +3,7 @@
 LethalBlock::LethalBlock(const char* name, const char* objectId) : BrickObject(name, objectId) {
 
 	lethal = true;
+	damage = 10000;
 }
 
 LethalBlock::~LethalBlock() {

@@ -9,18 +9,18 @@ using namespace std;
 
 Player::Player() : AccelerableObject("Player", "Player") {
 
-	bAcceleration = 0.005;
-	gAcceleration = 0.005;
+	bAcceleration = 0.02;
+	gAcceleration = 0.02;
 
 	// Accelerable vars
 
 	xMinSpeed = 0.0;
-	xMaxSpeed = 0.5;
+	xMaxSpeed = 1.5;
 	yMinSpeed = 0.0;
-	yMaxSpeed = 1.0;
+	yMaxSpeed = 1.8;
 
-	xBreaking = 0.002;
-	yBreaking = 0.002;
+	xBreaking = 0.05;
+	yBreaking = 0.05;
 
 	fireIsOn = false;
 	leftIsOn = false;

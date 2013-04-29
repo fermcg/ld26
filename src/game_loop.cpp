@@ -37,11 +37,17 @@ void GameLoop::Loop() throw() {
 	// Terminating
 	keepWalking = true;
 	currentStage->PositionPlayer();
+	int frameWait = 10;
+	int lastFrame = 0;
 
 	for(loopCount = 0; keepWalking; loopCount++) {
 		LoopStart();
 		HandleEvents();
 		HandleLogic();
+
+		while(SDL_GetTicks() - lastFrame < frameWait) {
+		}
+		lastFrame = SDL_GetTicks();
 		Render();
 		LoopEnd();
 	}
