@@ -71,4 +71,6 @@ bool DoorObject::Enter(Player* player) {
 
 		return true;
 	}
+
+	return false;
 }
