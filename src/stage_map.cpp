@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 
 #include "stage_map.h"
 #include "exceptions.h"
@@ -155,7 +156,7 @@ void StageMap::ReadStageLine(const string& line) {
 		yPos = boost::lexical_cast<int>(strY);
 		xSize = boost::lexical_cast<int>(strW);
 		ySize = boost::lexical_cast<int>(strH);
-	} catch(bad_cast& e) {
+	} catch(bad_cast&) {
 
 		cerr << "Bad line at stage file: [" << lineNumber << "]: [" << line << "]" << endl;
 		THROW(Exception::BadConfig);				
