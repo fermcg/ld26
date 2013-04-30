@@ -11,6 +11,7 @@ Screen::Screen() : BaseSystem("Screen") {
 
 	window = NULL;
 	renderer = NULL;
+	fullScreen = false;
 }
 Screen::~Screen() {
 
@@ -61,4 +62,13 @@ void Screen::Terminate() {
 	}
 
 	this->BaseSystem::Terminate();
+}
+void Screen::ToogleFullScreen() {
+
+	fullScreen = !fullScreen;
+	if(SDL_SetWindowFullscreen(window, fullScreen) != 0) {
+
+		cerr << "SDL_SetWindowFullscreen error: " << SDL_GetError() << endl;
+		THROW(Exception::FullScreenFailure);
+	}
 }

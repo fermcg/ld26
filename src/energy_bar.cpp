@@ -20,7 +20,7 @@ void EnergyBar::Init() {
 	redBar = Singleton::spriteMap->Get("ENERGY+R");
 
 	rect.x = 640 / 2 - greenBar->rect.w / 2;
-	rect.y = 10;
+	rect.y = 20;
 	rect.w = 80;
 	rect.h = 4;
 }

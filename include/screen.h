@@ -11,6 +11,12 @@ class Screen : public BaseSystem {
 		void Init() throw();
 		void Terminate();
 
+		void ToogleFullScreen();
+
 		SDL_Window* window;	
 		SDL_Renderer* renderer;
+
+	private:
+
+		bool fullScreen;
 };

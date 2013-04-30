@@ -9,6 +9,7 @@ using namespace std;
 GameLoop::GameLoop() : BaseSystem("GameLoop") {
 
 	currentStage = NULL;
+	gameOver = false;
 }
 
 GameLoop::~GameLoop() {
@@ -24,6 +25,11 @@ void GameLoop::Init() throw() {
 
 void GameLoop::Terminate() {
 
+}
+
+void GameLoop::GameOver() {
+
+	gameOver = true;
 }
 
 void GameLoop::Loop() throw() {
@@ -126,6 +132,12 @@ void GameLoop::HandleEvents() {
 					case SDLK_z:
 						Singleton::player->CommandSetOrReset(Player::jump, event.type == SDL_KEYDOWN);
 						break;
+					case SDLK_f:
+						if(event.type == SDL_KEYDOWN) {
+
+							Singleton::screen->ToogleFullScreen();
+						}
+						break;
 					default:
 						cout << "Symbol:" << event.key.keysym.sym << endl;
 						break;
@@ -179,5 +191,24 @@ void GameLoop::Render() {
 
 void GameLoop::LoopEnd() {
 
+	if(gameOver) {
+
+		Singleton::stageMap->Terminate();
+		delete Singleton::stageMap;
+		Singleton::stageMap = new StageMap();
+		Singleton::stageMap->Init();
+		gameOver = false;
+
+		Stage* nextStage = Singleton::stageMap->Get("MENU");
+		if(nextStage != NULL) {
+
+			currentStage = nextStage;
+			nextStage->PositionPlayer();
+			Singleton::player->Ressurrect();
+		} else {
+
+			cerr << "Error" << endl;
+		}
+	}
 }
 
