@@ -1,5 +1,9 @@
 #pragma once
 
+// cross platform
+#if defined(WIN32)
+#define __func__ __FUNCTION__
+#endif
 // helping macros
 
 #define DELETENULL(X) \
