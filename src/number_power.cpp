@@ -32,9 +32,10 @@ void NumberPower::HandleLogic() {
 
 void NumberPower::OnCollision(GameObject& other) {
 
-	if(other.name == "Player") {
+	if(other.isPlayer) {
 
 		(reinterpret_cast< Player& >(other)).GetNumberPower(*this);
+	} else if(other.isProjectile) {
 	}
 
 	this->PowerUp::OnCollision(other);

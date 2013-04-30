@@ -100,7 +100,7 @@ void GameLoop::HandleEvents() {
 						break;
 					case SDL_WINDOWEVENT_CLOSE:
 						cout << "SDL_WINDOWEVENT_CLOSE" << endl;
-						keepWalking - false;
+						keepWalking = false;
 						break;
 					default:
 						cout << "Unknown [" << (int)event.window.event << "]" << endl;

@@ -32,7 +32,10 @@ class Player : public AccelerableObject {
 		void OnCollision(GameObject& other);
 
 		void HandleLogic();
+		void Render();
 		void Ressurrect();
+
+		void ShowPowerUps();
 
 		void GetNumberPower(NumberPower& other);
 
@@ -71,6 +74,7 @@ class Player : public AccelerableObject {
 		SoundEffect* sfxPortal;
 
 		int distance;
+		int shortDistance;
 		int doubleJumps;
 
 		int maxEnergy;

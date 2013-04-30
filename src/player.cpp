@@ -51,6 +51,7 @@ Player::Player() : AccelerableObject("Player", "Player") {
 
 	energy = EnergyBar::MaxEnergy;
 	distance = 0;
+	shortDistance = 5;
 	doubleJumps = 0;
 
 	maxEnergy = EnergyBar::MaxEnergy;
@@ -124,6 +125,21 @@ void Player::OnCollision(GameObject& other) {
 void Player::HandleLogic() {
 
 	door = NULL;
+	
+	if(xAcceleration > 0.0) {
+
+		spriteFace->ChangeFace(SpriteFace::right);
+	} else if(xAcceleration < 0.0) {
+
+		spriteFace->ChangeFace(SpriteFace::left);
+	} else if(downIsOn) {
+
+		spriteFace->ChangeFace(SpriteFace::front);
+	} else if(xAcceleration == 0.0) {
+
+		spriteFace->ChangeFace(SpriteFace::front);
+	}
+
 	this->AccelerableObject::HandleLogic();
 	if(xAcceleration != 0.0 && !walking && grounded) {
 
@@ -178,8 +194,6 @@ void Player::IncreaseJump(const int doubleJumps) {
 
 		this->doubleJumps = maxDoubleJumps - 1;
 	}
-
-	cout << "Jump = " << this->doubleJumps << endl;
 }
 
 SpriteFace* Player::CreateSpriteFace() {
@@ -320,7 +334,25 @@ void Player::ActionShot() {
 	} else if(downIsOn && !upIsOn && !grounded) {
 
 		nextShotDirection = Projectile::down;
-	} else if(xSpeed > 0.0) {
+	} /*else {
+
+		if(spriteFace->facing == SpriteFace::left) {
+
+			nextShotDirection = Projectile::left;
+		} else if(spriteFace->facing == SpriteFace::right) {
+
+			nextShotDirection = Projectile::right;
+		} else if(spriteFace->facing == SpriteFace::front) {
+
+			nextShotDirection = Projectile::down;
+		} else {
+
+			cout << "facing = " << spriteFace->facing << endl;
+		}
+	}
+
+
+	}*/else if(xSpeed > 0.0) {
 
 		nextShotDirection = Projectile::right;
 	} else if(xSpeed < 0.0) {
@@ -331,9 +363,39 @@ void Player::ActionShot() {
 		nextShotDirection = Projectile::down;
 	}
 
-	PlayerShot* shot = new PlayerShot(*this, nextShotDirection);
+	PlayerShot* shot = new PlayerShot(*this, nextShotDirection, distance + shortDistance);
 	shot->Init();
 	Singleton::allFriends->RegisterObject(shot);
+	distance--;
+	if(distance < 0) {
+
+		distance = 0;
+	}
+}
+
+void Player::Render() {
+
+	ShowPowerUps();
+	this->AccelerableObject::Render();
+}
+
+void Player::ShowPowerUps() {
+
+//	Sprite* spriteR = Singleton::spriteMap->Get("NUMBERS+R");
+	Sprite* spriteG = Singleton::spriteMap->Get("NUMBERS+G");
+	Sprite* spriteB = Singleton::spriteMap->Get("NUMBERS+B");
+
+	SDL_Rect rect;
+
+	rect.x = 410;
+	rect.y = 20;
+	rect.w = 8;
+	rect.h = 8;
+
+	spriteG->RenderCopy(&rect, distance);
+
+	rect.x += 16;
+	spriteB->RenderCopy(&rect, doubleJumps);
 }
 
 void Player::PrintStates() {
