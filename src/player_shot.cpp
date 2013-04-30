@@ -3,7 +3,7 @@
 
 using namespace std;
 
-PlayerShot::PlayerShot(Player& father, Projectile::Direction direction, const int distance) : Projectile("PlayerShot", "shot") {
+PlayerShot::PlayerShot(Player& father, Projectile::Direction direction, const int distance, const int power) : Projectile("PlayerShot", "shot") {
 
 	this->direction = direction;
 	this->distance = distance * 8;
@@ -50,7 +50,7 @@ PlayerShot::PlayerShot(Player& father, Projectile::Direction direction, const in
 	this->y = father.y + father.h/2 - 1;
 
 	energy = 1;
-	damage = 300;
+	damage = 300 + 100*power;
 }
 
 PlayerShot::~PlayerShot() {

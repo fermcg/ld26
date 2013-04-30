@@ -1,6 +1,6 @@
 MENU:34,38-10x10
 @bg=MENU
-@hideEnergyBar=1
+@hideGamePanel=1
 !O=EMPTY
 !D=DOOR>STAGE01
 [

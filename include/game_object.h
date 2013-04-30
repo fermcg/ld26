@@ -33,6 +33,7 @@ class GameObject : public BaseSystem {
 		friend class AllObjects;
 		friend class StageMap;
 		friend class Stage;
+		friend class GamePanel;
 
 		bool unbreakable;
 		bool lethal;
@@ -53,6 +54,8 @@ class GameObject : public BaseSystem {
 		SpriteFace* spriteFace;
 		Stage* stage;
 		unsigned long gameObjectId;
+
+		int maxEnergy;
 
 		int energy;
 		int damage;

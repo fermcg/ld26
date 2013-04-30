@@ -25,6 +25,7 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 	boundingBox.w = 0;
 	boundingBox.h = 0;
 
+	maxEnergy = 1;
 	energy = 1;
 	damage = BigDamage;
 

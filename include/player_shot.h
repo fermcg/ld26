@@ -5,7 +5,7 @@
 
 class PlayerShot : public Projectile {
 	public:
-		PlayerShot(Player& father, Projectile::Direction direction, const int distance);
+		PlayerShot(Player& father, Projectile::Direction direction, const int distance, const int power);
 		~PlayerShot();
 
 		void HandleLogic();

@@ -49,15 +49,18 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	walking = false;
 	isPlayer = true;
 
-	energy = EnergyBar::MaxEnergy;
-	distance = 0;
-	shortDistance = 5;
-	doubleJumps = 0;
 
-	maxEnergy = EnergyBar::MaxEnergy;
+	maxEnergy = 5000;
+	maxPower = 10;
 	maxDistance = 10;
 	maxDoubleJumps = 10;
 
+	energy = maxEnergy;
+	power = 0;
+	distance = 0;
+	doubleJumps = 0;
+
+	shortDistance = 4;
 }
 
 Player::~Player() {
@@ -66,7 +69,7 @@ Player::~Player() {
 
 void Player::Ressurrect() {
 
-	energy = EnergyBar::MaxEnergy;
+	energy = maxEnergy;
 	dead = false;
 	distance = 0;
 	doubleJumps = 0;
@@ -95,7 +98,6 @@ void Player::Terminate() {
 
 void Player::OnCollision(GameObject& other) {
 
-	Singleton::energyBar->SetEnergy(energy);
 	if(energy < 0) {
 
 		dead = true;
@@ -157,7 +159,7 @@ void Player::GetNumberPower(NumberPower& other) {
 	switch(other.color) {
 
 		case NumberPower::red:
-			IncreaseHealth(other.number);
+			IncreasePower(other.number);
 			break;
 		case NumberPower::green:
 			IncreaseDistance(other.number);
@@ -169,12 +171,12 @@ void Player::GetNumberPower(NumberPower& other) {
 	sfxPowerup->Play(4);
 }
 
-void Player::IncreaseHealth(const int energy) {
+void Player::IncreasePower(const int power) {
 
-	this->energy += energy;
-	if(this->energy > maxEnergy) {
+	this->power += power;
+	if(this->power > maxPower) {
 
-		this->energy = maxEnergy;
+		this->power = maxPower;
 	}
 }
 
@@ -363,7 +365,7 @@ void Player::ActionShot() {
 		nextShotDirection = Projectile::down;
 	}
 
-	PlayerShot* shot = new PlayerShot(*this, nextShotDirection, distance + shortDistance);
+	PlayerShot* shot = new PlayerShot(*this, nextShotDirection, distance + shortDistance, power);
 	shot->Init();
 	Singleton::allFriends->RegisterObject(shot);
 	distance--;
@@ -371,11 +373,15 @@ void Player::ActionShot() {
 
 		distance = 0;
 	}
+	power--;
+	if(power < 0) {
+
+		power = 0;
+	}
 }
 
 void Player::Render() {
 
-	ShowPowerUps();
 	this->AccelerableObject::Render();
 }
 

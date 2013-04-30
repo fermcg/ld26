@@ -20,7 +20,7 @@ Stage::Stage(const char* stageId, const int xPos, const int yPos, const int xSiz
 	playerStartX = 0;
 	playerStartY = 0;
 	background = NULL;
-	hideEnergyBar = false;
+	hideGamePanel = false;
 }
 Stage::~Stage() {
 
@@ -41,9 +41,9 @@ void Stage::SetBackground(const char* spriteId) throw() {
 	background = Singleton::spriteMap->Get(spriteId);
 }
 
-void Stage::SetHideEnergyBar(const bool hideEnergyBar) {
+void Stage::SetHideGamePanel(const bool hideGamePanel) {
 
-	this->hideEnergyBar = hideEnergyBar;
+	this->hideGamePanel = hideGamePanel;
 }
 
 void Stage::SetPlayerStartPosition(const int x, const int y) {
@@ -66,9 +66,9 @@ void Stage::Render() {
 		background->RenderCopy();
 	}
 
-	if(!hideEnergyBar) {
+	if(!hideGamePanel) {
 
-		Singleton::energyBar->Render();
+		Singleton::gamePanel->Render();
 	}
 
 	this->AllObjects::Render();

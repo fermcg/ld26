@@ -181,9 +181,9 @@ void StageMap::ReadProperty(const string& line) {
 	if(propertyName == "bg") {
 
 		stage->SetBackground(propertyValue.c_str());
-	} else if(propertyName == "hideEnergyBar") {
+	} else if(propertyName == "hideGamePanel") {
 
-		stage->SetHideEnergyBar(propertyValue == "1");
+		stage->SetHideGamePanel(propertyValue == "1");
 	}
 }
 

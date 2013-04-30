@@ -40,11 +40,22 @@ class Player : public AccelerableObject {
 		void GetNumberPower(NumberPower& other);
 
 		friend class PlayerShot;
+		friend class GamePanel;
 	protected:
 		SpriteFace* CreateSpriteFace();
 
+		int power;
+		int distance;
+		int doubleJumps;
+
+		int maxPower;
+		int maxDistance;
+		int maxDoubleJumps;
+
+		int shortDistance;
+
 	private:
-		void IncreaseHealth(const int energy);
+		void IncreasePower(const int power);
 		void IncreaseDistance(const int distance);
 		void IncreaseJump(const int doubleJumps);
 
@@ -73,12 +84,5 @@ class Player : public AccelerableObject {
 		SoundEffect* sfxPowerup;
 		SoundEffect* sfxPortal;
 
-		int distance;
-		int shortDistance;
-		int doubleJumps;
-
-		int maxEnergy;
-		int maxDistance;
-		int maxDoubleJumps;
 		DoorObject* door;
 };
