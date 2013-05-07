@@ -1,8 +1,8 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
 
 namespace Aux {
 
-	void PrintRect(const SDL_Rect& rect);
+	void PrintRect(const sf::IntRect& rect);
 }

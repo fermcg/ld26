@@ -11,10 +11,10 @@ BrickObject::BrickObject(const char* name, const char* objectId) : GameObject(na
 	solid = true;
 	damage = 0;
 
-	boundingBox.x = 0;
-	boundingBox.y = 0;
-	boundingBox.w = BrickObject::Width;
-	boundingBox.h = BrickObject::Height;
+	boundingBox.left = 0;
+	boundingBox.top = 0;
+	boundingBox.width = BrickObject::Width;
+	boundingBox.height = BrickObject::Height;
 }
 
 BrickObject::~BrickObject() {
@@ -34,23 +34,23 @@ void BrickObject::Terminate() {
 void BrickObject::Render() {
 
 
-	SDL_Rect rect;
+	sf::IntRect rect;
 
-	rect.w = BrickObject::Width;
-	rect.h = BrickObject::Height;
+	rect.width = BrickObject::Width;
+	rect.height = BrickObject::Height;
 
 
 	int i, j;
-	rect.y = (Sint16)(int)y;
+	rect.top = (int)y;
 	for(j = 0; j < ySize; j++) {
 		
-		rect.x = (Sint16)(int)x;
+		rect.left = (int)x;
 		for(i = 0; i < xSize; i++) {
 
 			this->spriteFace->RenderCopy(&rect);
-			rect.x += BrickObject::Width;
+			rect.left += BrickObject::Width;
 		}
-		rect.y += BrickObject::Height;
+		rect.top += BrickObject::Height;
 	}
 	this->spriteFace->GetSequence()->IncrementSequence();
 }
@@ -83,7 +83,7 @@ bool BrickObject::Merge(BrickObject* other) {
 		this->w += other->w;
 		this->xSize += other->xSize;
 
-		this->boundingBox.w += other->w;
+		this->boundingBox.width += other->w;
 		return true;
 	}
 
@@ -93,7 +93,7 @@ bool BrickObject::Merge(BrickObject* other) {
 		this->h += other->h;
 		this->ySize += other->ySize;
 
-		this->boundingBox.h += other->h;
+		this->boundingBox.height += other->h;
 		return true;
 	}
 

@@ -1,6 +1,7 @@
 MENU:34,38-10x10
 @bg=MENU
 @hideGamePanel=1
+@noViewPort=1
 !O=EMPTY
 !D=DOOR>STAGE01
 [

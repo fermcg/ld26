@@ -10,7 +10,7 @@ class AccelerableObject : public GameObject {
 
 		virtual void HandleLogic();
 
-		void GetNewCollisionBox(Sint16& x0, Sint16& y0, Sint16& xf, Sint16& yf) const;
+		void GetNewCollisionBox(int& x0, int& y0, int& xf, int& yf) const;
 		friend class GameObject;
 	protected:
 		void SetNeverLeaveScreen(const bool neverLeaveScreen);

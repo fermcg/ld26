@@ -1,4 +1,4 @@
-#include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include "game_loop.h"
 #include "singletons.h"
@@ -43,17 +43,17 @@ void GameLoop::Loop() throw() {
 	// Terminating
 	keepWalking = true;
 	currentStage->PositionPlayer();
-	int frameWait = 10;
-	int lastFrame = 0;
+	//int frameWait = 10;
+	//int lastFrame = 0;
 
-	for(loopCount = 0; keepWalking; loopCount++) {
+	for(loopCount = 0; Singleton::screen->window->isOpen(); loopCount++) {
 		LoopStart();
 		HandleEvents();
 		HandleLogic();
 
-		while(SDL_GetTicks() - lastFrame < frameWait) {
-		}
-		lastFrame = SDL_GetTicks();
+		//while(XDL_GetTicks() - lastFrame < frameWait) {
+		//}
+		//lastFrame = XDL_GetTicks();
 		Render();
 		LoopEnd();
 	}
@@ -71,98 +71,62 @@ void GameLoop::LoopStart() {
 
 void GameLoop::HandleEvents() {
 
-	SDL_Event event = { 0 };
-
-	//	if(SDL_PeepEvents(&event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_KEYUP) > 0) {
-	if(SDL_PollEvent(&event) > 0) {
-
-		switch(event.type) {
-
-			case SDL_QUIT:
-				cout << "quit event" << endl;
-				keepWalking = false;
-				break;
-			case SDL_WINDOWEVENT:
-				switch(event.window.event) {
-					case SDL_WINDOWEVENT_SHOWN:
-					case SDL_WINDOWEVENT_HIDDEN:
-					case SDL_WINDOWEVENT_EXPOSED:
-					case SDL_WINDOWEVENT_MOVED:
-					case SDL_WINDOWEVENT_RESIZED:
-					case SDL_WINDOWEVENT_SIZE_CHANGED:
-					case SDL_WINDOWEVENT_MINIMIZED:
-					case SDL_WINDOWEVENT_MAXIMIZED:
-					case SDL_WINDOWEVENT_RESTORED:
-					case SDL_WINDOWEVENT_ENTER:
-					case SDL_WINDOWEVENT_LEAVE:
-					case SDL_WINDOWEVENT_FOCUS_GAINED:
-					case SDL_WINDOWEVENT_FOCUS_LOST:
-						break;
-					case SDL_WINDOWEVENT_CLOSE:
-						cout << "SDL_WINDOWEVENT_CLOSE" << endl;
-						keepWalking = false;
-						break;
-					default:
-						cout << "Unknown [" << (int)event.window.event << "]" << endl;
-						break;
-				}
-				break;
-				// Keyboard
-			case SDL_KEYDOWN:
-			case SDL_KEYUP:
-				switch(event.key.keysym.sym) {
-					case SDLK_LEFT:
-						Singleton::player->CommandSetOrReset(Player::left, event.type == SDL_KEYDOWN);
-						break;
-					case SDLK_RIGHT:
-						Singleton::player->CommandSetOrReset(Player::right, event.type == SDL_KEYDOWN);
-						break;
-					case SDLK_UP:
-						Singleton::player->CommandSetOrReset(Player::up, event.type == SDL_KEYDOWN);
-						break;
-					case SDLK_DOWN:
-						Singleton::player->CommandSetOrReset(Player::down, event.type == SDL_KEYDOWN);
-						break;
-					case SDLK_ESCAPE:
-						keepWalking = false;
-						break;
-					case SDLK_x:
-						Singleton::player->CommandSetOrReset(Player::fire, event.type == SDL_KEYDOWN);
-						break;
-					case SDLK_z:
-						Singleton::player->CommandSetOrReset(Player::jump, event.type == SDL_KEYDOWN);
-						break;
-					case SDLK_f:
-						if(event.type == SDL_KEYDOWN) {
-
-							Singleton::screen->ToogleFullScreen();
-						}
-						break;
-					default:
-						cout << "Symbol:" << event.key.keysym.sym << endl;
-						break;
-				}
-				break;
-			case SDL_TEXTEDITING:
-				break;
-			case SDL_TEXTINPUT:
-				break;
-				// Mouse
-			case SDL_MOUSEMOTION:
-			case SDL_MOUSEBUTTONDOWN:
-			case SDL_MOUSEBUTTONUP:
-			case SDL_MOUSEWHEEL:
-				break;
-				// Touch
-			case SDL_FINGERDOWN:
-			case SDL_FINGERUP:
-			case SDL_FINGERMOTION:
-				break;
-			default:
-				cout << "event type:" << "0x" << hex << event.type << endl;
-				break;
+	// Process events
+	sf::Event event;
+	while (Singleton::screen->window->pollEvent(event))
+	{
+		// Close window : exit
+		if (event.type == sf::Event::Closed) {
+			Singleton::screen->window->close();
 		}
-	}	
+		
+		
+		if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
+			
+			switch (event.key.code) {
+					
+				case sf::Keyboard::Left:
+					Singleton::player->CommandSetOrReset(Player::left, event.type == sf::Event::KeyPressed);
+					break;
+					
+				case sf::Keyboard::Right:
+					Singleton::player->CommandSetOrReset(Player::right, event.type == sf::Event::KeyPressed);
+					break;
+					
+				case sf::Keyboard::Up:
+					Singleton::player->CommandSetOrReset(Player::up, event.type == sf::Event::KeyPressed);
+					break;
+					
+				case sf::Keyboard::Down:
+					Singleton::player->CommandSetOrReset(Player::down, event.type == sf::Event::KeyPressed);
+					break;
+					
+				case sf::Keyboard::Escape:
+					if (event.type == sf::Event::KeyPressed) {
+						Singleton::screen->window->close();
+						continue;
+					}
+					break;
+					
+				case sf::Keyboard::X:
+					Singleton::player->CommandSetOrReset(Player::fire, event.type == sf::Event::KeyPressed);
+					break;
+					
+				case sf::Keyboard::Z:
+					Singleton::player->CommandSetOrReset(Player::jump, event.type == sf::Event::KeyPressed);
+					break;
+					
+				case sf::Keyboard::F:
+					if (event.type == sf::Event::KeyPressed) {
+						Singleton::screen->ToogleFullScreen();
+					}
+					break;
+				default:
+					cout << "Symbol:" << event.key.code << endl;
+					break;
+			}
+		}
+	}
 }
 
 void GameLoop::HandleLogic() {
@@ -176,9 +140,9 @@ void GameLoop::HandleLogic() {
 
 void GameLoop::Render() {
 
-//	SDL_SetRenderDrawColor(Singleton::screen->renderer, 102, 204, 255, 0);
-	SDL_SetRenderDrawColor(Singleton::screen->renderer, 0, 0, 0, 0);
-	SDL_RenderClear(Singleton::screen->renderer);
+	// Clear screen
+	Singleton::screen->window->clear();
+	//sf::Color(0,0,0,0));
 
 //	Singleton::allEnemies->Render();
 	//	Singleton::player->PrintStates();
@@ -187,7 +151,7 @@ void GameLoop::Render() {
 	Singleton::allFriends->Render();
 	Singleton::player->Render();
 
-	SDL_RenderPresent(Singleton::screen->renderer);
+	Singleton::screen->window->display();
 }
 
 void GameLoop::LoopEnd() {

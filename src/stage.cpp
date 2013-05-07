@@ -12,15 +12,19 @@ Stage::Stage(const char* stageId, const int xPos, const int yPos, const int xSiz
 	this->xSize = xSize;
 	this->ySize = ySize;
 
-	rect.x = BrickObject::Width * xPos;
-	rect.y = BrickObject::Height * yPos;
-	rect.w = BrickObject::Width * xSize;
-	rect.h = BrickObject::Height * ySize;
+	rect.left = BrickObject::Width * xPos;
+	rect.top = BrickObject::Height * yPos;
+	rect.width = BrickObject::Width * xSize;
+	rect.height = BrickObject::Height * ySize;
 
 	playerStartX = 0;
 	playerStartY = 0;
 	background = NULL;
 	hideGamePanel = false;
+	noViewPort = false;
+	
+	viewWidth = 258;
+	viewHeight = 192;
 }
 Stage::~Stage() {
 
@@ -46,6 +50,11 @@ void Stage::SetHideGamePanel(const bool hideGamePanel) {
 	this->hideGamePanel = hideGamePanel;
 }
 
+void Stage::SetNoViewPort(const bool noViewPort) {
+	
+	this->noViewPort = noViewPort;
+}
+
 void Stage::SetPlayerStartPosition(const int x, const int y) {
 
 	playerStartX = (xPos + x) * BrickObject::Width;
@@ -63,7 +72,9 @@ void Stage::Render() {
 	if(background != NULL) {
 
 		//background->RenderCopy(&rect, 0);
+		Singleton::screen->window->setView(Singleton::gamePanel->view);
 		background->RenderCopy();
+		Singleton::screen->window->setView(*Singleton::screen->view);
 	}
 
 	if(!hideGamePanel) {
@@ -71,6 +82,37 @@ void Stage::Render() {
 		Singleton::gamePanel->Render();
 	}
 
+	if (noViewPort ) {
+		
+		Singleton::screen->window->setView(Singleton::gamePanel->view);
+	} else {
+		double viewX, viewY;
+		
+		viewX = Singleton::player->x + Singleton::player->w / 2.0;
+		viewY = Singleton::player->y + Singleton::player->h / 2.0;
+		
+		if (viewX < 0.0) {
+			
+			viewX = 0.0;
+		}
+		if (viewY < 0.0) {
+			
+			viewY = 0.0;
+		}
+		if (viewX > Singleton::screen->window->getSize().x) {
+			
+			viewX = Singleton::screen->window->getSize().x;
+		}
+		if (viewY > Singleton::screen->window->getSize().y) {
+			
+			viewY = Singleton::screen->window->getSize().y;
+		}
+		
+		Singleton::screen->view->setCenter(viewX, viewY);
+		Singleton::screen->view->setSize(viewWidth, viewHeight);
+		
+		Singleton::screen->window->setView(*Singleton::screen->view);
+	}
 	this->AllObjects::Render();
 }
 

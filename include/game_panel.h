@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
 #include "base_system.h"
 #include "sprite.h"
 
@@ -15,8 +15,7 @@ class GamePanel : public BaseSystem {
 
 		void Render();
 
-
-	protected:
+		sf::View view;
 
 	private:
 		void ShowEnergyBar();
@@ -29,6 +28,7 @@ class GamePanel : public BaseSystem {
 		Sprite* greenNumbers;
 		Sprite* blueNumbers;
 
-		SDL_Rect energyBarRect;
-		SDL_Rect powerUpsRect;
+		sf::IntRect energyBarRect;
+		sf::IntRect powerUpsRect;
+	
 };

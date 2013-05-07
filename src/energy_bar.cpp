@@ -19,10 +19,10 @@ void EnergyBar::Init() {
 	greenBar = Singleton::spriteMap->Get("ENERGY+G");
 	redBar = Singleton::spriteMap->Get("ENERGY+R");
 
-	rect.x = 640 / 2 - greenBar->rect.w / 2;
-	rect.y = 10;
-	rect.w = 80;
-	rect.h = 4;
+	rect.left = 640 / 2 - greenBar->rect.width / 2;
+	rect.top = 10;
+	rect.width = 80;
+	rect.height = 4;
 }
 
 void EnergyBar::Terminate() {
@@ -34,9 +34,9 @@ void EnergyBar::Render() {
 
 	redBar->RenderCopy(&rect);
 
-	SDL_Rect greenRect = rect;
+	sf::IntRect greenRect = rect;
 
-	greenRect.w = (Uint16)((energy * (int)rect.w) / maxEnergy);
+	greenRect.width = (int)((energy * (int)rect.width) / maxEnergy);
 	greenBar->RenderCopy(&greenRect);
 }
 

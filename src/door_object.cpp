@@ -10,10 +10,10 @@ DoorObject::DoorObject(const char* stageId) : GameObject("Door", "Door") {
 
 	this->stageId = stageId;
 	isDoor = true;
-	boundingBox.x = 0;
-	boundingBox.y = 0;
-	boundingBox.w = 8;
-	boundingBox.h = 16;
+	boundingBox.left = 0;
+	boundingBox.top = 0;
+	boundingBox.width = 8;
+	boundingBox.height = 16;
 
 	unbreakable = true;
 	damage = 0;

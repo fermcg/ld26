@@ -32,10 +32,10 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	accelerationChanged = false;
 	fireChanged = false;
 
-	boundingBox.x = 1;
-	boundingBox.y = 4;
-	boundingBox.w = 4;
-	boundingBox.h = 12;
+	boundingBox.left = 1;
+	boundingBox.top = 4;
+	boundingBox.width = 5;
+	boundingBox.height = 12;
 
 	damage = 2000;
 
@@ -103,7 +103,7 @@ void Player::OnCollision(GameObject& other) {
 	if(energy < 0) {
 
 		dead = true;
-		sfxDeath->Play(7);
+		sfxDeath->Play();
 		cout << "Game Over" << endl;
 
 		Singleton::gameLoop->GameOver();
@@ -158,11 +158,11 @@ void Player::HandleLogic() {
 	if(xAcceleration != 0.0 && !walking && grounded) {
 
 		walking = true;
-		sfxStep->Start(1);
+		sfxStep->Start();
 	} else if (walking && (xAcceleration == 0.0 || !grounded)) {
 
 		walking = false;
-		sfxStep->Stop(1);
+		sfxStep->Stop();
 	}
 	if (grounded) {
 
@@ -184,7 +184,7 @@ void Player::GetNumberPower(NumberPower& other) {
 			IncreaseJump(other.number);
 			break;
 	}
-	sfxPowerup->Play(4);
+	sfxPowerup->Play();
 }
 
 void Player::IncreasePower(const int power) {
@@ -320,7 +320,7 @@ void Player::ActionDoor() {
 
 		if(door->Enter(this)) {
 		
-			sfxPortal->Play(6);	
+			sfxPortal->Play();	
 		}
 		return;
 	}
@@ -343,7 +343,7 @@ void Player::ActionJump() {
 	}
 
 	ySpeed = -yMaxSpeed;
-	sfxJump->Play(3);
+	sfxJump->Play();
 
 	if(!grounded && doubleJumps >= 1) {
 
@@ -354,7 +354,7 @@ void Player::ActionJump() {
 
 void Player::ActionShot() {
 
-	sfxStrongLaser->Play(2);
+	sfxStrongLaser->Play();
 /*
 	Projectile::Direction nextShotDirection;
 	if(upIsOn && !downIsOn) {
@@ -418,16 +418,16 @@ void Player::ShowPowerUps() {
 	Sprite* spriteG = Singleton::spriteMap->Get("NUMBERS+G");
 	Sprite* spriteB = Singleton::spriteMap->Get("NUMBERS+B");
 
-	SDL_Rect rect;
+	sf::IntRect rect;
 
-	rect.x = 410;
-	rect.y = 20;
-	rect.w = 8;
-	rect.h = 8;
+	rect.left = 410;
+	rect.top = 20;
+	rect.width = 8;
+	rect.height = 8;
 
 	spriteG->RenderCopy(&rect, distance);
 
-	rect.x += 16;
+	rect.left += 16;
 	spriteB->RenderCopy(&rect, doubleJumps);
 }
 

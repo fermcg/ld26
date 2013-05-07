@@ -6,13 +6,15 @@ SpriteSequence::SpriteSequence(Sprite* sprite) {
 	currentFrame = 0;
 	locked = false;
 	renderingMode = SpriteSequence::sequence;
+	counter = 0;
+	counterTarget = 1;
 }
 
 SpriteSequence::~SpriteSequence() {
 
 }
 
-void SpriteSequence::RenderCopy(const SDL_Rect* destinyRect) throw() {
+void SpriteSequence::RenderCopy(const sf::IntRect* destinyRect) throw() {
 
 	sprite->RenderCopy(destinyRect, currentFrame);
 
@@ -42,6 +44,12 @@ void SpriteSequence::UnlockSequence() {
 }
 
 void SpriteSequence::IncrementSequence() {
+	counter++;
+	if (counter < counterTarget) {
+		
+		return;
+	}
+	counter = 0;
 	currentFrame++;
 	if(currentFrame >= sprite->frames) {
 

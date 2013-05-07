@@ -39,10 +39,10 @@ PlayerShot::PlayerShot(Player& father, Projectile::Direction direction, const in
 	xBreaking = 0.002;
 	yBreaking = 0.002;
 
-	boundingBox.x = 3;
-	boundingBox.y = 3;
-	boundingBox.w = 2;
-	boundingBox.h = 2;
+	boundingBox.left = 3;
+	boundingBox.top = 3;
+	boundingBox.width = 2;
+	boundingBox.height = 2;
 
 	this->w = 8;
 	this->h = 8;

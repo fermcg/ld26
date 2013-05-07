@@ -20,10 +20,10 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 	this->h = 0;
 	gameObjectId = 0;
 
-	boundingBox.x = 0;
-	boundingBox.y = 0;
-	boundingBox.w = 0;
-	boundingBox.h = 0;
+	boundingBox.left = 0;
+	boundingBox.top = 0;
+	boundingBox.width = 0;
+	boundingBox.height = 0;
 
 	maxEnergy = 1;
 	energy = 1;
@@ -49,8 +49,8 @@ void GameObject::Init() throw() {
 	spriteFace = CreateSpriteFace();
 
 	Sprite* sprite = spriteFace->GetSequence()->GetSprite();
-	w = sprite->rect.w;
-	h = sprite->rect.h;
+	w = sprite->rect.width;
+	h = sprite->rect.height;
 
 	this->BaseSystem::Init();
 }
@@ -87,11 +87,11 @@ void GameObject::Terminate() {
 
 void GameObject::Render() {
 
-	SDL_Rect rect;
-	rect.x = (Sint16)(int)x;
-	rect.y = (Sint16)(int)y;
-	rect.w = w;
-	rect.h = h;
+	sf::IntRect rect;
+	rect.left = (int)x;
+	rect.top = (int)y;
+	rect.width = w;
+	rect.height = h;
 
 	this->spriteFace->RenderCopy(&rect);
 }
@@ -134,8 +134,8 @@ void GameObject::HoldMeBack(AccelerableObject& other) {
 		return;
 	}
 
-	Sint16 thisX0, thisY0, thisXf, thisYf;
-	Sint16 otherX0, otherY0, otherXf, otherYf;
+	int thisX0, thisY0, thisXf, thisYf;
+	int otherX0, otherY0, otherXf, otherYf;
 
 	this->GetCollisionBox(thisX0, thisY0, thisXf, thisYf);
 	other.GetNewCollisionBox(otherX0, otherY0, otherXf, otherYf);
@@ -220,7 +220,7 @@ void GameObject::HoldMeBack(AccelerableObject& other) {
 	if(zeroY) {
 
 		other.ySpeed = 0.0;
-//		other.yAcceleration = 0.0;
+		other.yAcceleration = 0.0;
 	}
 	return;
 	
@@ -233,8 +233,8 @@ bool GameObject::AmIGrounded(const AccelerableObject& other) {
 		return false;
 	}
 
-	Sint16 thisX0, thisY0, thisXf, thisYf;
-	Sint16 otherX0, otherY0, otherXf, otherYf;
+	int thisX0, thisY0, thisXf, thisYf;
+	int otherX0, otherY0, otherXf, otherYf;
 
 	this->GetCollisionBox(thisX0, thisY0, thisXf, thisYf);
 	other.GetCollisionBox(otherX0, otherY0, otherXf, otherYf);
@@ -248,8 +248,8 @@ bool GameObject::AmIGrounded(const AccelerableObject& other) {
 }
 bool GameObject::CheckCollision(const GameObject& other) {
 
-	Sint16 thisX0, thisY0, thisXf, thisYf;
-	Sint16 otherX0, otherY0, otherXf, otherYf;
+	int thisX0, thisY0, thisXf, thisYf;
+	int otherX0, otherY0, otherXf, otherYf;
 
 	this->GetCollisionBox(thisX0, thisY0, thisXf, thisYf);
 	other.GetCollisionBox(otherX0, otherY0, otherXf, otherYf);
@@ -287,10 +287,10 @@ bool GameObject::Merge(GameObject* other) {
 	return false; // Not implemented by default.
 }
 
-void GameObject::GetCollisionBox(Sint16& x0, Sint16& y0, Sint16& xf, Sint16& yf) const {
+void GameObject::GetCollisionBox(int& x0, int& y0, int& xf, int& yf) const {
 
-	x0 = (Sint16)x + boundingBox.x;
-	xf = x0 + boundingBox.w;
-	y0 = (Sint16)y + boundingBox.y;
-	yf = y0 + boundingBox.h;	
+	x0 = (int)x + boundingBox.left;
+	xf = x0 + boundingBox.width;
+	y0 = (int)y + boundingBox.top;
+	yf = y0 + boundingBox.height;	
 }

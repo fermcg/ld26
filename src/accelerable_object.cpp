@@ -173,9 +173,8 @@ void AccelerableObject::SetNeverLeaveScreen(const bool neverLeaveScreen) {
 	this->neverLeaveScreen = neverLeaveScreen;
 	if(neverLeaveScreen) {
 
-		int width = 0;
-		int height = 0;
-		SDL_GetWindowSize(Singleton::screen->window, &width, &height);
+		int width = Singleton::screen->window->getSize().x;
+		int height = Singleton::screen->window->getSize().y;
 
 		minX = 0.0;
 		minY = 0.0;
@@ -184,10 +183,10 @@ void AccelerableObject::SetNeverLeaveScreen(const bool neverLeaveScreen) {
 	}
 }
 
-void AccelerableObject::GetNewCollisionBox(Sint16& x0, Sint16& y0, Sint16& xf, Sint16& yf) const {
+void AccelerableObject::GetNewCollisionBox(int& x0, int& y0, int& xf, int& yf) const {
 
-	x0 = (Sint16)newX + boundingBox.x;
-	xf = x0 + boundingBox.w;
-	y0 = (Sint16)newY + boundingBox.y;
-	yf = y0 + boundingBox.h;	
+	x0 = (int)newX + boundingBox.left;
+	xf = x0 + boundingBox.width;
+	y0 = (int)newY + boundingBox.top;
+	yf = y0 + boundingBox.height;
 }

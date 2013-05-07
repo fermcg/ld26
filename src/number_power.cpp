@@ -6,10 +6,10 @@ NumberPower::NumberPower(const Color color, const int number) : PowerUp("NumberP
 	this->color = color;
 	this->number = number;
 
-	boundingBox.x = 2;
-	boundingBox.y = 1;
-	boundingBox.w = 4;
-	boundingBox.h = 6;
+	boundingBox.left = 2;
+	boundingBox.top = 1;
+	boundingBox.width = 4;
+	boundingBox.height = 6;
 }
 
 NumberPower::~NumberPower() {

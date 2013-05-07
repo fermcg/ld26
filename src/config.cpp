@@ -6,11 +6,12 @@
 #include "config.h"
 #include "exceptions.h"
 #include "macros.h"
+#include "ResourcePath.hpp"
 
 
 using namespace std;
 
-Config::Config(const char* fileName) : BaseSystem("Config") {
+Config::Config(const string& fileName) : BaseSystem("Config") {
 
 	this->configMap = NULL;
 	this->fileName = fileName;
@@ -36,7 +37,7 @@ void Config::Terminate() {
 void Config::Load() throw() {
 
 	ifstream fin;
-	fin.open(fileName.c_str());
+	fin.open(resourcePath() + fileName);
 
 	if (!fin.good()) {
 

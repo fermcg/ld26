@@ -11,10 +11,10 @@ void EmptyBlock::Init() throw() {
 	w = BrickObject::Width;
 	h = BrickObject::Height;
 
-	boundingBox.x = 0;
-	boundingBox.y = 0;
-	boundingBox.w = w;
-	boundingBox.h = h;
+	boundingBox.left = 0;
+	boundingBox.top = 0;
+	boundingBox.width= w;
+	boundingBox.height = h;
 
 	// bypass all the way to GameObject Inits on purpose
 	this->BaseSystem::Init();

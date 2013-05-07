@@ -5,6 +5,7 @@
 #include "exceptions.h"
 #include "macros.h"
 #include "brick_object.h"
+#include "ResourcePath.hpp"
 
 #include <boost/lexical_cast.hpp>
 
@@ -22,7 +23,7 @@ StageMap::~StageMap() {
 
 void StageMap::Init() {
 
-	ifs.open("stages.txt");
+	ifs.open(resourcePath() + "stages.txt");
 
 	lineNumber = -1;
 	while(ifs.good()) {
@@ -185,6 +186,9 @@ void StageMap::ReadProperty(const string& line) {
 	} else if(propertyName == "hideGamePanel") {
 
 		stage->SetHideGamePanel(propertyValue == "1");
+	} else if(propertyName == "noViewPort") {
+		
+		stage->SetNoViewPort(propertyValue == "1");
 	}
 }
 

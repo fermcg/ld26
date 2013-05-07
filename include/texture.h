@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
 
 #include "base_system.h"
 #include "config.h"
@@ -13,7 +13,7 @@ class Texture : public BaseSystem {
 		void Init();
 		void Terminate();
 
-		SDL_Texture* texture;
+		sf::Texture* texture;
 		int w;
 		int h;
 	private:

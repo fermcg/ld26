@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
 #include "base_system.h"
 #include "sprite_face.h"
 
@@ -45,12 +45,12 @@ class GameObject : public BaseSystem {
 
 		virtual SpriteFace* CreateSpriteFace() = 0;
 
-		Uint16 w;
-		Uint16 h;
+		int w;
+		int h;
 		double x;
 		double y;
 
-		SDL_Rect boundingBox;
+		sf::IntRect boundingBox;
 		SpriteFace* spriteFace;
 		Stage* stage;
 		unsigned long gameObjectId;
@@ -63,5 +63,5 @@ class GameObject : public BaseSystem {
 		bool dead;
 	private:
 
-		void GetCollisionBox(Sint16& x0, Sint16& y0, Sint16& xf, Sint16& yf) const;
+		void GetCollisionBox(int& x0, int& y0, int& xf, int& yf) const;
 };

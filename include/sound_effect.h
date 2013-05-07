@@ -1,7 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
+#include <SFML/Audio.hpp>
 
 #include "base_system.h"
 
@@ -13,10 +12,11 @@ class SoundEffect : public BaseSystem {
 		void Init();
 		void Terminate();
 
-		int Play(const int channelId = -1, const int loops = 0);
-		int Start(const int channelId);
-		void Stop(const int channelId);
+		void Play();
+		void Start();
+		void Stop();
 	private:
-		Mix_Chunk *sample;
+		sf::SoundBuffer *buffer;
+		sf::Sound *sound;
 		string fileName;
 };

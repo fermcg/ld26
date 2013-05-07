@@ -16,6 +16,7 @@ class Stage : public AllObjects {
 
 		void SetBackground(const char* spriteId) throw();
 		void SetHideGamePanel(const bool hideGamePanel);
+		void SetNoViewPort(const bool noViewPort);
 		void SetPlayerStartPosition(const int x, const int y);
 		void PositionPlayer();
 
@@ -29,7 +30,7 @@ class Stage : public AllObjects {
 		friend class StageMap;
 	protected:
 
-		SDL_Rect rect;
+		sf::IntRect rect;
 		int xPos;
 		int yPos;
 		int xSize;
@@ -39,6 +40,10 @@ class Stage : public AllObjects {
 		int playerStartY;
 
 		bool hideGamePanel;
+		bool noViewPort;
+	
+		double viewWidth;
+		double viewHeight;
 
 		string stageId;	
 		Sprite* background;

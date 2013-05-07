@@ -4,21 +4,22 @@
 #include "singletons.h"
 #include "exceptions.h"
 #include "macros.h"
+#include "ResourcePath.hpp"
 
 using namespace std;
 
 Screen::Screen() : BaseSystem("Screen") {
 
+	view = NULL;
 	window = NULL;
-	renderer = NULL;
 	fullScreen = false;
+	gameTitle = "Pato Loco";
 }
 Screen::~Screen() {
 
 }
 void Screen::Init() throw() {
 
-	const char* gameTitle = "Pato Loco";
 	const char* windowSection = "WINDOW";
 
 	int width = 0;
@@ -27,37 +28,35 @@ void Screen::Init() throw() {
 	Singleton::config->Read(windowSection, "width", width, 640);
 	Singleton::config->Read(windowSection, "height", height, 480);
 
-	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
-//	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN;
+	videoMode.width = width;
+	videoMode.height = height;
+	
+	// Create the view
+	view = new sf::View(sf::FloatRect(0.0,0.0, (float)width, (float)height));
+	view->setViewport(sf::FloatRect(0.0,0.0,1.0,1.0));
+	// Create the main window
+	window = new sf::RenderWindow(videoMode, gameTitle);
 
-	window = SDL_CreateWindow(gameTitle, SDL_WINDOWPOS_CENTERED,
-			SDL_WINDOWPOS_CENTERED, width, height, flags);
-	if (window == NULL) {
-
-		cerr << "SDL_CreateWindow error: " << SDL_GetError() << endl;
+	// Set the Icon
+	if (!icon.loadFromFile(resourcePath() + "icon.png")) {
 		THROW(Exception::InitializationFailure);
 	}
+	window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	if (renderer == NULL) {
+	window->setFramerateLimit(80);
 
-		cerr << "SDL_CreateRenderer error: " << SDL_GetError() << endl;
-		THROW(Exception::InitializationFailure);
-	}
-	SDL_ShowCursor(SDL_DISABLE);
 	this->BaseSystem::Init();	
 }
 void Screen::Terminate() {
 
-	if (renderer != NULL) {
-
-		SDL_DestroyRenderer(renderer);
-		renderer = NULL;
+	if (view != NULL) {
+		
+		delete view;
+		view = NULL;
 	}
-
 	if (window != NULL) {
 
-		SDL_DestroyWindow(window);
+		delete window;
 		window = NULL;
 	}
 
@@ -66,9 +65,15 @@ void Screen::Terminate() {
 void Screen::ToogleFullScreen() {
 
 	fullScreen = !fullScreen;
-	if(SDL_SetWindowFullscreen(window, fullScreen) != 0) {
 
-		cerr << "SDL_SetWindowFullscreen error: " << SDL_GetError() << endl;
-		THROW(Exception::FullScreenFailure);
+	if (fullScreen) {
+		
+		window->create(videoMode, gameTitle, sf::Style::Fullscreen);
+		window->setMouseCursorVisible(false);
+	} else {
+		
+		window->create(videoMode, gameTitle, sf::Style::Close);
 	}
+	
+	window->setView(*view);
 }

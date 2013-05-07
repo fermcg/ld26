@@ -30,7 +30,7 @@ void SpriteFace::Terminate() {
 	faces.clear();
 }
 
-void SpriteFace::RenderCopy(const SDL_Rect* destinyRect) throw() {
+void SpriteFace::RenderCopy(const sf::IntRect* destinyRect) throw() {
 
 	this->GetSequence()->RenderCopy(destinyRect);
 }
@@ -60,6 +60,11 @@ void SpriteFace::RegisterFace(const Facing facing, const char* spriteId) throw()
 
 	Sprite* sprite = Singleton::spriteMap->Get(spriteId);
 	SpriteSequence* spriteSequence = sprite->InstanceSequence();
+	
+	if (sprite->spriteId == "PLAYER+LEFT" || sprite->spriteId == "PLAYER+RIGHT") {
+		
+		spriteSequence->counterTarget = 5;
+	}
 	faces[facing] = spriteSequence;
 }
 void SpriteFace::ChangeFace(const Facing facing) {

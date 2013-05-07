@@ -1,4 +1,3 @@
-#include <SDL2/SDL.h>
 #include <iostream>
 #include "sprite.h"
 #include "sprite_sequence.h"
@@ -8,12 +7,10 @@
 
 using namespace std;
 
-Sprite::Sprite(const char* spriteId, SDL_Texture* texture, const Sint16 x, const Sint16 y, const Uint16 w, const Uint16 h, const int frames) {
+Sprite::Sprite(const char* spriteId, sf::Texture* texture, const sf::IntRect& rect, const int frames) 
+: sprite(*texture) {
 
-	this->rect.x = x;
-	this->rect.y = y;
-	this->rect.w = w;
-	this->rect.h = h;
+	this->rect = rect;
 
 	this->texture = texture;
 	this->spriteId = spriteId;
@@ -24,17 +21,23 @@ Sprite::~Sprite() {
 
 }
 
-void Sprite::RenderCopy(const SDL_Rect* destinyRect, const int frame) throw() {
+void Sprite::RenderCopy(const sf::IntRect* destinyRect, const int frame) throw() {
 
-	SDL_Rect sourceRect = rect;
-	sourceRect.x += frame * sourceRect.w;
+	sf::IntRect sourceRect = rect;
+	sourceRect.left += frame * sourceRect.width;
 
-	int r = SDL_RenderCopy(Singleton::screen->renderer, texture, &sourceRect, destinyRect);
-	if(r != 0) {
+	sprite.setTexture(*texture);
+	sprite.setTextureRect(sourceRect);
 
-		cerr << "Error rendering Sprite copy -> " << SDL_GetError() << endl;
-		THROWINFO(Exception::BadRender, spriteId.c_str());
+	if (!destinyRect) {
+
+		sprite.setPosition(0.0, 0.0);
+	} else {
+
+		sprite.setPosition((float)destinyRect->left, (float)destinyRect->top);
 	}
+
+	Singleton::screen->window->draw(sprite);
 }
 
 SpriteSequence* Sprite::InstanceSequence() {

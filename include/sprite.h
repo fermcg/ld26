@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
 #include <string>
 
 using namespace std;
@@ -10,21 +10,22 @@ class SpriteSequence;
 class Sprite {
 	public:
 
-		Sprite(const char* spriteId, SDL_Texture* texture, const Sint16 x, const Sint16 y, const Uint16 w, const Uint16 h, const int frames);
+		Sprite(const char* spriteId, sf::Texture* texture, const sf::IntRect& rect, const int frames);
 		~Sprite();
 
-		void RenderCopy(const SDL_Rect* destinyRect = NULL, const int frame = 0) throw();
+		void RenderCopy(const sf::IntRect* destinyRect = NULL, const int frame = 0) throw();
 		SpriteSequence* InstanceSequence();
 
 
 		friend class SpriteSequence;
 		friend class GameObject;
 		friend class GamePanel;
-		SDL_Rect rect;
+		sf::IntRect rect;
+		string spriteId;
 	protected:
 		int frames;
 
 	private:
-		SDL_Texture* texture;
-		string spriteId;
+		sf::Sprite sprite;
+		sf::Texture* texture;
 };

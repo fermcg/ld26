@@ -1,7 +1,7 @@
 #pragma once
 
 #include <map>
-#include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
 
 #include "base_system.h"
 #include "sprite_sequence.h"
@@ -26,7 +26,7 @@ class SpriteFace : public BaseSystem {
 		void Init();
 		void Terminate();
 
-		void RenderCopy(const SDL_Rect* destinyRect) throw();
+		void RenderCopy(const sf::IntRect* destinyRect) throw();
 		SpriteSequence* GetSequence() throw();
 
 		void RegisterFace(const Facing facing, const char* spriteId) throw();

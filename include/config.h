@@ -9,7 +9,7 @@ using namespace std;
 
 class Config : public BaseSystem {
 	public:
-		Config(const char* fileName);
+		Config(const string& fileName);
 		~Config();
 
 		void Init() throw();

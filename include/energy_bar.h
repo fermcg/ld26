@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include <SFML/Graphics.hpp>
 #include "base_system.h"
 #include "sprite.h"
 
@@ -17,7 +17,7 @@ class EnergyBar : public BaseSystem {
 		void Render();
 
 		void SetEnergy(const int energy);
-		SDL_Rect rect;
+		sf::IntRect rect;
 
 	protected:
 		int energy;

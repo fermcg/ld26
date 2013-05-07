@@ -18,10 +18,10 @@ Enemy::Enemy() : AccelerableObject("Enemy", "Enemy") {
 	xAcceleration = bAcceleration;
 	yAcceleration = bAcceleration / 2.0;
 
-	boundingBox.x = 0;
-	boundingBox.y = 9;
-	boundingBox.w = 32;
-	boundingBox.h = 16;
+	boundingBox.left = 0;
+	boundingBox.top = 9;
+	boundingBox.width = 32;
+	boundingBox.height = 16;
 
 	Enemy::objectCount++;
 

@@ -3,6 +3,7 @@
 #include "sound_effect.h"
 #include "exceptions.h"
 #include "macros.h"
+#include "ResourcePath.hpp"
 
 using namespace std;
 
@@ -10,7 +11,8 @@ SoundEffect::SoundEffect(const char* fileName, const char* soundId) : BaseSystem
 
 	this->fileName = fileName;
 	this->objectId = soundId;
-	this->sample = NULL;
+	this->buffer = NULL;
+	this->sound = NULL;
 }
 
 SoundEffect::~SoundEffect() {
@@ -19,45 +21,45 @@ SoundEffect::~SoundEffect() {
 
 void SoundEffect::Init() {
 
-	sample = Mix_LoadWAV(fileName.c_str());
+	buffer = new sf::SoundBuffer();
+	if (!buffer->loadFromFile(resourcePath() + fileName)) {
 
-	if(sample == NULL) {
-
-		cerr << "Error loading sound file [" << objectId << "] [" << fileName << "]: [" << Mix_GetError() << "]" << endl;
+		cerr << "Error loading sound file [" << objectId << "] [" << fileName << "]:" << endl;
 		THROWINFO(Exception::BadObject, fileName.c_str());
 	}
+
+	sound = new sf::Sound(*buffer);
 	this->BaseSystem::Init();
 }
 
 void SoundEffect::Terminate() {
 
-	if(sample != NULL) {
+	if(sound != NULL) {
 
-		Mix_FreeChunk(sample);
-		sample = NULL;
+		delete sound;
+		sound = NULL;
+	}
+	if(buffer != NULL) {
+
+		delete buffer;
+		buffer = NULL;
 	}
 	this->BaseSystem::Terminate();
 }
 
-int SoundEffect::Play(const int channelId, const int loops) {
+void SoundEffect::Play() {
 
-	int playChannel = Mix_PlayChannel(channelId, sample, loops);
-	if(playChannel == -1) {
-
-		cerr << "Error playing sound chunk [" << objectId << "] on channel ["
-			<< channelId << "] loops [" << loops << "] [" << Mix_GetError() << "]" << endl;
-		THROWINFO(Exception::BadAudioPlay, objectId.c_str());
-	}
-
-	return playChannel;
+	sound->setLoop(false);
+	sound->play();
 }
 
-int SoundEffect::Start(const int channelId) {
-
-	return Play(channelId, -1);
+void SoundEffect::Start() {
+	
+	sound->setLoop(true);
+	sound->play();
 }
 
-void SoundEffect::Stop(const int channelId) {
+void SoundEffect::Stop() {
 
-	Mix_HaltChannel(channelId);
+	sound->stop();
 }

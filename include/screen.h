@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
 #include "base_system.h"
 
 class Screen : public BaseSystem {
@@ -13,10 +13,13 @@ class Screen : public BaseSystem {
 
 		void ToogleFullScreen();
 
-		SDL_Window* window;	
-		SDL_Renderer* renderer;
+		sf::RenderWindow* window;	
+		sf::View *view;
 
 	private:
 
 		bool fullScreen;
+		sf::Image icon;
+		sf::VideoMode videoMode;
+		string gameTitle;
 };
