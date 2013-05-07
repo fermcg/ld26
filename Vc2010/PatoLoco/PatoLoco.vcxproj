@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0D1D6491-2D1D-4885-9D87-89351A7A7310}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>PatoLoco</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Pessoal\api\SFML-2.0-VC10\include;C:\Pessoal\api\boost_1_53_0;../../include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Pessoal\api\SFML-2.0-VC10\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Pessoal\api\SFML-2.0-VC10\include;C:\Pessoal\api\boost_1_53_0;../../include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Pessoal\api\SFML-2.0-VC10\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>sfml-audio-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\accelerable_object.cpp" />
+    <ClCompile Include="..\..\src\all_objects.cpp" />
+    <ClCompile Include="..\..\src\aux_functions.cpp" />
+    <ClCompile Include="..\..\src\base_system.cpp" />
+    <ClCompile Include="..\..\src\brick_object.cpp" />
+    <ClCompile Include="..\..\src\config.cpp" />
+    <ClCompile Include="..\..\src\config_map.cpp" />
+    <ClCompile Include="..\..\src\config_section.cpp" />
+    <ClCompile Include="..\..\src\door_object.cpp" />
+    <ClCompile Include="..\..\src\empty_block.cpp" />
+    <ClCompile Include="..\..\src\enemy.cpp" />
+    <ClCompile Include="..\..\src\energy_bar.cpp" />
+    <ClCompile Include="..\..\src\exceptions.cpp" />
+    <ClCompile Include="..\..\src\game_loop.cpp" />
+    <ClCompile Include="..\..\src\game_object.cpp" />
+    <ClCompile Include="..\..\src\game_panel.cpp" />
+    <ClCompile Include="..\..\src\game_system.cpp" />
+    <ClCompile Include="..\..\src\lethal_block.cpp" />
+    <ClCompile Include="..\..\src\lethal_empty_block.cpp" />
+    <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\number_power.cpp" />
+    <ClCompile Include="..\..\src\player.cpp" />
+    <ClCompile Include="..\..\src\player_shot.cpp" />
+    <ClCompile Include="..\..\src\power_up.cpp" />
+    <ClCompile Include="..\..\src\projectile.cpp" />
+    <ClCompile Include="..\..\src\screen.cpp" />
+    <ClCompile Include="..\..\src\singletons.cpp" />
+    <ClCompile Include="..\..\src\sound_effect.cpp" />
+    <ClCompile Include="..\..\src\sound_effects_map.cpp" />
+    <ClCompile Include="..\..\src\spike_block.cpp" />
+    <ClCompile Include="..\..\src\sprite.cpp" />
+    <ClCompile Include="..\..\src\sprite_face.cpp" />
+    <ClCompile Include="..\..\src\sprite_map.cpp" />
+    <ClCompile Include="..\..\src\sprite_sequence.cpp" />
+    <ClCompile Include="..\..\src\stage.cpp" />
+    <ClCompile Include="..\..\src\stage_map.cpp" />
+    <ClCompile Include="..\..\src\teal_brick.cpp" />
+    <ClCompile Include="..\..\src\teal_cracked_brick.cpp" />
+    <ClCompile Include="..\..\src\texture.cpp" />
+    <ClCompile Include="..\..\src\texture_map.cpp" />
+    <ClCompile Include="ResourcePath.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\accelerable_object.h" />
+    <ClInclude Include="..\..\include\all_objects.h" />
+    <ClInclude Include="..\..\include\aux_functions.h" />
+    <ClInclude Include="..\..\include\base_system.h" />
+    <ClInclude Include="..\..\include\brick_object.h" />
+    <ClInclude Include="..\..\include\config.h" />
+    <ClInclude Include="..\..\include\config_map.h" />
+    <ClInclude Include="..\..\include\config_section.h" />
+    <ClInclude Include="..\..\include\door_object.h" />
+    <ClInclude Include="..\..\include\empty_block.h" />
+    <ClInclude Include="..\..\include\enemy.h" />
+    <ClInclude Include="..\..\include\energy_bar.h" />
+    <ClInclude Include="..\..\include\exceptions.h" />
+    <ClInclude Include="..\..\include\exit_codes.h" />
+    <ClInclude Include="..\..\include\game_loop.h" />
+    <ClInclude Include="..\..\include\game_object.h" />
+    <ClInclude Include="..\..\include\game_panel.h" />
+    <ClInclude Include="..\..\include\game_system.h" />
+    <ClInclude Include="..\..\include\lethal_block.h" />
+    <ClInclude Include="..\..\include\lethal_empty_block.h" />
+    <ClInclude Include="..\..\include\macros.h" />
+    <ClInclude Include="..\..\include\number_power.h" />
+    <ClInclude Include="..\..\include\player.h" />
+    <ClInclude Include="..\..\include\player_shot.h" />
+    <ClInclude Include="..\..\include\power_up.h" />
+    <ClInclude Include="..\..\include\projectile.h" />
+    <ClInclude Include="..\..\include\ResourcePath.hpp" />
+    <ClInclude Include="..\..\include\screen.h" />
+    <ClInclude Include="..\..\include\singletons.h" />
+    <ClInclude Include="..\..\include\sound_effect.h" />
+    <ClInclude Include="..\..\include\sound_effects_map.h" />
+    <ClInclude Include="..\..\include\spike_block.h" />
+    <ClInclude Include="..\..\include\sprite.h" />
+    <ClInclude Include="..\..\include\sprite_face.h" />
+    <ClInclude Include="..\..\include\sprite_map.h" />
+    <ClInclude Include="..\..\include\sprite_sequence.h" />
+    <ClInclude Include="..\..\include\stage.h" />
+    <ClInclude Include="..\..\include\stage_map.h" />
+    <ClInclude Include="..\..\include\teal_brick.h" />
+    <ClInclude Include="..\..\include\teal_cracked_brick.h" />
+    <ClInclude Include="..\..\include\texture.h" />
+    <ClInclude Include="..\..\include\texture_map.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
