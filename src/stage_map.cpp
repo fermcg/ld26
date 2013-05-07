@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 
 #include "stage_map.h"
 #include "exceptions.h"
@@ -155,7 +156,7 @@ void StageMap::ReadStageLine(const string& line) {
 		yPos = boost::lexical_cast<int>(strY);
 		xSize = boost::lexical_cast<int>(strW);
 		ySize = boost::lexical_cast<int>(strH);
-	} catch(bad_cast& e) {
+	} catch(bad_cast&) {
 
 		cerr << "Bad line at stage file: [" << lineNumber << "]: [" << line << "]" << endl;
 		THROW(Exception::BadConfig);				
@@ -181,9 +182,9 @@ void StageMap::ReadProperty(const string& line) {
 	if(propertyName == "bg") {
 
 		stage->SetBackground(propertyValue.c_str());
-	} else if(propertyName == "hideEnergyBar") {
+	} else if(propertyName == "hideGamePanel") {
 
-		stage->SetHideEnergyBar(propertyValue == "1");
+		stage->SetHideGamePanel(propertyValue == "1");
 	}
 }
 
@@ -306,11 +307,11 @@ void StageMap::LoadStage() {
 			}
 		}
 	}
+#ifdef MERGE
 
 	int postMergeCount = preMergeCount;
 	// try to merge blocks on x axis.
 
-#ifdef MERGE
 	for(j = 0; j < stage->ySize; j++) {
 
 		int last_merge = -1;

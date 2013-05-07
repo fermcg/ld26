@@ -18,7 +18,7 @@ namespace Singleton {
 		if (initialized) {
 
 			cerr << "Singleton::Init - called after initializing" << endl;
-			THROWLOCATIONINFO(Exception::ShouldNotBeReached, "Singleton");
+			THROWINFO(Exception::ShouldNotBeReached, "Singleton");
 		}
 
 		config = NULL;
@@ -26,7 +26,7 @@ namespace Singleton {
 		screen = NULL;
 		textureMap = NULL;
 		spriteMap = NULL;
-		energyBar = NULL;
+		gamePanel = NULL;
 		soundEffectsMap = NULL;
 		allFriends = NULL;
 		//allEnemies = NULL;
@@ -40,7 +40,7 @@ namespace Singleton {
 		screen = new Screen();
 		textureMap = new TextureMap();
 		spriteMap = new SpriteMap();
-		energyBar = new EnergyBar();
+		gamePanel = new GamePanel();
 		soundEffectsMap = new SoundEffectsMap();
 		stageMap = new StageMap();
 		allFriends = new AllObjects();
@@ -53,7 +53,7 @@ namespace Singleton {
 		screen->Init();
 		textureMap->Init();
 		spriteMap->Init();
-		energyBar->Init();
+		gamePanel->Init();
 		soundEffectsMap->Init();
 		stageMap->Init();
 		allFriends->Init();
@@ -76,7 +76,7 @@ namespace Singleton {
 		allFriends->Terminate();
 		stageMap->Terminate();
 		soundEffectsMap->Terminate();
-		energyBar->Terminate();
+		gamePanel->Terminate();
 		spriteMap->Terminate();
 		textureMap->Terminate();
 		screen->Terminate();
@@ -89,7 +89,7 @@ namespace Singleton {
 		DELETENULL(allFriends);
 		DELETENULL(stageMap);
 		DELETENULL(soundEffectsMap);
-		DELETENULL(energyBar);
+		DELETENULL(gamePanel);
 		DELETENULL(spriteMap);
 		DELETENULL(textureMap);
 		DELETENULL(screen);

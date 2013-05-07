@@ -25,6 +25,7 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 	boundingBox.w = 0;
 	boundingBox.h = 0;
 
+	maxEnergy = 1;
 	energy = 1;
 	damage = BigDamage;
 
@@ -214,12 +215,12 @@ void GameObject::HoldMeBack(AccelerableObject& other) {
 	if(zeroX && !zeroY) {
 	
 		other.xSpeed = 0.0;
-		other.xAcceleration = 0.0;
+//		other.xAcceleration = 0.0;
 	}
 	if(zeroY) {
 
 		other.ySpeed = 0.0;
-		other.yAcceleration = 0.0;
+//		other.yAcceleration = 0.0;
 	}
 	return;
 	

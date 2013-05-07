@@ -4,6 +4,7 @@
 #include "door_object.h"
 #include "number_power.h"
 #include "sound_effect.h"
+#include "player_shot.h"
 
 
 class Player : public AccelerableObject {
@@ -32,16 +33,31 @@ class Player : public AccelerableObject {
 		void OnCollision(GameObject& other);
 
 		void HandleLogic();
+		void Render();
 		void Ressurrect();
+
+		void ShowPowerUps();
 
 		void GetNumberPower(NumberPower& other);
 
 		friend class PlayerShot;
+		friend class GamePanel;
 	protected:
 		SpriteFace* CreateSpriteFace();
 
+		int power;
+		int distance;
+		int doubleJumps;
+		int doubleJumpsNow;
+
+		int maxPower;
+		int maxDistance;
+		int maxDoubleJumps;
+
+		int shortDistance;
+
 	private:
-		void IncreaseHealth(const int energy);
+		void IncreasePower(const int power);
 		void IncreaseDistance(const int distance);
 		void IncreaseJump(const int doubleJumps);
 
@@ -63,6 +79,7 @@ class Player : public AccelerableObject {
 
 		bool accelerationChanged;
 		bool fireChanged;
+		Projectile::Direction nextShotDirection;
 		SoundEffect* sfxStep;
 		SoundEffect* sfxStrongLaser;
 		SoundEffect* sfxJump;
@@ -70,11 +87,5 @@ class Player : public AccelerableObject {
 		SoundEffect* sfxPowerup;
 		SoundEffect* sfxPortal;
 
-		int distance;
-		int doubleJumps;
-
-		int maxEnergy;
-		int maxDistance;
-		int maxDoubleJumps;
 		DoorObject* door;
 };

@@ -9,15 +9,15 @@ using namespace std;
 
 Player::Player() : AccelerableObject("Player", "Player") {
 
-	bAcceleration = 0.02;
-	gAcceleration = 0.02;
+	bAcceleration = 0.04;
+	gAcceleration = 0.03;
 
 	// Accelerable vars
 
 	xMinSpeed = 0.0;
-	xMaxSpeed = 1.5;
+	xMaxSpeed = 1.3;
 	yMinSpeed = 0.0;
-	yMaxSpeed = 1.8;
+	yMaxSpeed = 1.6;
 
 	xBreaking = 0.05;
 	yBreaking = 0.05;
@@ -49,14 +49,20 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	walking = false;
 	isPlayer = true;
 
-	energy = EnergyBar::MaxEnergy;
-	distance = 0;
-	doubleJumps = 0;
 
-	maxEnergy = EnergyBar::MaxEnergy;
+	maxEnergy = 5000;
+	maxPower = 9;
 	maxDistance = 10;
 	maxDoubleJumps = 10;
 
+	energy = maxEnergy;
+	power = 0;
+	distance = 0;
+	doubleJumps = 0;
+	doubleJumpsNow = 0;
+
+	shortDistance = 4;
+	nextShotDirection = Projectile::down;
 }
 
 Player::~Player() {
@@ -65,8 +71,10 @@ Player::~Player() {
 
 void Player::Ressurrect() {
 
-	energy = EnergyBar::MaxEnergy;
+	energy = maxEnergy;
 	dead = false;
+	distance = 0;
+	doubleJumps = 0;
 }
 
 void Player::Init() throw() {
@@ -92,12 +100,14 @@ void Player::Terminate() {
 
 void Player::OnCollision(GameObject& other) {
 
-	Singleton::energyBar->SetEnergy(energy);
 	if(energy < 0) {
 
 		dead = true;
 		sfxDeath->Play(7);
 		cout << "Game Over" << endl;
+
+		Singleton::gameLoop->GameOver();
+		return;
 		Stage* nextStage = Singleton::stageMap->Get("MENU");
 		if(nextStage != NULL) {
 
@@ -119,15 +129,44 @@ void Player::OnCollision(GameObject& other) {
 void Player::HandleLogic() {
 
 	door = NULL;
+	
+	if(xAcceleration > 0.0) {
+
+		spriteFace->ChangeFace(SpriteFace::right);
+	} else if(xAcceleration < 0.0) {
+
+		spriteFace->ChangeFace(SpriteFace::left);
+	} else if(downIsOn) {
+
+		spriteFace->ChangeFace(SpriteFace::front);
+	} else if(xAcceleration == 0.0) {
+
+		spriteFace->ChangeFace(SpriteFace::front);
+	}
+
+	if (leftIsOn && !rightIsOn) {
+		nextShotDirection = Projectile::left;
+	} else if (rightIsOn && !leftIsOn) {
+		nextShotDirection = Projectile::right;
+	} else if (upIsOn && !downIsOn) {
+		nextShotDirection = Projectile::up;
+	} else if (downIsOn && !upIsOn) {
+		nextShotDirection = Projectile::down;
+	}
+
 	this->AccelerableObject::HandleLogic();
 	if(xAcceleration != 0.0 && !walking && grounded) {
 
 		walking = true;
 		sfxStep->Start(1);
-	} else if (xAcceleration == 0.0 && walking || walking && !grounded) {
+	} else if (walking && (xAcceleration == 0.0 || !grounded)) {
 
 		walking = false;
 		sfxStep->Stop(1);
+	}
+	if (grounded) {
+
+		doubleJumpsNow = 0;
 	}
 }
 
@@ -136,7 +175,7 @@ void Player::GetNumberPower(NumberPower& other) {
 	switch(other.color) {
 
 		case NumberPower::red:
-			IncreaseHealth(other.number);
+			IncreasePower(other.number);
 			break;
 		case NumberPower::green:
 			IncreaseDistance(other.number);
@@ -148,12 +187,12 @@ void Player::GetNumberPower(NumberPower& other) {
 	sfxPowerup->Play(4);
 }
 
-void Player::IncreaseHealth(const int energy) {
+void Player::IncreasePower(const int power) {
 
-	this->energy += energy;
-	if(this->energy > maxEnergy) {
+	this->power += power;
+	if(this->power > maxPower) {
 
-		this->energy = maxEnergy;
+		this->power = maxPower;
 	}
 }
 
@@ -173,8 +212,6 @@ void Player::IncreaseJump(const int doubleJumps) {
 
 		this->doubleJumps = maxDoubleJumps - 1;
 	}
-
-	cout << "Jump = " << this->doubleJumps << endl;
 }
 
 SpriteFace* Player::CreateSpriteFace() {
@@ -224,7 +261,9 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 			break;
 		case down:
 			if(downIsOn != set) {
-
+				
+				downIsOn = set;
+				changed = true;
 			}
 			break;
 		case jump:
@@ -290,9 +329,17 @@ void Player::ActionDoor() {
 
 void Player::ActionJump() {
 
-	if(!grounded && doubleJumps <= 0) {
+	if(!grounded) {
 
-		return;
+		if (doubleJumps <= 0) {
+
+			return;
+		}
+
+		if (doubleJumpsNow > 0) {
+
+			return;
+		}
 	}
 
 	ySpeed = -yMaxSpeed;
@@ -301,13 +348,14 @@ void Player::ActionJump() {
 	if(!grounded && doubleJumps >= 1) {
 
 		doubleJumps--;
+		doubleJumpsNow++;
 	}
 }
 
 void Player::ActionShot() {
 
 	sfxStrongLaser->Play(2);
-
+/*
 	Projectile::Direction nextShotDirection;
 	if(upIsOn && !downIsOn) {
 
@@ -315,7 +363,25 @@ void Player::ActionShot() {
 	} else if(downIsOn && !upIsOn && !grounded) {
 
 		nextShotDirection = Projectile::down;
-	} else if(xSpeed > 0.0) {
+	} else {
+
+		if(spriteFace->facing == SpriteFace::left) {
+
+			nextShotDirection = Projectile::left;
+		} else if(spriteFace->facing == SpriteFace::right) {
+
+			nextShotDirection = Projectile::right;
+		} else if(spriteFace->facing == SpriteFace::front) {
+
+			nextShotDirection = Projectile::down;
+		} else {
+
+			cout << "facing = " << spriteFace->facing << endl;
+		}
+	}
+
+
+	}else if(xSpeed > 0.0) {
 
 		nextShotDirection = Projectile::right;
 	} else if(xSpeed < 0.0) {
@@ -324,11 +390,45 @@ void Player::ActionShot() {
 	} else {
 
 		nextShotDirection = Projectile::down;
-	}
+	}*/
 
-	PlayerShot* shot = new PlayerShot(*this, nextShotDirection);
+	PlayerShot* shot = new PlayerShot(*this, nextShotDirection, distance + shortDistance, power);
 	shot->Init();
 	Singleton::allFriends->RegisterObject(shot);
+	distance--;
+	if(distance < 0) {
+
+		distance = 0;
+	}
+	power--;
+	if(power < 0) {
+
+		power = 0;
+	}
+}
+
+void Player::Render() {
+
+	this->AccelerableObject::Render();
+}
+
+void Player::ShowPowerUps() {
+
+//	Sprite* spriteR = Singleton::spriteMap->Get("NUMBERS+R");
+	Sprite* spriteG = Singleton::spriteMap->Get("NUMBERS+G");
+	Sprite* spriteB = Singleton::spriteMap->Get("NUMBERS+B");
+
+	SDL_Rect rect;
+
+	rect.x = 410;
+	rect.y = 20;
+	rect.w = 8;
+	rect.h = 8;
+
+	spriteG->RenderCopy(&rect, distance);
+
+	rect.x += 16;
+	spriteB->RenderCopy(&rect, doubleJumps);
 }
 
 void Player::PrintStates() {

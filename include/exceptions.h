@@ -21,6 +21,7 @@ namespace Exception {
 		face_not_found = 9,
 		sound_not_found = 10,
 		stage_not_found = 11,
+		full_screen_failure = 19,
 		bad_render = 20,
 		bad_audio_play = 30,
 		overflow = 96,
@@ -131,6 +132,11 @@ namespace Exception {
 		public:
 			ObjectNotFound() : Base(object_not_found, "Object Not Found") {};
 			ObjectNotFound(const char* objectId) : Base(object_not_found, "Object Not Found", objectId) {};	
+	};
+
+	class FullScreenFailure : public Base {
+		public:
+			FullScreenFailure() : Base(full_screen_failure, "FullScreen toogle failure") {};
 	};
 
 	class BadRender : public Base {

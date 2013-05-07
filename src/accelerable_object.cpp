@@ -56,7 +56,7 @@ void AccelerableObject::HandleLogic() {
 				xSpeed = xMinSpeed;
 			}
 		}
-		spriteFace->ChangeFace(SpriteFace::right);
+		//spriteFace->ChangeFace(SpriteFace::right);
 
 	} else if(xAcceleration < 0.0) {
 
@@ -69,7 +69,7 @@ void AccelerableObject::HandleLogic() {
 				xSpeed = -xMinSpeed;
 			}
 		}
-		spriteFace->ChangeFace(SpriteFace::left);
+		//spriteFace->ChangeFace(SpriteFace::left);
 
 	} else if(xBreaking > 0.0) {
 
@@ -133,7 +133,7 @@ void AccelerableObject::HandleLogic() {
 
 	if(xSpeed == 0.0 && xAcceleration == 0.0) {
 
-		spriteFace->ChangeFace(SpriteFace::front);
+		//spriteFace->ChangeFace(SpriteFace::front);
 	}
 
 	newX = x + xSpeed;

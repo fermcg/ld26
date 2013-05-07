@@ -1,8 +1,12 @@
+#include <iostream>
 #include "player_shot.h"
 
-PlayerShot::PlayerShot(Player& father, Projectile::Direction direction) : Projectile("PlayerShot", "shot") {
+using namespace std;
+
+PlayerShot::PlayerShot(Player& father, Projectile::Direction direction, const int distance, const int power) : Projectile("PlayerShot", "shot") {
 
 	this->direction = direction;
+	this->distance = distance * 8;
 
 	yAcceleration = 0.0;
 	xAcceleration = 0.0;
@@ -42,11 +46,11 @@ PlayerShot::PlayerShot(Player& father, Projectile::Direction direction) : Projec
 
 	this->w = 8;
 	this->h = 8;
-	this->x = father.x + father.w/2 - 1;
+	this->x = father.x;
 	this->y = father.y + father.h/2 - 1;
 
 	energy = 1;
-	damage = 300;
+	damage = 300 + 100*power;
 }
 
 PlayerShot::~PlayerShot() {
@@ -64,15 +68,38 @@ SpriteFace* PlayerShot::CreateSpriteFace() {
 
 void PlayerShot::HandleLogic() {
 
+	double oldX = x;
+	double oldY = y;
+
 	this->Projectile::HandleLogic();
+
+	double diff = x - oldX;
+	if(diff == 0.0) {
+
+		diff = y - oldY;
+	}
+
+	if(diff < 0.0) {
+
+		diff = -diff;
+	}
+
+	distance -= (int)diff;
+
+	if(distance <= 0) {
+
+		dead = true;
+	}
 }
 
 void PlayerShot::OnCollision(GameObject& other) {
-	
+
 	if(other.unbreakable) {
 
 		dead = true;
 	}
+
+	this->Projectile::OnCollision(other);
 
 
 }

@@ -15,10 +15,3 @@ throw(e)
 	X e(I); \
 throw(e)
 
-#define THROWLOCATIONINFO(X, I) \
-{ \
-	ostringstream oss; \
-	oss << I << ": [" << __FILE__ << "][" << __LINE__ << "][" << __func__ << "]"; \
-	X e(oss.str().c_str()); \
-	throw(e); \
-}

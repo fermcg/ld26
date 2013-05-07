@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <iostream>
 #include "game_loop.h"
 #include "singletons.h"
@@ -9,6 +9,7 @@ using namespace std;
 GameLoop::GameLoop() : BaseSystem("GameLoop") {
 
 	currentStage = NULL;
+	gameOver = false;
 }
 
 GameLoop::~GameLoop() {
@@ -24,6 +25,11 @@ void GameLoop::Init() throw() {
 
 void GameLoop::Terminate() {
 
+}
+
+void GameLoop::GameOver() {
+
+	gameOver = true;
 }
 
 void GameLoop::Loop() throw() {
@@ -94,7 +100,7 @@ void GameLoop::HandleEvents() {
 						break;
 					case SDL_WINDOWEVENT_CLOSE:
 						cout << "SDL_WINDOWEVENT_CLOSE" << endl;
-						keepWalking - false;
+						keepWalking = false;
 						break;
 					default:
 						cout << "Unknown [" << (int)event.window.event << "]" << endl;
@@ -125,6 +131,12 @@ void GameLoop::HandleEvents() {
 						break;
 					case SDLK_z:
 						Singleton::player->CommandSetOrReset(Player::jump, event.type == SDL_KEYDOWN);
+						break;
+					case SDLK_f:
+						if(event.type == SDL_KEYDOWN) {
+
+							Singleton::screen->ToogleFullScreen();
+						}
 						break;
 					default:
 						cout << "Symbol:" << event.key.keysym.sym << endl;
@@ -164,6 +176,7 @@ void GameLoop::HandleLogic() {
 
 void GameLoop::Render() {
 
+//	SDL_SetRenderDrawColor(Singleton::screen->renderer, 102, 204, 255, 0);
 	SDL_SetRenderDrawColor(Singleton::screen->renderer, 0, 0, 0, 0);
 	SDL_RenderClear(Singleton::screen->renderer);
 
@@ -179,5 +192,24 @@ void GameLoop::Render() {
 
 void GameLoop::LoopEnd() {
 
+	if(gameOver) {
+
+		Singleton::stageMap->Terminate();
+		delete Singleton::stageMap;
+		Singleton::stageMap = new StageMap();
+		Singleton::stageMap->Init();
+		gameOver = false;
+
+		Stage* nextStage = Singleton::stageMap->Get("MENU");
+		if(nextStage != NULL) {
+
+			currentStage = nextStage;
+			nextStage->PositionPlayer();
+			Singleton::player->Ressurrect();
+		} else {
+
+			cerr << "Error" << endl;
+		}
+	}
 }
 

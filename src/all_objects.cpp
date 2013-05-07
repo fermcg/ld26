@@ -182,6 +182,9 @@ GameObject* AllObjects::CreateObject(const string& objectClass) {
 	} else if(objectClass == "SPIKES") {
 
 		object = new SpikeBlock();
+//	} else if(objectClass == "BOUNCING+ENEMY") {
+//
+//		object = new BouncingEnemy();
 	} else if(objectClass.substr(2, 7) == "NUMBER>") {
 
 		if(objectClass.size() != 10) {

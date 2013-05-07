@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <string>
 
 using namespace std;
@@ -19,9 +19,9 @@ class Sprite {
 
 		friend class SpriteSequence;
 		friend class GameObject;
-		friend class EnergyBar;
-	protected:
+		friend class GamePanel;
 		SDL_Rect rect;
+	protected:
 		int frames;
 
 	private:

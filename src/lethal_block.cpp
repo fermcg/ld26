@@ -4,6 +4,7 @@ LethalBlock::LethalBlock(const char* name, const char* objectId) : BrickObject(n
 
 	lethal = true;
 	damage = 10000;
+	solid = false;
 }
 
 LethalBlock::~LethalBlock() {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <map>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 #include "base_system.h"
 #include "sprite_sequence.h"

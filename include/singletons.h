@@ -5,7 +5,7 @@
 #include "screen.h"
 #include "texture_map.h"
 #include "sprite_map.h"
-#include "energy_bar.h"
+#include "game_panel.h"
 #include "sound_effects_map.h"
 #include "stage_map.h"
 #include "player.h"
@@ -27,7 +27,7 @@ namespace Singleton {
 	SINGLETON Screen* screen;
 	SINGLETON TextureMap* textureMap;
 	SINGLETON SpriteMap* spriteMap;
-	SINGLETON EnergyBar* energyBar;
+	SINGLETON GamePanel* gamePanel;
 	SINGLETON SoundEffectsMap* soundEffectsMap;
 	SINGLETON StageMap* stageMap;
 	SINGLETON AllObjects* allFriends;

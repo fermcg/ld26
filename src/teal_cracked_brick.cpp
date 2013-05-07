@@ -3,6 +3,8 @@
 TealCrackedBrick::TealCrackedBrick() : BrickObject("TealCrackedBrick", "TealCrackedBrick") {
 
 	unbreakable = false;
+	energy = 300;
+	damage = 1;
 }
 
 TealCrackedBrick::~TealCrackedBrick() {
