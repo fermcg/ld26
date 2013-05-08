@@ -132,16 +132,25 @@ void Player::HandleLogic() {
 	
 	if(xAcceleration > 0.0) {
 
-		spriteFace->ChangeFace(SpriteFace::right);
+		if (grounded) {
+			spriteFace->ChangeFace(SpriteFace::right);
+		} else {
+			spriteFace->ChangeFace(SpriteFace::jumping_right);
+		}
 	} else if(xAcceleration < 0.0) {
+		
+		if (grounded) {
+			spriteFace->ChangeFace(SpriteFace::left);
+		} else {
+			spriteFace->ChangeFace(SpriteFace::jumping_left);
+		}
+	} else if(downIsOn || xAcceleration == 0.0) {
 
-		spriteFace->ChangeFace(SpriteFace::left);
-	} else if(downIsOn) {
-
-		spriteFace->ChangeFace(SpriteFace::front);
-	} else if(xAcceleration == 0.0) {
-
-		spriteFace->ChangeFace(SpriteFace::front);
+		if (grounded) {
+			spriteFace->ChangeFace(SpriteFace::front);
+		} else {
+			spriteFace->ChangeFace(SpriteFace::jumping_front);
+		}
 	}
 
 	if (leftIsOn && !rightIsOn) {

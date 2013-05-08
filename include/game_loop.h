@@ -18,6 +18,7 @@ class GameLoop : public BaseSystem {
 		Stage* currentStage;
 		friend class StageMap;
 
+		long score;
 	private:
 		void LoopStart();
 		void HandleEvents();

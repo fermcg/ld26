@@ -17,7 +17,8 @@ Op     d O
 OOOOOOOOOO
 ]
 STAGE01:20,20-40x20
-!#=BRICK+TEAL
+@color=50,123,80
+!#=BRICK+TEAL,BRICK+BROWN
 !~=CRACK+TEAL
 !X=DEATH
 !*=SPIKES
@@ -45,8 +46,9 @@ STAGE01:20,20-40x20
 ########################################
 ]
 STAGE02:20,30-40x10
-!#=BRICK+TEAL
-!~=CRACK+TEAL
+@color=85,207,135
+!#=BRICK+TEAL,BRICK+COLORS
+!~=CRACK+TEAL,BRICK+BLINK
 !X=DEATH
 !*=SPIKES
 !D=DOOR>STAGE03
@@ -63,6 +65,7 @@ STAGE02:20,30-40x10
 ########################################
 ]
 STAGE03:0,10-80x41
+@color=108,54,0
 !#=BRICK+TEAL
 !~=CRACK+TEAL
 !X=DEATH

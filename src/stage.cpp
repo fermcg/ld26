@@ -1,7 +1,15 @@
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
+#include <vector>
+#include <string>
 #include "stage.h"
 #include "brick_object.h"
 #include "singletons.h"
+#include "exceptions.h"
+#include "macros.h"
 
+using std::vector;
+using std::string;
 
 Stage::Stage(const char* stageId, const int xPos, const int yPos, const int xSize, const int ySize) {
 
@@ -55,6 +63,62 @@ void Stage::SetNoViewPort(const bool noViewPort) {
 	this->noViewPort = noViewPort;
 }
 
+void Stage::SetColor(const string& colorString) {
+
+	vector<string> colorVector;
+	
+	boost::split(colorVector, colorString, boost::is_any_of(", "),
+				 boost::token_compress_on);
+	
+	if (colorVector.size() < 3 || colorVector.size() > 4) {
+		
+		cerr << "Error setting stage color. invalid string ["
+		<< colorString << "]" << endl;
+		
+		THROWINFO(Exception::BadConfigValue, colorString.c_str());
+	}
+
+	int r, g, b, a;
+	
+	try {
+	
+		r = boost::lexical_cast<int>(colorVector[0]);
+		g = boost::lexical_cast<int>(colorVector[1]);
+		b = boost::lexical_cast<int>(colorVector[2]);
+		
+		if (colorVector.size() == 4) {
+			
+			a = boost::lexical_cast<int>(colorVector[3]);
+		} else {
+			
+			a = 0;
+		}
+	} catch(bad_cast&) {
+		
+		cerr << "Error setting stage color. non numeric ["
+		<< colorString << "]" << endl;
+		
+		THROWINFO(Exception::BadConfigValue, colorString.c_str());
+	}
+	
+	if (r < 0 || r > 255 ||
+		g < 0 || g > 255 ||
+		b < 0 || b > 255 ||
+		a < 0 || a > 255) {
+		
+		cerr << "Error setting stage color. must be in [0-255] range ["
+		<< colorString << "]" << endl;
+		
+		THROWINFO(Exception::BadConfigValue, colorString.c_str());
+		
+	}
+	
+	color.r = (sf::Uint8)r;
+	color.g = (sf::Uint8)g;
+	color.b = (sf::Uint8)b;
+	color.a = (sf::Uint8)a;
+}
+
 void Stage::SetPlayerStartPosition(const int x, const int y) {
 
 	playerStartX = (xPos + x) * BrickObject::Width;
@@ -68,6 +132,8 @@ void Stage::PositionPlayer() {
 }
 
 void Stage::Render() {
+
+	Singleton::screen->window->clear(color);
 
 	if(background != NULL) {
 
@@ -95,9 +161,9 @@ void Stage::Render() {
 			
 			viewX = 0.0;
 		}
-		if (viewY < 0.0) {
+		if (viewY < 0.1) {
 			
-			viewY = 0.0;
+			viewY = 0.1;
 		}
 		if (viewX > Singleton::screen->window->getSize().x) {
 			
@@ -114,11 +180,18 @@ void Stage::Render() {
 		Singleton::screen->window->setView(*Singleton::screen->view);
 	}
 	this->AllObjects::Render();
+	
+	if(!hideGamePanel) {
+		
+		Singleton::gamePanel->Render();
+	}
 }
 
-GameObject* Stage::CreateObject(const string& objectClass) {
+GameObject* Stage::CreateObject(const string& objectClass,
+								const string& objectFace) {
 
-	GameObject* object = this->AllObjects::CreateObject(objectClass);
+	GameObject* object = this->AllObjects::CreateObject(objectClass,
+														objectFace);
 
 	if(object != NULL) {
 

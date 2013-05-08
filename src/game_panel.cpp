@@ -1,5 +1,10 @@
 #include "game_panel.h"
 #include "singletons.h"
+#include "ResourcePath.hpp"
+
+#include <sstream>
+
+using std::ostringstream;
 
 GamePanel::GamePanel() : BaseSystem("GamePanel") {
 }
@@ -28,12 +33,19 @@ void GamePanel::Init() {
 	powerUpsRect.width = 8;
 	powerUpsRect.height = 8;
 	
+	sf::IntRect scoreRect;
+	scorePosition.x = (float)powerUpsRect.left + 48;
+	scorePosition.y = (float)energyBarRect.top - 8;
+	
 	float width = (float) Singleton::screen->window->getSize().x;
 	float height = (float) Singleton::screen->window->getSize().y;
 	view.setSize(width, height);
 	view.setCenter(width / 2.0, height / 2.0);
 	view.setViewport(sf::FloatRect(0.0,0.0,1.0,1.0));
-
+	
+	font.loadFromFile(resourcePath() + "pixelated.ttf");
+	scoreText.setFont(font);
+	scoreText.setCharacterSize(10);
 }
 
 void GamePanel::Terminate() {
@@ -46,6 +58,7 @@ void GamePanel::Render() {
 	Singleton::screen->window->setView(view);
 	ShowEnergyBar();
 	ShowPowerUps();
+	ShowScore();
 	Singleton::screen->window->setView(*Singleton::screen->view);
 }
 
@@ -71,4 +84,17 @@ void GamePanel::ShowPowerUps() {
 	powerUpRect.left += 12;
 
 	blueNumbers->RenderCopy(&powerUpRect, Singleton::player->doubleJumps);
+}
+
+void GamePanel::ShowScore() {
+	
+	ostringstream ss;
+	
+	ss << Singleton::gameLoop->score;
+	
+	scoreText.setString(ss.str());
+	scoreText.setColor(sf::Color::White);
+
+	scoreText.setPosition(scorePosition);
+	Singleton::screen->window->draw(scoreText);
 }

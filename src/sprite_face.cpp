@@ -63,7 +63,7 @@ void SpriteFace::RegisterFace(const Facing facing, const char* spriteId) throw()
 	
 	if (sprite->spriteId == "PLAYER+LEFT" || sprite->spriteId == "PLAYER+RIGHT") {
 		
-		spriteSequence->counterTarget = 5;
+		spriteSequence->counterTarget = 3;
 	}
 	faces[facing] = spriteSequence;
 }

@@ -23,7 +23,8 @@ class AllObjects : public BaseSystem {
 
 		bool LoopCheckForCollision(GameObject& gameObject);
 
-		virtual GameObject* CreateObject(const string& objectClass);
+		virtual GameObject* CreateObject(const string& objectClass,
+										 const string& objectSequence);
 		void HoldMeBack(AccelerableObject& other);
 		bool AmIGrounded(const AccelerableObject& other);
 

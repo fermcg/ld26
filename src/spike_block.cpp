@@ -6,6 +6,8 @@ SpikeBlock::SpikeBlock() : LethalBlock("SpikeBlock", "SpikeBlock") {
 	boundingBox.top = 2;
 	boundingBox.width = 6;
 	boundingBox.height = 6;
+	
+	mirrored = true;
 }
 
 SpikeBlock::~SpikeBlock() {
@@ -25,7 +27,10 @@ SpriteFace* SpikeBlock::CreateSpriteFace() {
 
 	SpriteFace* face = new SpriteFace("Spike Face");
 
-	face->RegisterFace(SpriteFace::front, "SPIKES");
+	face->RegisterFace(SpriteFace::up, "SPIKES+UP");
+	face->RegisterFace(SpriteFace::down, "SPIKES+DOWN");
+	
+	face->ChangeFace(SpriteFace::up);
 
 	return face;
 }

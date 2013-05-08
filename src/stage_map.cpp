@@ -5,6 +5,7 @@
 #include "exceptions.h"
 #include "macros.h"
 #include "brick_object.h"
+#include "sprite_face.h"
 #include "ResourcePath.hpp"
 
 #include <boost/lexical_cast.hpp>
@@ -189,6 +190,9 @@ void StageMap::ReadProperty(const string& line) {
 	} else if(propertyName == "noViewPort") {
 		
 		stage->SetNoViewPort(propertyValue == "1");
+	} else if(propertyName == "color") {
+		
+		stage->SetColor(propertyValue);
 	}
 }
 
@@ -299,7 +303,25 @@ void StageMap::LoadStage() {
 				objectClass = it->second;
 			}
 
-			GameObject *gameObject = stage->CreateObject(objectClass);
+			size_t extPos = objectClass.find(",");
+			string objectSequence;
+			if (extPos != string::npos) {
+				objectSequence = objectClass.substr(extPos + 1);
+				objectClass.erase(extPos);
+			}
+			
+			GameObject *gameObject = stage->CreateObject(objectClass, objectSequence);
+			
+			if (gameObject->mirrored) {
+				
+				if (j > 0 && strMap[j - 1][i] == ' ') {
+					
+					gameObject->spriteFace->ChangeFace(SpriteFace::up);
+				} else {
+					
+					gameObject->spriteFace->ChangeFace(SpriteFace::down);
+				}
+			}
 
 			objectMatrix[j][i] = gameObject;
 

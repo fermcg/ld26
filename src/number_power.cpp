@@ -10,6 +10,8 @@ NumberPower::NumberPower(const Color color, const int number) : PowerUp("NumberP
 	boundingBox.top = 1;
 	boundingBox.width = 4;
 	boundingBox.height = 6;
+	
+	scoreValue = number * 100;
 }
 
 NumberPower::~NumberPower() {

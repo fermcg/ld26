@@ -16,10 +16,13 @@ class GamePanel : public BaseSystem {
 		void Render();
 
 		sf::View view;
+		sf::Font font;
+		sf::Text scoreText;
 
 	private:
 		void ShowEnergyBar();
 		void ShowPowerUps();
+		void ShowScore();
 
 		Sprite* greenBar;
 		Sprite* redBar;
@@ -30,5 +33,6 @@ class GamePanel : public BaseSystem {
 
 		sf::IntRect energyBarRect;
 		sf::IntRect powerUpsRect;
+		sf::Vector2f scorePosition;
 	
 };

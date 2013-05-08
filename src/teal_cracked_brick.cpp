@@ -5,6 +5,7 @@ TealCrackedBrick::TealCrackedBrick() : BrickObject("TealCrackedBrick", "TealCrac
 	unbreakable = false;
 	energy = 300;
 	damage = 1;
+	scoreValue = 1000;
 }
 
 TealCrackedBrick::~TealCrackedBrick() {

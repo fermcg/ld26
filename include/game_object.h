@@ -28,6 +28,8 @@ class GameObject : public BaseSystem {
 		void TakeThisHit(const int damage);
 
 		virtual bool Merge(GameObject* other);
+	
+		void ChangeFace(const string& objectFace);
 
 		static const int BigDamage;	
 		friend class AllObjects;
@@ -38,6 +40,7 @@ class GameObject : public BaseSystem {
 		bool unbreakable;
 		bool lethal;
 		bool solid;
+		bool mirrored;
 		bool isProjectile;
 		bool isDoor;
 		bool isPlayer;
@@ -49,6 +52,8 @@ class GameObject : public BaseSystem {
 		int h;
 		double x;
 		double y;
+	
+		long scoreValue;
 
 		sf::IntRect boundingBox;
 		SpriteFace* spriteFace;
@@ -61,6 +66,7 @@ class GameObject : public BaseSystem {
 		int damage;
 
 		bool dead;
+		string objectFace;
 	private:
 
 		void GetCollisionBox(int& x0, int& y0, int& xf, int& yf) const;

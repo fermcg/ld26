@@ -14,11 +14,17 @@ class SpriteFace : public BaseSystem {
 			front = 0,
 			left,
 			right,
+			up,
+			down,
 			jumping_front,
 			jumping_left,
 			jumping_right,
 			opened,
-			closed
+			closed,
+			top,
+			junction,
+			trunk,
+			root
 		};
 		SpriteFace(const char* objectId);
 		~SpriteFace();

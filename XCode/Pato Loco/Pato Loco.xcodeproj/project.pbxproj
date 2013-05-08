@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2B81ED751739234C0064DC33 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B81ED741739234C0064DC33 /* icon.png */; };
+		2B8258C01739CE2B00385DE9 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2B8258BF1739CE2B00385DE9 /* icon.icns */; };
 		2B9888511738EC1200D98C59 /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2B9888501738EC1200D98C59 /* ResourcePath.mm */; };
 		2B9888711738EDEB00D98C59 /* BadWeird.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2B9888631738EDEB00D98C59 /* BadWeird.wav */; };
 		2B9888721738EDEB00D98C59 /* Death.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2B9888641738EDEB00D98C59 /* Death.wav */; };
@@ -63,10 +64,15 @@
 		2B9888D01738EE3000D98C59 /* teal_cracked_brick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B9888A61738EE3000D98C59 /* teal_cracked_brick.cpp */; };
 		2B9888D21738EE3000D98C59 /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B9888A81738EE3000D98C59 /* texture.cpp */; };
 		2B9888D31738EE3000D98C59 /* texture_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B9888A91738EE3000D98C59 /* texture_map.cpp */; };
+		2BA63748173A75A4006CDC0B /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2BA63745173A75A4006CDC0B /* license.txt */; };
+		2BA63749173A75A4006CDC0B /* pixelated.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BA63746173A75A4006CDC0B /* pixelated.ttf */; };
+		2BA6374A173A75A4006CDC0B /* read me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2BA63747173A75A4006CDC0B /* read me.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2B81ED741739234C0064DC33 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		2B8258BE1739C4EE00385DE9 /* Icon */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Icon"; sourceTree = "<group>"; };
+		2B8258BF1739CE2B00385DE9 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		2B98884B1738EC1200D98C59 /* Pato Loco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pato Loco.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B98884F1738EC1200D98C59 /* Pato Loco-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pato Loco-Info.plist"; sourceTree = "<group>"; };
 		2B9888501738EC1200D98C59 /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
@@ -166,6 +172,9 @@
 		2B9888FC1738EE4E00D98C59 /* teal_cracked_brick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = teal_cracked_brick.h; sourceTree = "<group>"; };
 		2B9888FD1738EE4E00D98C59 /* texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture.h; sourceTree = "<group>"; };
 		2B9888FE1738EE4E00D98C59 /* texture_map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture_map.h; sourceTree = "<group>"; };
+		2BA63745173A75A4006CDC0B /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = license.txt; path = ../../../resources/license.txt; sourceTree = "<group>"; };
+		2BA63746173A75A4006CDC0B /* pixelated.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = pixelated.ttf; path = ../../../resources/pixelated.ttf; sourceTree = "<group>"; };
+		2BA63747173A75A4006CDC0B /* read me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "read me.txt"; path = "../../../resources/read me.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,9 +188,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B8258BD1739C4EE00385DE9 /* icon */ = {
+			isa = PBXGroup;
+			children = (
+				2B8258BE1739C4EE00385DE9 /* Icon */,
+			);
+			path = icon;
+			sourceTree = "<group>";
+		};
 		2B9888411738EC1200D98C59 = {
 			isa = PBXGroup;
 			children = (
+				2B8258BF1739CE2B00385DE9 /* icon.icns */,
+				2B8258BD1739C4EE00385DE9 /* icon */,
 				2B81ED741739234C0064DC33 /* icon.png */,
 				2B98884D1738EC1200D98C59 /* Pato Loco */,
 				2B98884C1738EC1200D98C59 /* Products */,
@@ -219,6 +238,9 @@
 		2B9888551738EC1200D98C59 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2BA63745173A75A4006CDC0B /* license.txt */,
+				2BA63746173A75A4006CDC0B /* pixelated.ttf */,
+				2BA63747173A75A4006CDC0B /* read me.txt */,
 				2B9888631738EDEB00D98C59 /* BadWeird.wav */,
 				2B9888641738EDEB00D98C59 /* Death.wav */,
 				2B9888651738EDEB00D98C59 /* EnemyDeath.wav */,
@@ -402,6 +424,10 @@
 				2B98887D1738EDEB00D98C59 /* Step.wav in Resources */,
 				2B98887E1738EDEB00D98C59 /* StrongLaser.wav in Resources */,
 				2B81ED751739234C0064DC33 /* icon.png in Resources */,
+				2B8258C01739CE2B00385DE9 /* icon.icns in Resources */,
+				2BA63748173A75A4006CDC0B /* license.txt in Resources */,
+				2BA63749173A75A4006CDC0B /* pixelated.ttf in Resources */,
+				2BA6374A173A75A4006CDC0B /* read me.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

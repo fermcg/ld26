@@ -10,6 +10,8 @@ GameLoop::GameLoop() : BaseSystem("GameLoop") {
 
 	currentStage = NULL;
 	gameOver = false;
+	
+	score = 0;
 }
 
 GameLoop::~GameLoop() {
@@ -141,7 +143,6 @@ void GameLoop::HandleLogic() {
 void GameLoop::Render() {
 
 	// Clear screen
-	Singleton::screen->window->clear();
 	//sf::Color(0,0,0,0));
 
 //	Singleton::allEnemies->Render();
@@ -161,6 +162,7 @@ void GameLoop::LoopEnd() {
 		Singleton::stageMap->Terminate();
 		delete Singleton::stageMap;
 		Singleton::stageMap = new StageMap();
+		Singleton::gameLoop->score = 0;
 		Singleton::stageMap->Init();
 		gameOver = false;
 

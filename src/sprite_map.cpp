@@ -29,11 +29,31 @@ void SpriteMap::Init() {
 	LoadSprite("PLAYER+JUMP+RIGHT", spritesTexture, sf::IntRect(72, 0, 8, 16), 1);
 	LoadSprite("PLAYER+JUMP+LEFT", spritesTexture, sf::IntRect(80, 0, 8, 16), 1);
 	LoadSprite("PLAYER+JUMP+FRONT", spritesTexture, sf::IntRect(88, 0, 8, 16), 1);
-	LoadSprite("PLAYER+SHOT", spritesTexture, sf::IntRect(24, 16, 8, 8), 8);
+	LoadSprite("PLAYER+SHOT", spritesTexture, sf::IntRect(32, 16, 8, 8), 8);
 	// Scene
 	LoadSprite("BRICK+TEAL", spritesTexture, sf::IntRect(0, 16, 8, 8), 2);
 	LoadSprite("CRACK+TEAL", spritesTexture, sf::IntRect(0, 24, 8, 8), 2);
-	LoadSprite("SPIKES", spritesTexture, sf::IntRect(16, 16, 8, 8), 1);
+	LoadSprite("BRICK+BROWN", spritesTexture, sf::IntRect(16, 24, 8, 8), 1);
+	LoadSprite("BRICK+COLORS", spritesTexture, sf::IntRect(24, 24, 8, 8), 1);
+	LoadSprite("BRICK+BLINK", spritesTexture, sf::IntRect(32, 24, 8, 8), 4);
+	LoadSprite("BRICK+EARTH", spritesTexture, sf::IntRect(64, 24, 8, 8), 2);
+	
+	LoadSprite("MUSHROOM+LEFT", spritesTexture, sf::IntRect(80, 24, 8, 8), 1);
+	LoadSprite("MUSHROOM+TOP", spritesTexture, sf::IntRect(88, 24, 8, 8), 1);
+	LoadSprite("MUSHROOM+RIGHT", spritesTexture, sf::IntRect(96, 24, 8, 8), 1);
+	LoadSprite("MUSHROOM+JUNCTION", spritesTexture, sf::IntRect(80, 32, 8, 8), 1);
+	LoadSprite("MUSHROOM+TRUNK", spritesTexture, sf::IntRect(88, 32, 8, 8), 1);
+	LoadSprite("MUSHROOM+ROOT", spritesTexture, sf::IntRect(96, 32, 8, 8), 1);
+
+	LoadSprite("TREE+LEFT", spritesTexture, sf::IntRect(80, 40, 8, 8), 1);
+	LoadSprite("TREE+TOP", spritesTexture, sf::IntRect(88, 40, 8, 8), 1);
+	LoadSprite("TREE+RIGHT", spritesTexture, sf::IntRect(96, 40, 8, 8), 1);
+	LoadSprite("TREE+JUNCTION", spritesTexture, sf::IntRect(80, 48, 8, 8), 1);
+	LoadSprite("TREE+TRUNK", spritesTexture, sf::IntRect(88, 48, 8, 8), 1);
+	LoadSprite("TREE+ROOT", spritesTexture, sf::IntRect(96, 48, 8, 8), 1);
+
+	LoadSprite("SPIKES+UP", spritesTexture, sf::IntRect(16, 16, 8, 8), 1);
+	LoadSprite("SPIKES+DOWN", spritesTexture, sf::IntRect(24, 16, 8, 8), 1);
 	LoadSprite("DOOR+CLOSED", spritesTexture, sf::IntRect(96, 0, 8, 16), 1);
 	LoadSprite("DOOR+OPENED", spritesTexture, sf::IntRect(104, 0, 8, 16), 1);
 	// Numbers

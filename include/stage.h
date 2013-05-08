@@ -17,12 +17,14 @@ class Stage : public AllObjects {
 		void SetBackground(const char* spriteId) throw();
 		void SetHideGamePanel(const bool hideGamePanel);
 		void SetNoViewPort(const bool noViewPort);
+		void SetColor(const string& colorString);
 		void SetPlayerStartPosition(const int x, const int y);
 		void PositionPlayer();
 
 		void Render();
 
-		GameObject* CreateObject(const string& objectClass);
+		GameObject* CreateObject(const string& objectClass,
+								 const string& objectFace);
 
 		typedef map< char, string > Dictionary;
 		Dictionary dictionary;
@@ -31,6 +33,7 @@ class Stage : public AllObjects {
 	protected:
 
 		sf::IntRect rect;
+		sf::Color color;
 		int xPos;
 		int yPos;
 		int xSize;

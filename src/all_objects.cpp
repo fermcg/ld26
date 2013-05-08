@@ -161,7 +161,8 @@ bool AllObjects::UnregisterObject(unsigned long gameObjectId) {
 	return true;
 }
 
-GameObject* AllObjects::CreateObject(const string& objectClass) {
+GameObject* AllObjects::CreateObject(const string& objectClass,
+									 const string& objectFace) {
 
 	GameObject* object = NULL;
 	if(objectClass == "EMPTY") {
@@ -216,6 +217,10 @@ GameObject* AllObjects::CreateObject(const string& objectClass) {
 
 	if(object != NULL) {
 
+		if (!objectFace.empty()) {
+			
+			object->ChangeFace(objectFace);
+		}
 		object->Init();
 		RegisterObject(object);
 	}

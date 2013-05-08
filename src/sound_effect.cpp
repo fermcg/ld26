@@ -50,6 +50,7 @@ void SoundEffect::Terminate() {
 void SoundEffect::Play() {
 
 	sound->setLoop(false);
+	sound->stop();
 	sound->play();
 }
 

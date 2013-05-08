@@ -25,6 +25,8 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 	boundingBox.width = 0;
 	boundingBox.height = 0;
 
+	scoreValue = 0;
+	
 	maxEnergy = 1;
 	energy = 1;
 	damage = BigDamage;
@@ -39,6 +41,7 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 	isProjectile = false;
 	isDoor = false;
 	isPlayer = false;
+	mirrored = false;
 }
 GameObject::~GameObject() {
 
@@ -46,12 +49,22 @@ GameObject::~GameObject() {
 
 void GameObject::Init() throw() {
 
-	spriteFace = CreateSpriteFace();
+	if (objectFace.empty()) {
+		
+		spriteFace = CreateSpriteFace();
+	} else {
+		
+		spriteFace = new SpriteFace("Game Object Face");
+		
+		spriteFace->RegisterFace(SpriteFace::front, objectFace.c_str());
+
+	}
 
 	Sprite* sprite = spriteFace->GetSequence()->GetSprite();
 	w = sprite->rect.width;
 	h = sprite->rect.height;
 
+	Singleton::gameLoop->score += scoreValue;
 	this->BaseSystem::Init();
 }
 
@@ -82,6 +95,7 @@ void GameObject::Terminate() {
 		spriteFace = NULL;
 	}
 
+	Singleton::gameLoop->score -= scoreValue;
 	this->BaseSystem::Terminate();
 }
 
@@ -285,6 +299,11 @@ void GameObject::TakeThisHit(const int damage) {
 bool GameObject::Merge(GameObject* other) {
 
 	return false; // Not implemented by default.
+}
+
+void GameObject::ChangeFace(const string &objectFace) {
+	
+	this->objectFace = objectFace;
 }
 
 void GameObject::GetCollisionBox(int& x0, int& y0, int& xf, int& yf) const {
