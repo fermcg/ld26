@@ -21,6 +21,7 @@ class Screen : public BaseSystem {
 	private:
 
 		double zoomOutSpeed;
+		double zoomInSpeed;
 		double zoomFactor;
 		double maxZoomFactor;
 		bool fullScreen;

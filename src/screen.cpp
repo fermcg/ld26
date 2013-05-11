@@ -15,8 +15,9 @@ Screen::Screen() : BaseSystem("Screen") {
 	fullScreen = false;
 	gameTitle = "Pato Loco";
 	zoomOutSpeed = 0.0;
+	zoomInSpeed = 0.01;
 	zoomFactor = 1.0;
-	maxZoomFactor = 1.15;
+	maxZoomFactor = 1.5;
 }
 Screen::~Screen() {
 
@@ -83,7 +84,7 @@ void Screen::ToogleFullScreen() {
 
 void Screen::TempZoomOut() {
 
-	zoomOutSpeed = 0.003;
+	zoomOutSpeed = 0.01;
 }
 
 void Screen::HandleZoom() {
@@ -98,11 +99,17 @@ void Screen::HandleZoom() {
 		zoomOutSpeed = 0.0;
 	} else {
 
-		zoomFactor += zoomOutSpeed;
+		if (Singleton::player->ySpeed < 0.0) {
+
+			zoomFactor += zoomOutSpeed;
+		} else {
+
+			zoomFactor -= zoomInSpeed;
+		}
 	}
 	if (zoomFactor >= maxZoomFactor) {
 
-		zoomOutSpeed = -0.0001;
+		zoomFactor = maxZoomFactor;
 	}
 	view->zoom(zoomFactor);
 }

@@ -12,6 +12,7 @@ class AccelerableObject : public GameObject {
 
 		void GetNewCollisionBox(int& x0, int& y0, int& xf, int& yf) const;
 		friend class GameObject;
+		friend class Screen;
 	protected:
 		void SetNeverLeaveScreen(const bool neverLeaveScreen);
 
