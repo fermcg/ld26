@@ -12,12 +12,17 @@ class Screen : public BaseSystem {
 		void Terminate();
 
 		void ToogleFullScreen();
+		void TempZoomOut();
+		void HandleZoom();
 
 		sf::RenderWindow* window;	
 		sf::View *view;
 
 	private:
 
+		double zoomOutSpeed;
+		double zoomFactor;
+		double maxZoomFactor;
 		bool fullScreen;
 		sf::Image icon;
 		sf::VideoMode videoMode;

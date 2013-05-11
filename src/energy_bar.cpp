@@ -19,7 +19,7 @@ void EnergyBar::Init() {
 	greenBar = Singleton::spriteMap->Get("ENERGY+G");
 	redBar = Singleton::spriteMap->Get("ENERGY+R");
 
-	rect.left = 640 / 2 - greenBar->rect.width / 2;
+	rect.left = Singleton::screen->window->getSize().x / 2 - greenBar->rect.width / 2;
 	rect.top = 10;
 	rect.width = 80;
 	rect.height = 4;

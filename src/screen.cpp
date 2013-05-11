@@ -14,6 +14,9 @@ Screen::Screen() : BaseSystem("Screen") {
 	window = NULL;
 	fullScreen = false;
 	gameTitle = "Pato Loco";
+	zoomOutSpeed = 0.0;
+	zoomFactor = 1.0;
+	maxZoomFactor = 1.15;
 }
 Screen::~Screen() {
 
@@ -25,7 +28,7 @@ void Screen::Init() throw() {
 	int width = 0;
 	int height = 0;
 
-	Singleton::config->Read(windowSection, "width", width, 640);
+	Singleton::config->Read(windowSection, "width", width, 704);
 	Singleton::config->Read(windowSection, "height", height, 480);
 
 	videoMode.width = width;
@@ -43,7 +46,7 @@ void Screen::Init() throw() {
 	}
 	window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-	window->setFramerateLimit(80);
+	window->setFramerateLimit(90);
 
 	this->BaseSystem::Init();	
 }
@@ -76,4 +79,30 @@ void Screen::ToogleFullScreen() {
 	}
 	
 	window->setView(*view);
+}
+
+void Screen::TempZoomOut() {
+
+	zoomOutSpeed = 0.003;
+}
+
+void Screen::HandleZoom() {
+
+	if (zoomOutSpeed == 0.0) {
+
+		return;
+	}
+	if (zoomFactor < 1.0) {
+
+		zoomFactor = 1.0;
+		zoomOutSpeed = 0.0;
+	} else {
+
+		zoomFactor += zoomOutSpeed;
+	}
+	if (zoomFactor >= maxZoomFactor) {
+
+		zoomOutSpeed = -0.0001;
+	}
+	view->zoom(zoomFactor);
 }

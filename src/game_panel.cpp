@@ -23,7 +23,7 @@ void GamePanel::Init() {
 	greenNumbers = Singleton::spriteMap->Get("NUMBERS+G");
 	blueNumbers = Singleton::spriteMap->Get("NUMBERS+B");
 
-	energyBarRect.left = 640 / 2 - (greenBar->rect.width + 48) / 2;
+	energyBarRect.left = Singleton::screen->window->getSize().x / 2 - (greenBar->rect.width + 48) / 2;
 	energyBarRect.top = 20;
 	energyBarRect.width = 80;
 	energyBarRect.height = 4;

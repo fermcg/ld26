@@ -29,6 +29,7 @@ class AccelerableObject : public GameObject {
 		double xAcceleration;
 		double yAcceleration;
 		double gAcceleration;
+		double jAcceleration;
 
 		double minX;
 		double maxX;

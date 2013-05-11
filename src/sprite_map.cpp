@@ -19,7 +19,7 @@ void SpriteMap::Init() {
 	this->BaseSystem::Init();
 
 	Texture* menuTexture = Singleton::textureMap->Get("MENU");
-	LoadSprite("MENU", menuTexture, sf::IntRect(0, 0, 640, 480), 1);
+	LoadSprite("MENU", menuTexture, sf::IntRect(0, 0, Singleton::screen->window->getSize().x, Singleton::screen->window->getSize().y), 1);
 	// Sprites from "SPRITES" texture map.
 	// This could be loaded from a file or resource...
 	Texture* spritesTexture = Singleton::textureMap->Get("SPRITES");

@@ -39,13 +39,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Pessoal\api\SFML-2.0-VC10\include;C:\Pessoal\api\boost_1_53_0;../../include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Pessoal\api\SFML-2.0-VC10\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>../../../../lib/SFML-2.0-windows-vc11-32bits/include;../../../../lib/boost_1_53_0;../../include;$(IncludePath)</IncludePath>
+    <LibraryPath>../../../../lib/SFML-2.0-windows-vc11-32bits/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Pessoal\api\SFML-2.0-VC10\include;C:\Pessoal\api\boost_1_53_0;../../include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Pessoal\api\SFML-2.0-VC10\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>../../../../lib/SFML-2.0-windows-vc11-32bits/include;../../../../lib/boost_1_53_0;../../include;$(IncludePath)</IncludePath>
+    <LibraryPath>../../../../lib/SFML-2.0-windows-vc11-32bits/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
