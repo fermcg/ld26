@@ -2,6 +2,7 @@
 #include <boost/lexical_cast.hpp>
 #include <vector>
 #include <string>
+#include <iostream>
 #include "stage.h"
 #include "brick_object.h"
 #include "singletons.h"
@@ -10,6 +11,8 @@
 
 using std::vector;
 using std::string;
+
+using std::cerr;
 
 Stage::Stage(const char* stageId, const int xPos, const int yPos, const int xSize, const int ySize) {
 
@@ -149,6 +152,11 @@ void Stage::Render() {
 	}
 
 	if (noViewPort ) {
+		Singleton::screen->view->setSize(viewWidth, viewHeight);
+		
+		//Singleton::screen->HandleZoom();
+		Singleton::screen->window->setView(*Singleton::screen->view);
+		Singleton::screen->view->setCenter(100, 100);
 		
 		Singleton::screen->window->setView(Singleton::gamePanel->view);
 	} else {
@@ -157,7 +165,7 @@ void Stage::Render() {
 		viewX = Singleton::player->x + Singleton::player->w / 2.0;
 		viewY = Singleton::player->y + Singleton::player->h / 2.0;
 		
-		if (viewX < 0.0) {
+		/*if (viewX < 0.0) {
 			
 			viewX = 0.0;
 		}
@@ -172,11 +180,12 @@ void Stage::Render() {
 		if (viewY > Singleton::screen->window->getSize().y) {
 			
 			viewY = Singleton::screen->window->getSize().y;
-		}
+		}*/
 		
 		Singleton::screen->view->setCenter(viewX, viewY);
 		Singleton::screen->view->setSize(viewWidth, viewHeight);
 		
+		Singleton::screen->HandleZoom();
 		Singleton::screen->window->setView(*Singleton::screen->view);
 	}
 	this->AllObjects::Render();

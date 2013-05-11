@@ -1,6 +1,6 @@
 # Ignore at this project - the binary
 /obj/*.o
-PatoLoco
+./PatoLoco
 test
 *.swp
 .DS_Store

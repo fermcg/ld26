@@ -9,17 +9,17 @@ using namespace std;
 
 Player::Player() : AccelerableObject("Player", "Player") {
 
-	bAcceleration = 0.04;
-	gAcceleration = 0.03;
+	bAcceleration = 0.037;
+	gAcceleration = 0.050;
 
 	// Accelerable vars
 
 	xMinSpeed = 0.0;
-	xMaxSpeed = 1.3;
+	xMaxSpeed = 1.2;
 	yMinSpeed = 0.0;
-	yMaxSpeed = 1.6;
+	yMaxSpeed = 1.8;
 
-	xBreaking = 0.05;
+	xBreaking = 0.08;
 	yBreaking = 0.05;
 
 	fireIsOn = false;
@@ -88,7 +88,7 @@ void Player::Init() throw() {
 	sfxPowerup = Singleton::soundEffectsMap->Get("POWERUP");
 	sfxPortal = Singleton::soundEffectsMap->Get("PORTAL");
 
-	SetNeverLeaveScreen(true);
+	SetNeverLeaveScreen(false);
 	x = minX + (maxX - minX) / 2.0;
 	y = maxY;
 }
@@ -353,6 +353,7 @@ void Player::ActionJump() {
 
 	ySpeed = -yMaxSpeed;
 	sfxJump->Play();
+	Singleton::screen->TempZoomOut();
 
 	if(!grounded && doubleJumps >= 1) {
 

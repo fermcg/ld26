@@ -127,8 +127,40 @@ void GameLoop::HandleEvents() {
 					cout << "Symbol:" << event.key.code << endl;
 					break;
 			}
+		} else if (event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::JoystickButtonReleased) {
+
+			Singleton::player->CommandSetOrReset(Player::fire, sf::Joystick::isButtonPressed(0, 0));
+			Singleton::player->CommandSetOrReset(Player::jump, sf::Joystick::isButtonPressed(0, 1));
 		}
 	}
+
+	if (sf::Joystick::isConnected(0)) {
+		float x = sf::Joystick::getAxisPosition(0, sf::Joystick::PovY);
+		float y = -sf::Joystick::getAxisPosition(0, sf::Joystick::PovX);
+
+		if (x < -20.0) {
+			Singleton::player->CommandSetOrReset(Player::left, true);
+			Singleton::player->CommandSetOrReset(Player::right, false);
+		} else if (x > 20.0) {
+			Singleton::player->CommandSetOrReset(Player::left, false);
+			Singleton::player->CommandSetOrReset(Player::right, true);
+		} else if (x > -10.0 && x < 10.0) {
+			Singleton::player->CommandSetOrReset(Player::left, false);
+			Singleton::player->CommandSetOrReset(Player::right, false);
+		}
+
+		if (y < -20.0) {
+			Singleton::player->CommandSetOrReset(Player::up, true);
+			Singleton::player->CommandSetOrReset(Player::down, false);
+		} else if (y > 20.0) {
+			Singleton::player->CommandSetOrReset(Player::up, false);
+			Singleton::player->CommandSetOrReset(Player::down, true);
+		} else if (y > -10.0 && y < 10.0) {
+			Singleton::player->CommandSetOrReset(Player::up, false);
+			Singleton::player->CommandSetOrReset(Player::down, false);
+		}
+	}
+
 }
 
 void GameLoop::HandleLogic() {
@@ -136,6 +168,7 @@ void GameLoop::HandleLogic() {
 	Singleton::player->HandleLogic();
 	currentStage->HandleLogic();
 	Singleton::allFriends->HandleLogic();
+//	Singleton::screen->HandleZoom();
 //	Singleton::allEnemies->HandleLogic();
 	return;
 }

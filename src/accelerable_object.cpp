@@ -22,6 +22,7 @@ AccelerableObject::AccelerableObject(const char* name, const char* objectId) : G
 	yAcceleration = 0.0;
 
 	gAcceleration = 0.0;
+	jAcceleration = 0.0;
 
 	neverLeaveScreen = false;
 
