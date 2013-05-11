@@ -3,7 +3,7 @@ MENU:33,41-18x10
 @hideGamePanel=1
 @noViewPort=1
 !O=EMPTY
-!D=DOOR>STAGE02
+!D=DOOR>STAGE01
 [
 OOOOOOOOOOOOOOOOOO
 O                O
