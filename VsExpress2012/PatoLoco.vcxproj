@@ -93,6 +93,7 @@
     <ClCompile Include="..\src\door_object.cpp" />
     <ClCompile Include="..\src\empty_block.cpp" />
     <ClCompile Include="..\src\enemy.cpp" />
+    <ClCompile Include="..\src\enemy_bouncer.cpp" />
     <ClCompile Include="..\src\energy_bar.cpp" />
     <ClCompile Include="..\src\exceptions.cpp" />
     <ClCompile Include="..\src\game_loop.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="..\include\door_object.h" />
     <ClInclude Include="..\include\empty_block.h" />
     <ClInclude Include="..\include\enemy.h" />
+    <ClInclude Include="..\include\enemy_bouncer.h" />
     <ClInclude Include="..\include\energy_bar.h" />
     <ClInclude Include="..\include\exceptions.h" />
     <ClInclude Include="..\include\exit_codes.h" />
