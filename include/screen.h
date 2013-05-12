@@ -16,7 +16,8 @@ class Screen : public BaseSystem {
 		void HandleZoom();
 
 		sf::RenderWindow* window;	
-		sf::View *view;
+		sf::View view;
+		sf::View noZoomView;
 
 	private:
 

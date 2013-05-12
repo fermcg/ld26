@@ -141,9 +141,9 @@ void Stage::Render() {
 	if(background != NULL) {
 
 		//background->RenderCopy(&rect, 0);
-		Singleton::screen->window->setView(Singleton::gamePanel->view);
+		Singleton::screen->window->setView(Singleton::screen->noZoomView);
 		background->RenderCopy();
-		Singleton::screen->window->setView(*Singleton::screen->view);
+		Singleton::screen->window->setView(Singleton::screen->view);
 	}
 
 	if(!hideGamePanel) {
@@ -152,14 +152,10 @@ void Stage::Render() {
 	}
 
 	if (noViewPort ) {
-		Singleton::screen->view->setSize(viewWidth, viewHeight);
 		
-		//Singleton::screen->HandleZoom();
-		Singleton::screen->window->setView(*Singleton::screen->view);
-		Singleton::screen->view->setCenter(100, 100);
-		
-		Singleton::screen->window->setView(Singleton::gamePanel->view);
+		Singleton::screen->window->setView(Singleton::screen->noZoomView);
 	} else {
+
 		double viewX, viewY;
 		
 		viewX = Singleton::player->x + Singleton::player->w / 2.0;
@@ -182,11 +178,11 @@ void Stage::Render() {
 			viewY = Singleton::screen->window->getSize().y;
 		}*/
 		
-		Singleton::screen->view->setCenter(viewX, viewY);
-		Singleton::screen->view->setSize(viewWidth, viewHeight);
+		Singleton::screen->view.setCenter(viewX, viewY);
+		Singleton::screen->view.setSize(viewWidth, viewHeight);
 		
 		Singleton::screen->HandleZoom();
-		Singleton::screen->window->setView(*Singleton::screen->view);
+		Singleton::screen->window->setView(Singleton::screen->view);
 	}
 	this->AllObjects::Render();
 	

@@ -5,8 +5,8 @@
 #include "sprite.h"
 
 class GamePanel : public BaseSystem {
-	public:
 
+	public:
 		GamePanel();
 		~GamePanel();
 
@@ -16,8 +16,6 @@ class GamePanel : public BaseSystem {
 		void Render();
 
 		sf::View view;
-		sf::Font font;
-		sf::Text scoreText;
 
 	private:
 		void ShowEnergyBar();
@@ -27,6 +25,7 @@ class GamePanel : public BaseSystem {
 		Sprite* greenBar;
 		Sprite* redBar;
 
+		Sprite* whiteNumbers;
 		Sprite* redNumbers;
 		Sprite* greenNumbers;
 		Sprite* blueNumbers;

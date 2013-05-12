@@ -10,7 +10,6 @@ using namespace std;
 
 Screen::Screen() : BaseSystem("Screen") {
 
-	view = NULL;
 	window = NULL;
 	fullScreen = false;
 	gameTitle = "Pato Loco";
@@ -35,9 +34,15 @@ void Screen::Init() throw() {
 	videoMode.width = width;
 	videoMode.height = height;
 	
-	// Create the view
-	view = new sf::View(sf::FloatRect(0.0,0.0, (float)width, (float)height));
-	view->setViewport(sf::FloatRect(0.0,0.0,1.0,1.0));
+	// Configure the view
+	view.setSize(width, height);
+	view.setViewport(sf::FloatRect(0.0,0.0,1.0,1.0));
+
+	// Configure the non zoomign view
+	noZoomView.setSize(width, height);
+	noZoomView.setCenter(width / 2.0, height / 2.0);
+	noZoomView.setViewport(sf::FloatRect(0.0,0.0,1.0,1.0));
+
 	// Create the main window
 	window = new sf::RenderWindow(videoMode, gameTitle);
 
@@ -47,17 +52,12 @@ void Screen::Init() throw() {
 	}
 	window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-	window->setFramerateLimit(90);
+	window->setFramerateLimit(70);
 
 	this->BaseSystem::Init();	
 }
 void Screen::Terminate() {
 
-	if (view != NULL) {
-		
-		delete view;
-		view = NULL;
-	}
 	if (window != NULL) {
 
 		delete window;
@@ -79,7 +79,7 @@ void Screen::ToogleFullScreen() {
 		window->create(videoMode, gameTitle, sf::Style::Close);
 	}
 	
-	window->setView(*view);
+	window->setView(view);
 }
 
 void Screen::TempZoomOut() {
@@ -111,5 +111,5 @@ void Screen::HandleZoom() {
 
 		zoomFactor = maxZoomFactor;
 	}
-	view->zoom(zoomFactor);
+	view.zoom(zoomFactor);
 }

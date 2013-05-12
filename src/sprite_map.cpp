@@ -35,7 +35,7 @@ void SpriteMap::Init() {
 	LoadSprite("CRACK+TEAL", spritesTexture, sf::IntRect(48, 16, 8, 8));
 	LoadSprite("BRICK+BROWN", spritesTexture, sf::IntRect(24, 32, 8, 8));
 	LoadSprite("BRICK+COLORS", spritesTexture, sf::IntRect(24, 56, 8, 8));
-	LoadSprite("BRICK+BLINK", spritesTexture, sf::IntRect(32, 32, 16, 16), sf::IntRect(0, 0, 8, 8));
+	LoadSprite("BRICK+BLINK", spritesTexture, sf::IntRect(32, 48, 16, 16), sf::IntRect(0, 0, 8, 8));
 	LoadSprite("BRICK+EARTH", spritesTexture, sf::IntRect(24, 48, 8, 8), sf::IntRect(0, 0, 8, 8));
 	
 	LoadSprite("MUSHROOM+LEFT", spritesTexture, sf::IntRect(104, 72, 8, 8));
@@ -57,12 +57,13 @@ void SpriteMap::Init() {
 	LoadSprite("DOOR+CLOSED", spritesTexture, sf::IntRect(112, 32, 8, 16));
 	LoadSprite("DOOR+OPENED", spritesTexture, sf::IntRect(120, 32, 8, 16));
 	// Numbers
+	LoadSprite("NUMBERS+W", spritesTexture, sf::IntRect(48, 96, 80, 8), sf::IntRect(0, 0, 8, 8));
 	LoadSprite("NUMBERS+R", spritesTexture, sf::IntRect(48, 104, 80, 8), sf::IntRect(0, 0, 8, 8));
 	LoadSprite("NUMBERS+G", spritesTexture, sf::IntRect(48, 112, 80, 8), sf::IntRect(0, 0, 8, 8));
 	LoadSprite("NUMBERS+B", spritesTexture, sf::IntRect(48, 120, 80, 8), sf::IntRect(0, 0, 8, 8));
 	// Health
-	LoadSprite("ENERGY+R", spritesTexture, sf::IntRect(0, 72, 80, 4));
-	LoadSprite("ENERGY+G", spritesTexture, sf::IntRect(0, 80, 80, 4));
+	LoadSprite("ENERGY+R", spritesTexture, sf::IntRect(0, 72, 80, 8));
+	LoadSprite("ENERGY+G", spritesTexture, sf::IntRect(0, 80, 80, 8));
 
 	//	LoadSprite("ENEMY", spritesTexture, sf::IntRect(0, 64, 32, 32), 4);
 	//	LoadSprite("ENEMY+SHOT", spritesTexture, sf::IntRect(0, 96, 32, 32), 4);

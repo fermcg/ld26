@@ -9,19 +9,19 @@ using namespace std;
 
 Player::Player() : AccelerableObject("Player", "Player") {
 
-	bAcceleration = 0.037;
-	gAccelerationBase = 0.070;
-	jAcceleration = 0.030;
+	bAcceleration = 0.07;
+	gAccelerationBase = 0.20;
+	jAcceleration = 0.10;
 
 	// Accelerable vars
 
 	xMinSpeed = 0.0;
-	xMaxSpeed = 1.2;
+	xMaxSpeed = 2.0;
 	yMinSpeed = 0.0;
-	yMaxSpeed = 1.8;
+	yMaxSpeed = 3.0;
 
-	xBreaking = 0.08;
-	yBreaking = 0.05;
+	xBreaking = 0.16;
+	yBreaking = 0.10;
 
 	fireIsOn = false;
 	leftIsOn = false;
@@ -77,6 +77,7 @@ void Player::Ressurrect() {
 	dead = false;
 	distance = 0;
 	doubleJumps = 0;
+	power = 0;
 }
 
 void Player::Init() throw() {
