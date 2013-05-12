@@ -34,6 +34,12 @@ void SpriteFace::RenderCopy(const sf::IntRect* destinyRect) throw() {
 
 	this->GetSequence()->RenderCopy(destinyRect);
 }
+void SpriteFace::RenderToImage(sf::Image& destinyImage, const int x,
+							   const int y) throw() {
+	
+	this->GetSequence()->RenderToImage(destinyImage, x, y);
+}
+
 SpriteSequence* SpriteFace::GetSequence() throw() {
 
 	MapOfFaces::iterator it;

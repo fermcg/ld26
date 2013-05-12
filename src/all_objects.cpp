@@ -1,4 +1,5 @@
 #include <iostream>
+#include <boost/lexical_cast.hpp>
 
 #include "all_objects.h"
 #include "macros.h"
@@ -11,6 +12,7 @@
 #include "lethal_empty_block.h"
 #include "spike_block.h"
 #include "number_power.h"
+#include "enemy_bouncer.h"
 #include "accelerable_object.h"
 
 using namespace std;
@@ -85,6 +87,10 @@ void AllObjects::Render() {
 
 	for(it = objectMap.begin(); it != objectMap.end(); it++) {
 
+		if (it->second->preRender) {
+			
+			continue;
+		}
 		it->second->Render();
 	}	
 }
@@ -183,9 +189,27 @@ GameObject* AllObjects::CreateObject(const string& objectClass,
 	} else if(objectClass == "SPIKES") {
 
 		object = new SpikeBlock();
-//	} else if(objectClass == "BOUNCING+ENEMY") {
-//
-//		object = new BouncingEnemy();
+	} else if(objectClass.substr(0, 8) == "BOUNCER>") {
+
+		size_t pos = objectClass.find(":", 8);
+		
+		if (pos == string::npos) {
+			
+			return NULL;
+		}
+		
+		double xSpeed = 0.0;
+		double ySpeed = 0.0;
+		
+		try {
+			
+			xSpeed = boost::lexical_cast< double >(objectClass.substr(8, pos - 8));
+			ySpeed = boost::lexical_cast< double >(objectClass.substr(pos + 1));
+		} catch(std::bad_cast&) {
+			
+			return NULL;
+		}
+		object = new EnemyBouncer(xSpeed, ySpeed);
 	} else if(objectClass.substr(2, 7) == "NUMBER>") {
 
 		if(objectClass.size() != 10) {

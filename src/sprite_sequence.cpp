@@ -23,6 +23,13 @@ void SpriteSequence::RenderCopy(const sf::IntRect* destinyRect) throw() {
 	}
 }
 
+void SpriteSequence::RenderToImage(sf::Image& destinyImage,
+								   const int x, const int y,
+								   const int frame) throw() {
+	
+	sprite->RenderToImage(destinyImage, x, y, frame);
+}
+
 Sprite* SpriteSequence::GetSprite() {
 
 	return sprite;

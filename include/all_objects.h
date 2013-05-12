@@ -31,10 +31,10 @@ class AllObjects : public BaseSystem {
 		friend class GameObject;
 
 	protected:
+		typedef map< unsigned long, GameObject* > ObjectMap;
+		ObjectMap objectMap;
 		bool UnregisterObject(unsigned long gameObjectId);
 
 	private:
-		typedef map< unsigned long, GameObject* > ObjectMap;
-		ObjectMap objectMap;
 		unsigned long currentId;
 };

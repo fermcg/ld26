@@ -14,6 +14,7 @@ class Texture : public BaseSystem {
 		void Terminate();
 
 		sf::Texture* texture;
+		sf::Image image;
 		int w;
 		int h;
 	private:

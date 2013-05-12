@@ -22,9 +22,15 @@ Texture::~Texture() {
 void Texture::Init() {
 
 	texture = new sf::Texture();
-	if (!texture->loadFromFile(resourcePath() + fileName)) {
+	
+	if (!image.loadFromFile(resourcePath() + fileName)) {
 
 		cerr << "Error loading image file [" << objectId << "] [" << fileName << "]" << endl;
+		THROWINFO(Exception::BadObject, fileName.c_str());
+	}
+	if (!texture->loadFromImage(image)) {
+		
+		cerr << "Error loading texture from image file [" << objectId << "] [" << fileName << "]" << endl;
 		THROWINFO(Exception::BadObject, fileName.c_str());
 	}
 

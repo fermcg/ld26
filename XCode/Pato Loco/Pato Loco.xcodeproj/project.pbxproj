@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B3CBD75173FB841001D4061 /* patoloco.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B3CBD74173FB841001D4061 /* patoloco.png */; };
+		2B3CBD78173FD38F001D4061 /* enemy_bouncer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B3CBD77173FD38F001D4061 /* enemy_bouncer.cpp */; };
 		2B81ED751739234C0064DC33 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B81ED741739234C0064DC33 /* icon.png */; };
 		2B8258C01739CE2B00385DE9 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2B8258BF1739CE2B00385DE9 /* icon.icns */; };
 		2B9888511738EC1200D98C59 /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2B9888501738EC1200D98C59 /* ResourcePath.mm */; };
@@ -70,6 +72,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B3CBD74173FB841001D4061 /* patoloco.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = patoloco.png; path = ../../../resources/patoloco.png; sourceTree = "<group>"; };
+		2B3CBD76173FD2B1001D4061 /* enemy_bouncer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = enemy_bouncer.h; sourceTree = "<group>"; };
+		2B3CBD77173FD38F001D4061 /* enemy_bouncer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = enemy_bouncer.cpp; sourceTree = "<group>"; };
 		2B81ED741739234C0064DC33 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		2B8258BE1739C4EE00385DE9 /* Icon */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Icon"; sourceTree = "<group>"; };
 		2B8258BF1739CE2B00385DE9 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
@@ -238,6 +243,7 @@
 		2B9888551738EC1200D98C59 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2B3CBD74173FB841001D4061 /* patoloco.png */,
 				2BA63745173A75A4006CDC0B /* license.txt */,
 				2BA63746173A75A4006CDC0B /* pixelated.ttf */,
 				2BA63747173A75A4006CDC0B /* read me.txt */,
@@ -273,6 +279,7 @@
 				2B9888891738EE3000D98C59 /* door_object.cpp */,
 				2B98888A1738EE3000D98C59 /* empty_block.cpp */,
 				2B98888B1738EE3000D98C59 /* enemy.cpp */,
+				2B3CBD77173FD38F001D4061 /* enemy_bouncer.cpp */,
 				2B98888C1738EE3000D98C59 /* energy_bar.cpp */,
 				2B98888D1738EE3000D98C59 /* exceptions.cpp */,
 				2B98888E1738EE3000D98C59 /* game_loop.cpp */,
@@ -321,6 +328,7 @@
 				2B9888DD1738EE4E00D98C59 /* door_object.h */,
 				2B9888DE1738EE4E00D98C59 /* empty_block.h */,
 				2B9888DF1738EE4E00D98C59 /* enemy.h */,
+				2B3CBD76173FD2B1001D4061 /* enemy_bouncer.h */,
 				2B9888E01738EE4E00D98C59 /* energy_bar.h */,
 				2B9888E11738EE4E00D98C59 /* exceptions.h */,
 				2B9888E21738EE4E00D98C59 /* exit_codes.h */,
@@ -428,6 +436,7 @@
 				2BA63748173A75A4006CDC0B /* license.txt in Resources */,
 				2BA63749173A75A4006CDC0B /* pixelated.ttf in Resources */,
 				2BA6374A173A75A4006CDC0B /* read me.txt in Resources */,
+				2B3CBD75173FB841001D4061 /* patoloco.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +504,7 @@
 				2B9888D01738EE3000D98C59 /* teal_cracked_brick.cpp in Sources */,
 				2B9888D21738EE3000D98C59 /* texture.cpp in Sources */,
 				2B9888D31738EE3000D98C59 /* texture_map.cpp in Sources */,
+				2B3CBD78173FD38F001D4061 /* enemy_bouncer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

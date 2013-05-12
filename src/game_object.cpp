@@ -36,11 +36,13 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 
 	unbreakable = false;
 	lethal = false;
+	preRender = false;
 
 	stage = NULL;
 	isProjectile = false;
 	isDoor = false;
 	isPlayer = false;
+	isBouncer = false;
 	mirrored = false;
 }
 GameObject::~GameObject() {
@@ -110,6 +112,15 @@ void GameObject::Render() {
 	this->spriteFace->RenderCopy(&rect);
 }
 
+void GameObject::RenderToImage(sf::Image& destinyImage) throw() {
+	
+	if (spriteFace == NULL) {
+		
+		return;
+	}
+	this->spriteFace->RenderToImage(destinyImage, (int)x, (int)y);
+}
+
 void GameObject::HandleLogic() {
 
 	if(stage != NULL) {
@@ -143,7 +154,7 @@ void GameObject::OnCollision(GameObject& other) {
 
 void GameObject::HoldMeBack(AccelerableObject& other) {
 
-	if(!solid) {
+	if(!solid && !other.isBouncer) {
 
 		return;
 	}
@@ -226,16 +237,34 @@ void GameObject::HoldMeBack(AccelerableObject& other) {
 
 	//HoldMeBack(other);
 
-	if(zeroX && !zeroY) {
+	if (other.isPlayer) {
+		
+		if(zeroX && !zeroY) {
 	
-		other.xSpeed = 0.0;
-//		other.xAcceleration = 0.0;
-	}
-	if(zeroY) {
+			other.xSpeed = 0.0;
+//			other.xAcceleration = 0.0;
+		}
+		if(zeroY) {
 
-		other.ySpeed = 0.0;
-		other.yAcceleration = 0.0;
+			other.ySpeed = 0.0;
+			other.yAcceleration = 0.0;
+		}
 	}
+	
+	if (other.isBouncer) {
+		
+		if (zeroX) {
+			
+			other.xSpeed = 0.0;
+			other.xAcceleration = -other.xAcceleration;
+		}
+		if (zeroY) {
+			
+			other.ySpeed = 0.0;
+			other.yAcceleration = -other.yAcceleration;
+		}
+	}
+	
 	return;
 	
 }

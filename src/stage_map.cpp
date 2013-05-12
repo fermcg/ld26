@@ -410,6 +410,7 @@ void StageMap::LoadStage() {
 	delete[] objectMatrix;
 
 	(*this)[currentStageId] = stage;
+	stage->PrepareFixedData();
 	stage = NULL;
 }
 

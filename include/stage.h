@@ -7,47 +7,50 @@
 using namespace std;
 
 class Stage : public AllObjects {
-	public:
-		Stage(const char* stageId, const int xPos, const int yPos, const int xSize, const int ySize);
-		~Stage();
-
-		virtual void Init() throw();
-		virtual void Terminate();
-
-		void SetBackground(const char* spriteId) throw();
-		void SetHideGamePanel(const bool hideGamePanel);
-		void SetNoViewPort(const bool noViewPort);
-		void SetColor(const string& colorString);
-		void SetPlayerStartPosition(const int x, const int y);
-		void PositionPlayer();
-
-		void Render();
-
-		GameObject* CreateObject(const string& objectClass,
-								 const string& objectFace);
-
-		typedef map< char, string > Dictionary;
-		Dictionary dictionary;
-
-		friend class StageMap;
-	protected:
-
-		sf::IntRect rect;
-		sf::Color color;
-		int xPos;
-		int yPos;
-		int xSize;
-		int ySize;
-
-		int playerStartX;
-		int playerStartY;
-
-		bool hideGamePanel;
-		bool noViewPort;
+public:
+	Stage(const char* stageId, const int xPos, const int yPos, const int xSize, const int ySize);
+	~Stage();
 	
-		double viewWidth;
-		double viewHeight;
-
-		string stageId;	
-		Sprite* background;
+	virtual void Init() throw();
+	virtual void Terminate();
+	
+	void PrepareFixedData();
+	void SetBackground(const char* spriteId) throw();
+	void SetHideGamePanel(const bool hideGamePanel);
+	void SetNoViewPort(const bool noViewPort);
+	void SetColor(const string& colorString);
+	void SetPlayerStartPosition(const int x, const int y);
+	void PositionPlayer();
+	
+	void Render();
+	
+	GameObject* CreateObject(const string& objectClass,
+							 const string& objectFace);
+	
+	typedef map< char, string > Dictionary;
+	Dictionary dictionary;
+	
+	friend class StageMap;
+protected:
+	
+	sf::IntRect rect;
+	sf::Color color;
+	int xPos;
+	int yPos;
+	int xSize;
+	int ySize;
+	
+	int playerStartX;
+	int playerStartY;
+	
+	bool hideGamePanel;
+	bool noViewPort;
+	
+	double viewWidth;
+	double viewHeight;
+	
+	string stageId;
+	Sprite* background;
+	sf::Image cachedImage;
+	sf::Texture cachedTexture;	
 };

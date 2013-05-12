@@ -65,6 +65,8 @@ void SpriteMap::Init() {
 	LoadSprite("ENERGY+R", spritesTexture, sf::IntRect(0, 72, 80, 8));
 	LoadSprite("ENERGY+G", spritesTexture, sf::IntRect(0, 80, 80, 8));
 
+	// Bouncer
+	LoadSprite("BOUNCER", spritesTexture, sf::IntRect(56, 32, 16, 16), sf::IntRect(0,0,8,8));
 	//	LoadSprite("ENEMY", spritesTexture, sf::IntRect(0, 64, 32, 32), 4);
 	//	LoadSprite("ENEMY+SHOT", spritesTexture, sf::IntRect(0, 96, 32, 32), 4);
 }
@@ -94,7 +96,7 @@ Sprite* SpriteMap::Get(const char* spriteId) throw() {
 	return it->second;
 }
 
-void SpriteMap::LoadSprite(const char* spriteId, const Texture* texture,
+void SpriteMap::LoadSprite(const char* spriteId, Texture* texture,
 						   const sf::IntRect& rect) {
 	sf::IntRect sRect = rect;
 
@@ -103,7 +105,7 @@ void SpriteMap::LoadSprite(const char* spriteId, const Texture* texture,
 
 	LoadSprite( spriteId, texture, rect, sRect);
 }
-void SpriteMap::LoadSprite(const char* spriteId, const Texture* texture,
+void SpriteMap::LoadSprite(const char* spriteId, Texture* texture,
 						   const sf::IntRect& rect, const sf::IntRect& sRect) {
 
 	SpriteMap::const_iterator it;
@@ -123,6 +125,6 @@ void SpriteMap::LoadSprite(const char* spriteId, const Texture* texture,
 		THROWINFO(Exception::BadObject, spriteId);
 	}
 
-	Sprite* sprite = new Sprite(spriteId, texture->texture, rect, sRect);
+	Sprite* sprite = new Sprite(spriteId, texture, rect, sRect);
 	(*this)[spriteId] = sprite;
 }

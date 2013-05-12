@@ -19,6 +19,8 @@ class GameObject : public BaseSystem {
 		virtual void Terminate();
 
 		virtual void Render();
+		virtual void RenderToImage(sf::Image& destinyImage) throw();
+
 		virtual void HandleLogic();
 		virtual void OnCollision(GameObject& other);
 
@@ -41,9 +43,11 @@ class GameObject : public BaseSystem {
 		bool lethal;
 		bool solid;
 		bool mirrored;
+		bool preRender;
 		bool isProjectile;
 		bool isDoor;
 		bool isPlayer;
+		bool isBouncer;
 	protected:
 
 		virtual SpriteFace* CreateSpriteFace() = 0;

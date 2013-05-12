@@ -51,6 +51,24 @@ void Stage::Terminate() {
 	this->AllObjects::Terminate();
 }
 
+void Stage::PrepareFixedData() {
+	
+	AllObjects::ObjectMap::iterator it;
+		
+	cachedImage.create(xSize * BrickObject::Width, ySize * BrickObject::Height,
+					   color);
+	
+	for(it = objectMap.begin(); it != objectMap.end(); it++) {
+		
+		if (it->second->preRender) {
+			
+			// render to cached image.
+			it->second->RenderToImage(cachedImage);
+		}
+	}
+
+	cachedTexture.loadFromImage(cachedImage);
+}
 void Stage::SetBackground(const char* spriteId) throw() {
 
 	background = Singleton::spriteMap->Get(spriteId);
@@ -137,6 +155,8 @@ void Stage::PositionPlayer() {
 void Stage::Render() {
 
 	Singleton::screen->window->clear(color);
+	sf::Sprite cachedSprite(cachedTexture);
+	Singleton::screen->window->draw(cachedSprite);
 
 	if(background != NULL) {
 

@@ -1,6 +1,9 @@
 #include "teal_brick.h"
 
 TealBrick::TealBrick() : BrickObject("TealBrick", "TealBrick") {
+	
+	preRender = true;
+
 }
 
 TealBrick::~TealBrick() {
