@@ -29,40 +29,40 @@ void SpriteMap::Init() {
 	LoadSprite("PLAYER+JUMP+RIGHT", spritesTexture, sf::IntRect(72, 0, 8, 16));
 	LoadSprite("PLAYER+JUMP+LEFT", spritesTexture, sf::IntRect(80, 0, 8, 16));
 	LoadSprite("PLAYER+JUMP+FRONT", spritesTexture, sf::IntRect(88, 0, 8, 16));
-	LoadSprite("PLAYER+SHOT", spritesTexture, sf::IntRect(32, 16, 64, 8), sf::IntRect(0, 0, 8, 8));
+	LoadSprite("PLAYER+SHOT", spritesTexture, sf::IntRect(96, 0, 32, 16), sf::IntRect(0, 0, 8, 8));
 	// Scene
-	LoadSprite("BRICK+TEAL", spritesTexture, sf::IntRect(0, 16, 16, 8), sf::IntRect(0, 0, 8, 8));
-	LoadSprite("CRACK+TEAL", spritesTexture, sf::IntRect(0, 24, 16, 8), sf::IntRect(0, 0, 8, 8));
-	LoadSprite("BRICK+BROWN", spritesTexture, sf::IntRect(16, 24, 8, 8));
-	LoadSprite("BRICK+COLORS", spritesTexture, sf::IntRect(24, 24, 8, 8));
-	LoadSprite("BRICK+BLINK", spritesTexture, sf::IntRect(32, 24, 32, 8), sf::IntRect(0, 0, 8, 8));
-	LoadSprite("BRICK+EARTH", spritesTexture, sf::IntRect(64, 24, 16, 8), sf::IntRect(0, 0, 8, 8));
+	LoadSprite("BRICK+TEAL", spritesTexture, sf::IntRect(24, 40, 8, 8));
+	LoadSprite("CRACK+TEAL", spritesTexture, sf::IntRect(48, 16, 8, 8));
+	LoadSprite("BRICK+BROWN", spritesTexture, sf::IntRect(24, 32, 8, 8));
+	LoadSprite("BRICK+COLORS", spritesTexture, sf::IntRect(24, 56, 8, 8));
+	LoadSprite("BRICK+BLINK", spritesTexture, sf::IntRect(32, 32, 16, 16), sf::IntRect(0, 0, 8, 8));
+	LoadSprite("BRICK+EARTH", spritesTexture, sf::IntRect(24, 48, 8, 8), sf::IntRect(0, 0, 8, 8));
 	
-	LoadSprite("MUSHROOM+LEFT", spritesTexture, sf::IntRect(80, 24, 8, 8));
-	LoadSprite("MUSHROOM+TOP", spritesTexture, sf::IntRect(88, 24, 8, 8));
-	LoadSprite("MUSHROOM+RIGHT", spritesTexture, sf::IntRect(96, 24, 8, 8));
-	LoadSprite("MUSHROOM+JUNCTION", spritesTexture, sf::IntRect(80, 32, 8, 8));
-	LoadSprite("MUSHROOM+TRUNK", spritesTexture, sf::IntRect(88, 32, 8, 8));
-	LoadSprite("MUSHROOM+ROOT", spritesTexture, sf::IntRect(96, 32, 8, 8));
+	LoadSprite("MUSHROOM+LEFT", spritesTexture, sf::IntRect(104, 72, 8, 8));
+	LoadSprite("MUSHROOM+TOP", spritesTexture, sf::IntRect(112, 72, 8, 8));
+	LoadSprite("MUSHROOM+RIGHT", spritesTexture, sf::IntRect(120, 72, 8, 8));
+	LoadSprite("MUSHROOM+JUNCTION", spritesTexture, sf::IntRect(104, 80, 8, 8));
+	LoadSprite("MUSHROOM+TRUNK", spritesTexture, sf::IntRect(112, 80, 8, 8));
+	LoadSprite("MUSHROOM+ROOT", spritesTexture, sf::IntRect(120, 80, 8, 8));
 
-	LoadSprite("TREE+LEFT", spritesTexture, sf::IntRect(80, 40, 8, 8));
-	LoadSprite("TREE+TOP", spritesTexture, sf::IntRect(88, 40, 8, 8));
-	LoadSprite("TREE+RIGHT", spritesTexture, sf::IntRect(96, 40, 8, 8));
-	LoadSprite("TREE+JUNCTION", spritesTexture, sf::IntRect(80, 48, 8, 8));
-	LoadSprite("TREE+TRUNK", spritesTexture, sf::IntRect(88, 48, 8, 8));
-	LoadSprite("TREE+ROOT", spritesTexture, sf::IntRect(96, 48, 8, 8));
+	LoadSprite("TREE+LEFT", spritesTexture, sf::IntRect(104, 56, 8, 8));
+	LoadSprite("TREE+TOP", spritesTexture, sf::IntRect(112, 56, 8, 8));
+	LoadSprite("TREE+RIGHT", spritesTexture, sf::IntRect(120, 56, 8, 8));
+	LoadSprite("TREE+JUNCTION", spritesTexture, sf::IntRect(104, 64, 8, 8));
+	LoadSprite("TREE+TRUNK", spritesTexture, sf::IntRect(112, 64, 8, 8));
+	LoadSprite("TREE+ROOT", spritesTexture, sf::IntRect(120, 64, 8, 8));
 
-	LoadSprite("SPIKES+UP", spritesTexture, sf::IntRect(16, 16, 8, 8));
-	LoadSprite("SPIKES+DOWN", spritesTexture, sf::IntRect(24, 16, 8, 8));
-	LoadSprite("DOOR+CLOSED", spritesTexture, sf::IntRect(96, 0, 8, 16));
-	LoadSprite("DOOR+OPENED", spritesTexture, sf::IntRect(104, 0, 8, 16));
+	LoadSprite("SPIKES+UP", spritesTexture, sf::IntRect(96, 32, 8, 8));
+	LoadSprite("SPIKES+DOWN", spritesTexture, sf::IntRect(96, 40, 8, 8));
+	LoadSprite("DOOR+CLOSED", spritesTexture, sf::IntRect(112, 32, 8, 16));
+	LoadSprite("DOOR+OPENED", spritesTexture, sf::IntRect(120, 32, 8, 16));
 	// Numbers
-	LoadSprite("NUMBERS+R", spritesTexture, sf::IntRect(0, 32, 80, 8), sf::IntRect(0, 0, 8, 8));
-	LoadSprite("NUMBERS+G", spritesTexture, sf::IntRect(0, 40, 80, 8), sf::IntRect(0, 0, 8, 8));
-	LoadSprite("NUMBERS+B", spritesTexture, sf::IntRect(0, 48, 80, 8), sf::IntRect(0, 0, 8, 8));
+	LoadSprite("NUMBERS+R", spritesTexture, sf::IntRect(48, 104, 80, 8), sf::IntRect(0, 0, 8, 8));
+	LoadSprite("NUMBERS+G", spritesTexture, sf::IntRect(48, 112, 80, 8), sf::IntRect(0, 0, 8, 8));
+	LoadSprite("NUMBERS+B", spritesTexture, sf::IntRect(48, 120, 80, 8), sf::IntRect(0, 0, 8, 8));
 	// Health
-	LoadSprite("ENERGY+R", spritesTexture, sf::IntRect(0, 56, 80, 4));
-	LoadSprite("ENERGY+G", spritesTexture, sf::IntRect(0, 60, 80, 4));
+	LoadSprite("ENERGY+R", spritesTexture, sf::IntRect(0, 72, 80, 4));
+	LoadSprite("ENERGY+G", spritesTexture, sf::IntRect(0, 80, 80, 4));
 
 	//	LoadSprite("ENEMY", spritesTexture, sf::IntRect(0, 64, 32, 32), 4);
 	//	LoadSprite("ENEMY+SHOT", spritesTexture, sf::IntRect(0, 96, 32, 32), 4);

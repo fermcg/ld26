@@ -65,6 +65,10 @@ void SpriteFace::RegisterFace(const Facing facing, const char* spriteId) throw()
 		
 		spriteSequence->counterTarget = 3;
 	}
+	if (sprite->spriteId == "BRICK+BLINK") {
+
+		spriteSequence->counterTarget = 40;
+	}
 	faces[facing] = spriteSequence;
 }
 void SpriteFace::ChangeFace(const Facing facing) {
