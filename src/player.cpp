@@ -10,7 +10,8 @@ using namespace std;
 Player::Player() : AccelerableObject("Player", "Player") {
 
 	bAcceleration = 0.037;
-	gAcceleration = 0.050;
+	gAccelerationBase = 0.070;
+	jAcceleration = 0.030;
 
 	// Accelerable vars
 
@@ -31,6 +32,7 @@ Player::Player() : AccelerableObject("Player", "Player") {
 
 	accelerationChanged = false;
 	fireChanged = false;
+	jumpChanged = false;
 
 	boundingBox.left = 1;
 	boundingBox.top = 4;
@@ -163,6 +165,13 @@ void Player::HandleLogic() {
 		nextShotDirection = Projectile::down;
 	}
 
+	if (holdingJump) {
+
+		gAcceleration = gAccelerationBase - jAcceleration;
+	} else {
+
+		gAcceleration = gAccelerationBase;
+	}
 	this->AccelerableObject::HandleLogic();
 	if(xAcceleration != 0.0 && !walking && grounded) {
 
@@ -280,6 +289,12 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 
 				jumpIsOn = set;
 				changed = true;
+				jumpChanged = true;
+
+				if (!set) {
+
+					holdingJump = false;
+				}
 			}
 			break;
 		case fire:
@@ -298,9 +313,13 @@ void Player::CommandSetOrReset(const Player::Command& command, const bool set) {
 
 			ActionDoor();
 		}
-		if(jumpIsOn) {
+		if(jumpChanged) {
 
-			ActionJump();
+			if (jumpIsOn) {
+
+				ActionJump();
+			}
+			jumpChanged = false;
 		}
 		if(accelerationChanged) {
 
@@ -351,6 +370,7 @@ void Player::ActionJump() {
 		}
 	}
 
+	holdingJump = true;
 	ySpeed = -yMaxSpeed;
 	sfxJump->Play();
 	Singleton::screen->TempZoomOut();

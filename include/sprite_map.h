@@ -20,5 +20,7 @@ class SpriteMap : public BaseSystem, map< string, Sprite* > {
 		Sprite* Get(const char* spriteId) throw();
 	private:
 		void LoadSprite(const char* spriteId, const Texture* texture,
-				const sf::IntRect& rect, const int frames);
+						const sf::IntRect& rect);
+		void LoadSprite(const char* spriteId, const Texture* texture,
+						const sf::IntRect& rect, const sf::IntRect& sRect);
 };

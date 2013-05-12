@@ -67,6 +67,7 @@ class Player : public AccelerableObject {
 		void ActionShot();
 
 		double bAcceleration;
+		double gAccelerationBase;
 
 		bool fireIsOn;
 		bool leftIsOn;
@@ -75,10 +76,13 @@ class Player : public AccelerableObject {
 		bool downIsOn;
 		bool jumpIsOn;
 
+		bool holdingJump;
+
 		bool walking;
 
 		bool accelerationChanged;
 		bool fireChanged;
+		bool jumpChanged;
 		Projectile::Direction nextShotDirection;
 		SoundEffect* sfxStep;
 		SoundEffect* sfxStrongLaser;

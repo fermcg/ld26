@@ -7,14 +7,19 @@
 
 using namespace std;
 
-Sprite::Sprite(const char* spriteId, sf::Texture* texture, const sf::IntRect& rect, const int frames) 
+Sprite::Sprite(const char* spriteId, sf::Texture* texture,
+			   const sf::IntRect& rect, const sf::IntRect& sRect) 
 : sprite(*texture) {
 
 	this->rect = rect;
+	this->sRect = sRect;
 
 	this->texture = texture;
 	this->spriteId = spriteId;
-	this->frames = frames;
+	this->xFrames = (rect.width / sRect.width);
+	this->yFrames = (rect.height / sRect.height);
+
+	this->frames = this->xFrames * this->yFrames;
 }
 
 Sprite::~Sprite() {
@@ -23,8 +28,15 @@ Sprite::~Sprite() {
 
 void Sprite::RenderCopy(const sf::IntRect* destinyRect, const int frame) throw() {
 
-	sf::IntRect sourceRect = rect;
-	sourceRect.left += frame * sourceRect.width;
+	sf::IntRect sourceRect;
+	
+	int fx = frame % xFrames;
+	int fy = frame / xFrames;
+
+	sourceRect.left = rect.left + fx * sRect.width;
+	sourceRect.top = rect.top + fy * sRect.height;
+	sourceRect.width = sRect.width;
+	sourceRect.height = sRect.height;
 
 	sprite.setTexture(*texture);
 	sprite.setTextureRect(sourceRect);
