@@ -105,7 +105,7 @@ void Config::Load() throw() {
 		}
 
 		string key = line.substr(0, pos);
-		string value = line.substr(pos);
+		string value = line.substr(pos + 1);
 
 		boost::algorithm::trim(key);
 
