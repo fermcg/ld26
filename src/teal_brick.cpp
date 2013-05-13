@@ -2,7 +2,7 @@
 
 TealBrick::TealBrick() : BrickObject("TealBrick", "TealBrick") {
 	
-	preRender = true;
+//	preRender = true;
 
 }
 

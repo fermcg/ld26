@@ -37,6 +37,7 @@ void SpriteMap::Init() {
 	LoadSprite("BRICK+COLORS", spritesTexture, sf::IntRect(24, 56, 8, 8));
 	LoadSprite("BRICK+BLINK", spritesTexture, sf::IntRect(32, 48, 16, 16), sf::IntRect(0, 0, 8, 8));
 	LoadSprite("BRICK+EARTH", spritesTexture, sf::IntRect(24, 48, 8, 8), sf::IntRect(0, 0, 8, 8));
+	LoadSprite("BRICK+GRAY", spritesTexture, sf::IntRect(24, 16, 8, 8), sf::IntRect(0, 0, 8, 8));
 	
 	LoadSprite("MUSHROOM+LEFT", spritesTexture, sf::IntRect(104, 72, 8, 8));
 	LoadSprite("MUSHROOM+TOP", spritesTexture, sf::IntRect(112, 72, 8, 8));

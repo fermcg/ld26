@@ -7,7 +7,7 @@ SpikeBlock::SpikeBlock() : LethalBlock("SpikeBlock", "SpikeBlock") {
 	boundingBox.width = 6;
 	boundingBox.height = 4;
 	
-	preRender = true;
+//	preRender = true;
 	mirrored = true;
 }
 

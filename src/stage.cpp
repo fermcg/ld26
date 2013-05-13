@@ -36,6 +36,7 @@ Stage::Stage(const char* stageId, const int xPos, const int yPos, const int xSiz
 	
 	viewWidth = 258;
 	viewHeight = 192;
+
 }
 Stage::~Stage() {
 

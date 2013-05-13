@@ -20,7 +20,7 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	yMinSpeed = 0.0;
 	yMaxSpeed = 3.0;
 
-	xBreaking = 0.16;
+	xBreaking = 0.13;
 	yBreaking = 0.10;
 
 	fireIsOn = false;
