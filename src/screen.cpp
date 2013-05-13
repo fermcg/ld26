@@ -28,8 +28,8 @@ void Screen::Init() throw() {
 	int width = 0;
 	int height = 0;
 
-	Singleton::config->Read(windowSection, "width", width, 704);
-	Singleton::config->Read(windowSection, "height", height, 480);
+	Singleton::config->Read(windowSection, "width", width, 768);
+	Singleton::config->Read(windowSection, "height", height, 432);
 
 	videoMode.width = width;
 	videoMode.height = height;
@@ -52,7 +52,8 @@ void Screen::Init() throw() {
 	}
 	window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-	window->setFramerateLimit(70);
+	window->setFramerateLimit(60);
+	window->setVerticalSyncEnabled(true);
 
 	this->BaseSystem::Init();	
 }
@@ -74,9 +75,13 @@ void Screen::ToogleFullScreen() {
 		
 		window->create(videoMode, gameTitle, sf::Style::Fullscreen);
 		window->setMouseCursorVisible(false);
+		window->setFramerateLimit(60);
+		window->setVerticalSyncEnabled(true);
 	} else {
 		
 		window->create(videoMode, gameTitle, sf::Style::Close);
+		window->setFramerateLimit(60);
+		window->setVerticalSyncEnabled(true);
 	}
 	
 	window->setView(view);
