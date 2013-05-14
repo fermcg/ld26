@@ -12,6 +12,8 @@ public:
 	
 	void Init() throw();
 	void Terminate();
+
+	void TakeThisHit(const int damage);
 	
 protected:
 	SpriteFace* CreateSpriteFace();

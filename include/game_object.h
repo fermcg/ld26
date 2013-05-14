@@ -27,7 +27,7 @@ class GameObject : public BaseSystem {
 		void HoldMeBack(AccelerableObject& other);
 		bool AmIGrounded(const AccelerableObject& other);
 		bool CheckCollision(const GameObject& other);
-		void TakeThisHit(const int damage);
+		virtual void TakeThisHit(const int damage);
 
 		virtual bool Merge(GameObject* other);
 	

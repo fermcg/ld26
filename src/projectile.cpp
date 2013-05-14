@@ -4,6 +4,7 @@ Projectile::Projectile(const char* name, const char* objectId) : AccelerableObje
 
 	direction = Projectile::up;
 	isProjectile = true;
+	gravity = false;
 }
 Projectile::~Projectile() {
 

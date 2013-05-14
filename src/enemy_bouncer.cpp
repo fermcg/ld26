@@ -58,6 +58,13 @@ void EnemyBouncer::Terminate() {
 	this->AccelerableObject::Terminate();
 }
 
+void EnemyBouncer::TakeThisHit(const int damage) {
+
+	this->AccelerableObject::TakeThisHit(damage);
+
+	this->xSpeed = this->xSpeed / ((800.0 + damage) / 500.0);
+	this->ySpeed = this->ySpeed / ((800.0 + damage) / 500.0);
+}
 SpriteFace* EnemyBouncer::CreateSpriteFace() {
 	
 	SpriteFace* face = new SpriteFace("Enemy Bouncer Face");
