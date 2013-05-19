@@ -3,6 +3,9 @@
 #include "ResourcePath.hpp"
 
 #include <sstream>
+#include <iostream>
+
+using namespace std;
 
 using std::ostringstream;
 
@@ -24,10 +27,17 @@ void GamePanel::Init() {
 	greenNumbers = Singleton::spriteMap->Get("NUMBERS+G");
 	blueNumbers = Singleton::spriteMap->Get("NUMBERS+B");
 
+	life = Singleton::spriteMap->Get("LIFE");
+	charLowerX = Singleton::spriteMap->Get("CHAR+L+X");
+
 	energyBarRect.left = Singleton::screen->window->getSize().x / 4 - (greenBar->rect.width * 2 + 48) / 2;
 	energyBarRect.top = 10;
 	energyBarRect.width = greenBar->rect.width;
 	energyBarRect.height = greenBar->rect.height;
+
+	livesPosition.x = energyBarRect.left - 4 - charLowerX->rect.width - 6 * 2 - life->rect.width;
+	livesPosition.y = energyBarRect.top;
+
 
 	powerUpsRect.left = energyBarRect.left + energyBarRect.width + 8;
 	powerUpsRect.top = energyBarRect.top;
@@ -52,10 +62,35 @@ void GamePanel::Terminate() {
 void GamePanel::Render() {
 
 	Singleton::screen->window->setView(view);
+	ShowLives();
 	ShowEnergyBar();
 	ShowPowerUps();
 	ShowScore();
 	Singleton::screen->window->setView(Singleton::screen->view);
+}
+
+void GamePanel::ShowLives() {
+
+	sf::IntRect rect;
+	
+	rect.left = livesPosition.x;
+	rect.top = livesPosition.y;
+
+	rect.width = life->sRect.width;
+	rect.height = life->sRect.height;
+
+	life->RenderCopy(&rect);
+
+	rect.left += 8;
+	charLowerX->RenderCopy(&rect);
+
+	sf::Vector2f numPosition = livesPosition;
+	numPosition.x = rect.left + 8;
+
+	if (Singleton::player->lifes >= 0) {
+
+		this->ShowNumber(numPosition, whiteNumbers, Singleton::player->lifes);
+	}
 }
 
 void GamePanel::ShowEnergyBar() {
@@ -65,7 +100,10 @@ void GamePanel::ShowEnergyBar() {
 
 	sf::IntRect greenRect = energyBarRect;
 
-	greenRect.width = (int)((Singleton::player->energy * (int)energyBarRect.width) / Singleton::player->maxEnergy);
+	double factor = (double)Singleton::player->energy / (double)Singleton::player->maxEnergy;
+	cout << "factor: " << factor << endl;
+	greenRect.width = (int)((double)energyBarRect.width * factor);
+	greenBar->sRect.width = greenRect.width;
 	greenBar->RenderCopy(&greenRect);
 }
 
@@ -84,29 +122,40 @@ void GamePanel::ShowPowerUps() {
 
 void GamePanel::ShowScore() {
 	
-	int vScore[10];
+	ShowNumber(scorePosition, whiteNumbers, Singleton::gameLoop->score);
+}
 
-	int remaining = Singleton::gameLoop->score;
-	int start;
-	for (start = 9; remaining > 0; start--) {
+void GamePanel::ShowNumber(const sf::Vector2f& position, Sprite* numberSprite, const unsigned int number) {
+
+	unsigned int vNumber[10];
+
+	unsigned int remaining = number;
+	unsigned int start;
+	for (start = 9; remaining != 0; start--) {
 
 		int digit = remaining % 10;
 		remaining = remaining / 10;
 
-		vScore[start] = digit;
+		vNumber[start] = digit;
+	}
+
+	if (start == 9) {
+
+		vNumber[start] = 0;
+		start--;
 	}
 
 	start++;
-	sf::IntRect scoreRect;
+	sf::IntRect rect;
 
-	scoreRect.left = scorePosition.x;
-	scoreRect.top = scorePosition.y;
-	scoreRect.width = 8;
-	scoreRect.height = 8;
+	rect.left = position.x;
+	rect.top = position.y;
+	rect.width = 8;
+	rect.height = 8;
 
 	for (int i = start; i < 10; i++) {
 
-		whiteNumbers->RenderCopy(&scoreRect, vScore[i]);
-		scoreRect.left += 6;
+		numberSprite->RenderCopy(&rect, vNumber[i]);
+		rect.left += 6;
 	}
 }

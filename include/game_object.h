@@ -26,7 +26,7 @@ class GameObject : public BaseSystem {
 
 		void HoldMeBack(AccelerableObject& other);
 		bool AmIGrounded(const AccelerableObject& other);
-		bool CheckCollision(const GameObject& other);
+		virtual bool CheckCollision(const GameObject& other);
 		virtual void TakeThisHit(const int damage);
 
 		virtual bool Merge(GameObject* other);
@@ -43,14 +43,27 @@ class GameObject : public BaseSystem {
 		bool lethal;
 		bool solid;
 		bool mirrored;
+		bool smartBricks;
 		bool preRender;
+		bool respawn;
+		bool stationary;
 		bool isProjectile;
 		bool isDoor;
 		bool isPlayer;
 		bool isBouncer;
+		bool isPickable;
+		bool isHurting;
+
+		double xAdjust;
+		double yAdjust;
+		double xAdjustAcceleration;
+		double yAdjustAcceleration;
+
 	protected:
 
 		virtual SpriteFace* CreateSpriteFace() = 0;
+
+		SpriteFace* CreateSmartBricksFace(const char* prefixId);
 
 		int w;
 		int h;

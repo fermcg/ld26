@@ -10,30 +10,37 @@ using namespace std;
 class AccelerableObject;
 class AllObjects : public BaseSystem {
 	public:
+		typedef map< unsigned long, GameObject* > ObjectMap;
+
 		AllObjects();
 		virtual ~AllObjects();
 
 		void Init();
 		void Terminate();
 
-		void RegisterObject(GameObject* gameObject);
+		virtual void RegisterObject(GameObject* gameObject);
+		virtual bool UnregisterObject(unsigned long gameObjectId);
 
-		void HandleLogic();
+		virtual void HandleLogic();
 		virtual void Render();
 
-		bool LoopCheckForCollision(GameObject& gameObject);
+		virtual bool LoopCheckForCollision(GameObject& gameObject);
 
 		virtual GameObject* CreateObject(const string& objectClass,
-										 const string& objectSequence);
-		void HoldMeBack(AccelerableObject& other);
-		bool AmIGrounded(const AccelerableObject& other);
+										 const string& objectSequence,
+										  const double x, const double y,
+										  const bool respawn);
+
+		virtual void HoldMeBack(AccelerableObject& other);
+		virtual bool AmIGrounded(const AccelerableObject& other);
+
+		virtual void TerminateObject(ObjectMap::iterator itDead);
 
 		friend class GameObject;
 
+		GameObject* groundObject;
 	protected:
-		typedef map< unsigned long, GameObject* > ObjectMap;
 		ObjectMap objectMap;
-		bool UnregisterObject(unsigned long gameObjectId);
 
 	private:
 		unsigned long currentId;

@@ -261,6 +261,7 @@ void StageMap::LoadStage() {
 			objectMatrix[j][i] = NULL;
 			char c = strMap[j][i];
 
+			bool respawn = false;
 			switch(c) {
 				case ' ':
 					continue;
@@ -292,6 +293,7 @@ void StageMap::LoadStage() {
 				objectClass = nextColor;
 				objectClass.push_back(c);
 				nextColor = "";
+				respawn = true;
 			} else {
 
 				Stage::Dictionary::iterator it = stage->dictionary.find(c);
@@ -300,7 +302,14 @@ void StageMap::LoadStage() {
 					cout << "StageMap::LoadStage - Unknown character [" << c << "]" << endl;
 					continue;
 				}
-				objectClass = it->second;
+				if (it->second[0] == '<') {
+
+					respawn = true;
+					objectClass = it->second.substr(1);
+				} else {
+
+					objectClass = it->second;
+				}
 			}
 
 			size_t extPos = objectClass.find(",");
@@ -310,26 +319,137 @@ void StageMap::LoadStage() {
 				objectClass.erase(extPos);
 			}
 			
-			GameObject *gameObject = stage->CreateObject(objectClass, objectSequence);
+			GameObject *gameObject = stage->CreateObject(objectClass, objectSequence,
+				stage->xPos * BrickObject::Width + i * BrickObject::Width,
+				stage->yPos * BrickObject::Height + j * BrickObject::Height,
+				respawn);
 			
-			if (gameObject->mirrored) {
-				
-				if (j > 0 && strMap[j - 1][i] == ' ') {
-					
-					gameObject->spriteFace->ChangeFace(SpriteFace::up);
-				} else {
-					
-					gameObject->spriteFace->ChangeFace(SpriteFace::down);
-				}
-			}
 
 			objectMatrix[j][i] = gameObject;
 
 			if(gameObject != NULL) {
 
 				preMergeCount++;
-				gameObject->y = stage->yPos * BrickObject::Height + j * BrickObject::Height;
-				gameObject->x = stage->xPos * BrickObject::Width + i * BrickObject::Width;
+//				gameObject->y = stage->yPos * BrickObject::Height + j * BrickObject::Height;
+//				gameObject->x = stage->xPos * BrickObject::Width + i * BrickObject::Width;
+				if (gameObject->mirrored) {
+				
+					if (j > 0 && strMap[j - 1][i] == ' ') {
+					
+						gameObject->spriteFace->ChangeFace(SpriteFace::up);
+					} else {
+					
+						gameObject->spriteFace->ChangeFace(SpriteFace::down);
+					}
+				} else if (gameObject->smartBricks) {
+
+					char mask = 0x00;
+					SpriteFace::Facing facing;
+
+					for (int jj = -1; jj <=1; jj++) {
+
+						for (int ii = -1; ii <= 1; ii++) {
+
+							if (jj == -1 && ii != 0 || jj == 1 && ii != 0 || ii == 0 && jj == 0) {
+
+								// won't check corners or center.
+								continue;
+							}
+							if (j + jj < 0 || j + jj >= stage->ySize || 
+								i + ii < 0 || i + ii >= stage->xSize) {
+
+								// empty map areas.
+								continue;
+							}
+
+							if (strMap[j][i] == strMap[j + jj][i + ii]) {
+
+								if (jj == -1) {
+
+									mask = mask | 0x08;
+								} else if (jj == 1) {
+
+									mask = mask | 0x04;
+								} else if (ii == -1) {
+
+									mask = mask | 0x02;
+								} else if (ii == 1) {
+
+									mask = mask | 0x01;
+								}
+							}
+						}
+					}
+
+					switch (mask) {
+
+					case 0x00: // nothing
+						facing = SpriteFace::full_front;
+						break;
+
+					case 0x01: // only right
+						facing = SpriteFace::full_left;
+						break;
+
+					case 0x02: // only left
+						facing = SpriteFace::full_right;
+						break;
+
+					case 0x03: // right and left
+						facing = SpriteFace::horizontal;
+						break;
+
+					case 0x04: // only down
+						facing = SpriteFace::full_up;
+						break;
+
+					case 0x05: // down and right
+						facing = SpriteFace::top_left;
+						break;
+
+					case 0x06: // down and left
+						facing = SpriteFace::top_right;
+						break;
+
+					case 0x07: // down right and left
+						facing = SpriteFace::up;
+						break;
+
+					case 0x08: // only up
+						facing = SpriteFace::full_down;
+						break;
+
+					case 0x09: // up and right
+						facing = SpriteFace::bottom_left;
+						break;
+
+					case 0x0a: // up and left
+						facing = SpriteFace::bottom_right;
+						break;
+
+					case 0x0b: // up right and left
+						facing = SpriteFace::down;
+						break;
+
+					case 0x0c: // up and down
+						facing = SpriteFace::vertical;
+						break;
+
+					case 0x0d: // up down and right
+						facing = SpriteFace::left;
+						break;
+
+					case 0x0e: // up down and left
+						facing = SpriteFace::right;
+						break;
+
+					case 0x0f: // up down right and left
+						facing = SpriteFace::front;
+						break;
+					}
+
+					gameObject->spriteFace->ChangeFace(facing);
+				}
 			}
 		}
 	}

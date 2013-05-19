@@ -9,6 +9,7 @@
 #include "door_object.h"
 #include "teal_brick.h"
 #include "teal_cracked_brick.h"
+#include "ice_brick.h"
 #include "lethal_empty_block.h"
 #include "spike_block.h"
 #include "number_power.h"
@@ -20,6 +21,7 @@ using namespace std;
 AllObjects::AllObjects() : BaseSystem("AllObjects") {
 
 	currentId = 0;
+	groundObject = NULL;
 }
 
 AllObjects::~AllObjects() {
@@ -69,11 +71,7 @@ void AllObjects::HandleLogic() {
 			AllObjects::ObjectMap::iterator itDead = it;
 			it++;
 
-			itDead->second->gameObjectId = 0;
-			itDead->second->Terminate();
-			delete itDead->second;
-			itDead->second = NULL;
-			objectMap.erase(itDead);
+			TerminateObject(itDead);
 		} else {
 
 			it->second->HandleLogic();
@@ -87,10 +85,10 @@ void AllObjects::Render() {
 
 	for(it = objectMap.begin(); it != objectMap.end(); it++) {
 
-		if (it->second->preRender) {
+		//if (it->second->preRender) {
 			
-			continue;
-		}
+		//	continue;
+		//}
 		it->second->Render();
 	}	
 }
@@ -113,10 +111,12 @@ bool AllObjects::AmIGrounded(const AccelerableObject& other) {
 
 	AllObjects::ObjectMap::iterator it;
 
+	groundObject = NULL;
 	for(it = objectMap.begin(); it != objectMap.end(); it++) {
 
 		if(it->second->AmIGrounded(other)) {
 			
+			groundObject = it->second;
 			return true;
 		}
 	}
@@ -124,11 +124,19 @@ bool AllObjects::AmIGrounded(const AccelerableObject& other) {
 	return false;
 }
 
+void AllObjects::TerminateObject(AllObjects::ObjectMap::iterator itDead) {
+
+	itDead->second->gameObjectId = 0;
+	itDead->second->Terminate();
+	delete itDead->second;
+	itDead->second = NULL;
+	objectMap.erase(itDead);
+}
+
 bool AllObjects::LoopCheckForCollision(GameObject& gameObject) {
 	AllObjects::ObjectMap::iterator it;
 	bool result = false;
 
-	static bool only_one_time = true;
 	for(it = objectMap.begin(); it != objectMap.end(); it++) {
 
 		if(it->second->CheckCollision(gameObject)) {
@@ -141,12 +149,7 @@ bool AllObjects::LoopCheckForCollision(GameObject& gameObject) {
 			result = true;
 
 		}
-		if(only_one_time) {
-
-			cout << "name: " << it->second->name << endl;
-		}
 	}
-	only_one_time = false;
 
 	return result;
 }
@@ -168,7 +171,9 @@ bool AllObjects::UnregisterObject(unsigned long gameObjectId) {
 }
 
 GameObject* AllObjects::CreateObject(const string& objectClass,
-									 const string& objectFace) {
+									 const string& objectFace,
+									 const double x, const double y,
+									 const bool respawn) {
 
 	GameObject* object = NULL;
 	if(objectClass == "EMPTY") {
@@ -183,6 +188,9 @@ GameObject* AllObjects::CreateObject(const string& objectClass,
 	} else if(objectClass == "CRACK+TEAL") {
 
 		object = new TealCrackedBrick();
+	} else if(objectClass == "SMART+ICE") {
+
+		object = new IceBrick();
 	} else if(objectClass == "DEATH") {
 
 		object = new LethalEmptyBlock();
@@ -246,7 +254,10 @@ GameObject* AllObjects::CreateObject(const string& objectClass,
 			object->ChangeFace(objectFace);
 		}
 		object->Init();
+		object->x = x;
+		object->y = y;
 		RegisterObject(object);
+		object->respawn = respawn;
 	}
 
 	return object;

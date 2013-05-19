@@ -5,6 +5,7 @@ PowerUp::PowerUp(const char* name, const char* objectId) : GameObject(name, obje
 
 	energy = 1;
 	damage = 0;
+	isPickable = true;
 }
 
 PowerUp::~PowerUp() {

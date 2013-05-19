@@ -15,6 +15,11 @@ AccelerableObject::AccelerableObject(const char* name, const char* objectId) : G
 	xBreaking = 0.0;
 	yBreaking = 0.0;
 
+	xBreakingAdjust = 1.0;
+	yBreakingAdjust = 1.0;
+	xAccelerationAdjust = 1.0;
+	yAccelerationAdjust = 1.0;
+
 	xSpeed = 0.0;
 	ySpeed = 0.0;
 
@@ -50,11 +55,22 @@ void AccelerableObject::HandleLogic() {
 
 		if(xSpeed < xMaxSpeed) {
 
-			xSpeed += xAcceleration;
-			if(xSpeed > xMaxSpeed) {
-				xSpeed = xMaxSpeed;
-			} else if(xSpeed < xMinSpeed) {
-				xSpeed = xMinSpeed;
+			if(xSpeed < xMinSpeed) { // actually breaking
+
+				xSpeed += xAcceleration * xAccelerationAdjust;
+				if(xSpeed > xMaxSpeed) {
+					xSpeed = xMaxSpeed;
+				} else if(!grounded && xSpeed < xMinSpeed) {
+					xSpeed = xMinSpeed;
+				}
+			} else {
+
+				xSpeed += xAcceleration * xAccelerationAdjust;
+				if(xSpeed > xMaxSpeed) {
+					xSpeed = xMaxSpeed;
+				} else if(xSpeed < xMinSpeed) {
+					xSpeed = xMinSpeed;
+				}
 			}
 		}
 		//spriteFace->ChangeFace(SpriteFace::right);
@@ -63,11 +79,22 @@ void AccelerableObject::HandleLogic() {
 
 		if(xSpeed > -xMaxSpeed) {
 
-			xSpeed += xAcceleration;
-			if(xSpeed < -xMaxSpeed) {
-				xSpeed = -xMaxSpeed;
-			} else if(xSpeed > -xMinSpeed) {
-				xSpeed = -xMinSpeed;
+			if(xSpeed > -xMinSpeed) { // actually breaking
+
+				xSpeed += xAcceleration * xAccelerationAdjust;
+				if(xSpeed < -xMaxSpeed) {
+					xSpeed = -xMaxSpeed;
+				} else if(!grounded && xSpeed > -xMinSpeed) {
+					xSpeed = -xMinSpeed;
+				}
+			} else {
+
+				xSpeed += xAcceleration * xAccelerationAdjust;
+				if(xSpeed < -xMaxSpeed) {
+					xSpeed = -xMaxSpeed;
+				} else if(xSpeed > -xMinSpeed) {
+					xSpeed = -xMinSpeed;
+				}
 			}
 		}
 		//spriteFace->ChangeFace(SpriteFace::left);
@@ -76,14 +103,14 @@ void AccelerableObject::HandleLogic() {
 
 		if(xSpeed > xMinSpeed) {
 
-			xSpeed -= xBreaking;
+			xSpeed -= xBreaking * xBreakingAdjust;
 			if(xSpeed < xMinSpeed) {
 
 				xSpeed = xMinSpeed;
 			}
 		} else if(xSpeed < -xMinSpeed) {
 
-			xSpeed += xBreaking;
+			xSpeed += xBreaking * xBreakingAdjust;
 			if(xSpeed > -xMinSpeed) {
 
 				xSpeed = -xMinSpeed;
@@ -95,7 +122,13 @@ void AccelerableObject::HandleLogic() {
 
 		if(ySpeed < yMaxSpeed) {
 
-			ySpeed += yAcceleration;
+			if(ySpeed < yMinSpeed) { // actually breaking
+
+				ySpeed += yAcceleration * yBreakingAdjust;
+			} else {
+
+				ySpeed += yAcceleration * yAccelerationAdjust;
+			}
 			if(ySpeed > yMaxSpeed) {
 				ySpeed = yMaxSpeed;
 			}
@@ -106,7 +139,14 @@ void AccelerableObject::HandleLogic() {
 
 		if(ySpeed > -yMaxSpeed) {
 
-			ySpeed += yAcceleration;
+			if(ySpeed > -yMinSpeed) { // actually breaking
+
+				ySpeed += yAcceleration * yBreakingAdjust;
+			} else {
+
+				ySpeed += yAcceleration * yAccelerationAdjust;
+			}
+			ySpeed += yAcceleration * yAccelerationAdjust;
 			if(ySpeed < -yMaxSpeed) {
 				ySpeed = -yMaxSpeed;
 			}
@@ -115,16 +155,16 @@ void AccelerableObject::HandleLogic() {
 		}
 	} else if(yBreaking > 0.0) {
 
-		if(ySpeed > yMinSpeed) {
+		if(ySpeed > yMinSpeed ) {
 
-			ySpeed -= yBreaking;
+			ySpeed -= yBreaking * yBreakingAdjust;
 			if(ySpeed < yMinSpeed) {
 
 				ySpeed = yMinSpeed;
 			}
 		} else if(ySpeed < -yMinSpeed) {
 
-			ySpeed += yBreaking;
+			ySpeed += yBreaking * yBreakingAdjust;
 			if(ySpeed > -yMinSpeed) {
 
 				ySpeed = -yMinSpeed;
@@ -142,12 +182,27 @@ void AccelerableObject::HandleLogic() {
 
 	Singleton::gameLoop->currentStage->HoldMeBack(*this);
 
-	grounded = Singleton::gameLoop->currentStage->AmIGrounded(*this);
-
-	cout << "grounded = " << grounded << "   \r";
 	x = newX;
 	y = newY;
-		
+	
+	if (gravity) {
+		grounded = Singleton::gameLoop->currentStage->AmIGrounded(*this);
+		cout << "grounded = " << grounded << "   \r";
+
+		if (grounded && Singleton::gameLoop->currentStage->groundObject != NULL) {
+
+			xBreakingAdjust = Singleton::gameLoop->currentStage->groundObject->xAdjust;
+			yBreakingAdjust = Singleton::gameLoop->currentStage->groundObject->yAdjust;
+			xAccelerationAdjust = Singleton::gameLoop->currentStage->groundObject->xAdjustAcceleration;
+			yAccelerationAdjust = Singleton::gameLoop->currentStage->groundObject->yAdjustAcceleration;
+		} else {
+
+			xBreakingAdjust = 1.0;
+			yBreakingAdjust = 1.0;
+			xAccelerationAdjust = 1.0;
+			yAccelerationAdjust = 1.0;
+		}
+	}
 	if(neverLeaveScreen) {
 
 		if(x < minX) {

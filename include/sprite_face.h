@@ -16,9 +16,21 @@ public:
 		right,
 		up,
 		down,
+		top_left,
+		top_right,
+		bottom_left,
+		bottom_right,
+		full_left,
+		full_right,
+		full_up,
+		full_down,
+		full_front,
+		horizontal,
+		vertical,
 		jumping_front,
 		jumping_left,
 		jumping_right,
+		dying,
 		opened,
 		closed,
 		top,
@@ -26,7 +38,7 @@ public:
 		trunk,
 		root
 	};
-	SpriteFace(const char* objectId);
+	SpriteFace(const char* objectId, bool* blinker = NULL);
 	~SpriteFace();
 	
 	void Init();
@@ -41,10 +53,12 @@ public:
 	void RegisterFace(const Facing facing, const char* spriteId) throw();
 	//SpriteSequence* spriteSequence);
 	void ChangeFace(const Facing facing);
-		
+
+	
 	typedef map<Facing, SpriteSequence*> MapOfFaces;
 		
 protected:
 	MapOfFaces faces;
 	Facing facing;
+	bool* blinker;
 };

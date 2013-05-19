@@ -10,6 +10,7 @@
 using namespace std;
 
 class SpriteMap : public BaseSystem, map< string, Sprite* > {
+
 	public:
 		SpriteMap();
 		~SpriteMap();
@@ -18,9 +19,12 @@ class SpriteMap : public BaseSystem, map< string, Sprite* > {
 		void Terminate();
 
 		Sprite* Get(const char* spriteId) throw();
+
 	private:
 		void LoadSprite(const char* spriteId, Texture* texture,
 						const sf::IntRect& rect);
 		void LoadSprite(const char* spriteId, Texture* texture,
 						const sf::IntRect& rect, const sf::IntRect& sRect);
+		void LoadSmartBricks(const char* prefixId, Texture* texture,
+							 const sf::Vector2u position);
 };

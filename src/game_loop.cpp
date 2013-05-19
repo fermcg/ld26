@@ -10,6 +10,7 @@ GameLoop::GameLoop() : BaseSystem("GameLoop") {
 
 	currentStage = NULL;
 	gameOver = false;
+	reloadStage = false;
 	
 	score = 0;
 }
@@ -32,6 +33,11 @@ void GameLoop::Terminate() {
 void GameLoop::GameOver() {
 
 	gameOver = true;
+}
+
+void GameLoop::ReloadStage() {
+
+	reloadStage = true;
 }
 
 void GameLoop::Loop() throw() {
@@ -117,6 +123,10 @@ void GameLoop::HandleEvents() {
 				case sf::Keyboard::Z:
 					Singleton::player->CommandSetOrReset(Player::jump, event.type == sf::Event::KeyPressed);
 					break;
+
+				case sf::Keyboard::K:
+					GameOver();
+					break;
 					
 				case sf::Keyboard::F:
 					if (event.type == sf::Event::KeyPressed) {
@@ -192,22 +202,36 @@ void GameLoop::LoopEnd() {
 
 	if(gameOver) {
 
-		Singleton::stageMap->Terminate();
-		delete Singleton::stageMap;
-		Singleton::stageMap = new StageMap();
-		Singleton::gameLoop->score = 0;
-		Singleton::stageMap->Init();
-		gameOver = false;
+		if (!Singleton::player->IsDying()) {
 
-		Stage* nextStage = Singleton::stageMap->Get("MENU");
-		if(nextStage != NULL) {
+			Singleton::stageMap->Terminate();
+			delete Singleton::stageMap;
+			Singleton::stageMap = new StageMap();
+			Singleton::gameLoop->score = 0;
+			Singleton::stageMap->Init();
+			gameOver = false;
 
-			currentStage = nextStage;
-			nextStage->PositionPlayer();
-			Singleton::player->Ressurrect();
-		} else {
+			Stage* nextStage = Singleton::stageMap->Get("MENU");
+			if(nextStage != NULL) {
 
-			cerr << "Error" << endl;
+				currentStage = nextStage;
+				nextStage->PositionPlayer();
+				Singleton::player->Ressurrect();
+			} else {
+
+				cerr << "Error" << endl;
+			}
+		}
+	} else if (reloadStage) {
+
+		if (!Singleton::player->IsDying()) {
+
+			currentStage->Unspawn();
+			currentStage->PositionPlayer();
+			currentStage->Spawn();
+			Singleton::player->Recover();
+
+			reloadStage = false;
 		}
 	}
 }

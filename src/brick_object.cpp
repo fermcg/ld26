@@ -9,12 +9,15 @@ BrickObject::BrickObject(const char* name, const char* objectId) : GameObject(na
 	ySize = 1;
 	unbreakable = true;
 	solid = true;
+	stationary = true;
 	damage = 0;
 
 	boundingBox.left = 0;
 	boundingBox.top = 0;
 	boundingBox.width = BrickObject::Width;
 	boundingBox.height = BrickObject::Height;
+
+	xAdjust = 2.0;
 }
 
 BrickObject::~BrickObject() {

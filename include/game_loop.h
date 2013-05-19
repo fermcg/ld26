@@ -14,6 +14,7 @@ class GameLoop : public BaseSystem {
 		void Loop() throw();
 
 		void GameOver();
+		void ReloadStage();
 
 		Stage* currentStage;
 		friend class StageMap;
@@ -28,5 +29,6 @@ class GameLoop : public BaseSystem {
 
 		bool keepWalking;
 		bool gameOver;
+		bool reloadStage;
 		unsigned long loopCount;
 };

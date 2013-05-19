@@ -15,6 +15,8 @@ class SoundEffect : public BaseSystem {
 		void Play();
 		void Start();
 		void Stop();
+
+		bool IsPlaying();
 	private:
 		sf::SoundBuffer *buffer;
 		sf::Sound *sound;

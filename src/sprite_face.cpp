@@ -6,10 +6,11 @@
 
 using namespace std;
 
-SpriteFace::SpriteFace(const char* objectId) : BaseSystem("SpriteFace") {
+SpriteFace::SpriteFace(const char* objectId, bool * blinker) : BaseSystem("SpriteFace") {
 
 	this->objectId = objectId;
 	this->facing = SpriteFace::front;
+	this->blinker = blinker;
 }
 
 SpriteFace::~SpriteFace() {
@@ -32,6 +33,10 @@ void SpriteFace::Terminate() {
 
 void SpriteFace::RenderCopy(const sf::IntRect* destinyRect) throw() {
 
+	if (blinker != NULL && *blinker) { // when blinking don't render this frame.
+
+		return;
+	}
 	this->GetSequence()->RenderCopy(destinyRect);
 }
 void SpriteFace::RenderToImage(sf::Image& destinyImage, const int x,
@@ -70,6 +75,11 @@ void SpriteFace::RegisterFace(const Facing facing, const char* spriteId) throw()
 	if (sprite->spriteId == "PLAYER+LEFT" || sprite->spriteId == "PLAYER+RIGHT") {
 		
 		spriteSequence->counterTarget = 3;
+	}
+
+	if (sprite->spriteId == "PLAYER+DEATH") {
+
+		spriteSequence->counterTarget = 15;
 	}
 	if (sprite->spriteId == "BRICK+BLINK") {
 

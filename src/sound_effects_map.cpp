@@ -23,6 +23,9 @@ void SoundEffectsMap::Init() {
 	LoadSound("PLAYER+DEATH", "Death.wav");
 	LoadSound("POWERUP", "GrabItem.wav");
 	LoadSound("PORTAL", "Portal.wav");
+	LoadSound("UNTOUCHABLE", "Untouchable.wav");
+	LoadSound("NEWLIFE", "NewLife.wav");
+	LoadSound("HURT", "Hurt.wav");
 }
 
 void SoundEffectsMap::Terminate() {

@@ -20,7 +20,7 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	yMinSpeed = 0.0;
 	yMaxSpeed = 3.0;
 
-	xBreaking = 0.13;
+	xBreaking = 0.07;
 	yBreaking = 0.10;
 
 	fireIsOn = false;
@@ -30,14 +30,26 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	downIsOn = false;
 	jumpIsOn = false;
 
+	blinker = false;
+
 	accelerationChanged = false;
 	fireChanged = false;
 	jumpChanged = false;
+	untouchable = false;
+
+	untouchableMiliSeconds = 4000;
+	blinkMiliSeconds = 100;
+	untouchableSoundMiliSeconds = untouchableMiliSeconds / 4;
 
 	boundingBox.left = 1;
 	boundingBox.top = 4;
 	boundingBox.width = 5;
 	boundingBox.height = 12;
+
+	lastGroundedX = 0;
+	lastGroundedX = 0;
+
+	lifes = 3;
 
 	damage = 2000;
 
@@ -47,6 +59,7 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	sfxDeath = NULL;
 	sfxPowerup = NULL;
 	sfxPortal = NULL;
+	sfxUntouchable = NULL;
 	door = NULL;
 	walking = false;
 	isPlayer = true;
@@ -58,6 +71,7 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	maxDoubleJumps = 10;
 
 	energy = maxEnergy;
+	lastEnergy = energy;
 	power = 0;
 	distance = 0;
 	doubleJumps = 0;
@@ -73,11 +87,27 @@ Player::~Player() {
 
 void Player::Ressurrect() {
 
-	energy = maxEnergy;
 	dead = false;
+	lifes = 3;
+	Recover();
+}
+
+void Player::Recover() {
+
+	dead = false;
+	energy = maxEnergy;
+	lastEnergy = energy;
 	distance = 0;
 	doubleJumps = 0;
 	power = 0;
+
+	xSpeed = 0.0;
+	ySpeed = 0.0;
+
+	untouchable = false;
+	blinker = false;
+//	x = lastGroundedX;
+//	y = lastGroundedY;
 }
 
 void Player::Init() throw() {
@@ -90,6 +120,9 @@ void Player::Init() throw() {
 	sfxDeath = Singleton::soundEffectsMap->Get("PLAYER+DEATH");
 	sfxPowerup = Singleton::soundEffectsMap->Get("POWERUP");
 	sfxPortal = Singleton::soundEffectsMap->Get("PORTAL");
+	sfxUntouchable = Singleton::soundEffectsMap->Get("UNTOUCHABLE");
+	sfxNewLife = Singleton::soundEffectsMap->Get("NEWLIFE");
+	sfxHurt = Singleton::soundEffectsMap->Get("HURT");
 
 	SetNeverLeaveScreen(false);
 	x = minX + (maxX - minX) / 2.0;
@@ -103,25 +136,51 @@ void Player::Terminate() {
 
 void Player::OnCollision(GameObject& other) {
 
-	if(energy < 0) {
+	if (energy < 0) {
 
-		dead = true;
-		sfxDeath->Play();
-		cout << "Game Over" << endl;
+		if (!dead) {
 
-		Singleton::gameLoop->GameOver();
-		return;
-		Stage* nextStage = Singleton::stageMap->Get("MENU");
-		if(nextStage != NULL) {
+			untouchable = false;
+			blinker = false;
+			sfxDeath->Play();
+			spriteFace->ChangeFace(SpriteFace::dying);
+			sfxStep->Stop();
+			lifes--;
+			dead = true;
+			Singleton::screen->TempZoomOut();
+			if (lifes >= 0) {
 
-			Singleton::gameLoop->currentStage = nextStage;
-			nextStage->PositionPlayer();
-			Ressurrect();
-		} else {
+				Singleton::gameLoop->ReloadStage();
+			} else {
 
-			cerr << "Error" << endl;
+				Singleton::gameLoop->GameOver();
+			}
+			return;
 		}
-		return;
+	} else {
+
+		if (untouchable) {
+
+			energy = lastEnergy;
+		} else if (energy < lastEnergy) {
+
+			lastEnergy = energy;
+			xSpeed = (xSpeed < 0.0 ? 0.8 * xMaxSpeed : (xSpeed > 0.0 ? -xMaxSpeed * 0.8 : 0.0));
+			//xSpeed = -xSpeed;
+
+			ySpeed -= yMaxSpeed * 0.7;
+			if (ySpeed < -yMaxSpeed) {
+
+				ySpeed = -yMaxSpeed;
+			}
+			sfxHurt->Play();
+			untouchable = true;
+			clockUntouchable.restart();
+			clockBlink.restart();
+			clockUntouchableSound.restart();
+			untouchableSoundMiliSeconds = untouchableMiliSeconds / 8;
+			//sfxUntouchable->Play();
+		}
 	}
 	if(other.isDoor) {
 
@@ -129,10 +188,51 @@ void Player::OnCollision(GameObject& other) {
 	}
 }
 
+bool Player::CheckCollision(const GameObject& other) {
+
+	if (untouchable && !other.lethal && other.isHurting) {
+
+		return false;
+	}
+
+	return AccelerableObject::CheckCollision(other);
+}
+
 void Player::HandleLogic() {
 
 	door = NULL;
 	
+	if (dead) {
+
+		return;
+	}
+
+	if (untouchable) {
+
+		if (clockUntouchable.getElapsedTime().asMilliseconds() >= untouchableMiliSeconds) { // end of untouchable...
+
+			untouchable = false;
+			blinker = false;
+			//sfxUntouchable->Stop();
+		} else {
+			if (clockBlink.getElapsedTime().asMilliseconds() >= (blinkMiliSeconds < untouchableSoundMiliSeconds ? blinkMiliSeconds : untouchableSoundMiliSeconds)) { // change blinking state...
+
+				blinker = !blinker;
+				clockBlink.restart();
+			}
+			if (clockUntouchableSound.getElapsedTime().asMilliseconds() >= untouchableSoundMiliSeconds) {
+
+				sfxUntouchable->Stop();
+				sfxUntouchable->Play();
+				untouchableSoundMiliSeconds = (untouchableMiliSeconds - clockUntouchable.getElapsedTime().asMilliseconds()) / 8;
+				if (untouchableSoundMiliSeconds < 50) {
+
+					untouchableSoundMiliSeconds = 50;
+				}
+				clockUntouchableSound.restart();
+			}
+		}
+	}
 	if(xAcceleration > 0.0) {
 
 		if (grounded) {
@@ -186,6 +286,8 @@ void Player::HandleLogic() {
 	if (grounded) {
 
 		doubleJumpsNow = 0;
+//		lastGroundedX = x;
+//		lastGroundedY = y;
 	}
 }
 
@@ -203,6 +305,7 @@ void Player::GetNumberPower(NumberPower& other) {
 			IncreaseJump(other.number);
 			break;
 	}
+	//Singleton::gameLoop->score += other.scoreValue;
 	sfxPowerup->Play();
 }
 
@@ -235,7 +338,7 @@ void Player::IncreaseJump(const int doubleJumps) {
 
 SpriteFace* Player::CreateSpriteFace() {
 
-	SpriteFace* face = new SpriteFace("Player Face");
+	SpriteFace* face = new SpriteFace("Player Face", &blinker);
 
 	face->RegisterFace(SpriteFace::front, "PLAYER+FRONT");
 	face->RegisterFace(SpriteFace::left, "PLAYER+LEFT");
@@ -243,6 +346,7 @@ SpriteFace* Player::CreateSpriteFace() {
 	face->RegisterFace(SpriteFace::jumping_front, "PLAYER+JUMP+FRONT");
 	face->RegisterFace(SpriteFace::jumping_left, "PLAYER+JUMP+LEFT");
 	face->RegisterFace(SpriteFace::jumping_right, "PLAYER+JUMP+RIGHT");
+	face->RegisterFace(SpriteFace::dying, "PLAYER+DEATH");
 
 	return face;
 }
@@ -358,6 +462,11 @@ void Player::ActionDoor() {
 
 void Player::ActionJump() {
 
+	if (dead) {
+
+		return;
+	}
+
 	if(!grounded) {
 
 		if (doubleJumps <= 0) {
@@ -385,44 +494,12 @@ void Player::ActionJump() {
 
 void Player::ActionShot() {
 
-	sfxStrongLaser->Play();
-/*
-	Projectile::Direction nextShotDirection;
-	if(upIsOn && !downIsOn) {
+	if (dead) {
 
-		nextShotDirection = Projectile::up;
-	} else if(downIsOn && !upIsOn && !grounded) {
-
-		nextShotDirection = Projectile::down;
-	} else {
-
-		if(spriteFace->facing == SpriteFace::left) {
-
-			nextShotDirection = Projectile::left;
-		} else if(spriteFace->facing == SpriteFace::right) {
-
-			nextShotDirection = Projectile::right;
-		} else if(spriteFace->facing == SpriteFace::front) {
-
-			nextShotDirection = Projectile::down;
-		} else {
-
-			cout << "facing = " << spriteFace->facing << endl;
-		}
+		return;
 	}
 
-
-	}else if(xSpeed > 0.0) {
-
-		nextShotDirection = Projectile::right;
-	} else if(xSpeed < 0.0) {
-
-		nextShotDirection = Projectile::left;
-	} else {
-
-		nextShotDirection = Projectile::down;
-	}*/
-
+	sfxStrongLaser->Play();
 	PlayerShot* shot = new PlayerShot(*this, nextShotDirection, distance + shortDistance, power);
 	shot->Init();
 	Singleton::allFriends->RegisterObject(shot);
@@ -503,4 +580,9 @@ void Player::PrintStates() {
 		fireChanged = false;
 	}
 
+}
+
+bool Player::IsDying() {
+
+	return sfxDeath->IsPlaying();
 }

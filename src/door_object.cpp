@@ -66,8 +66,10 @@ bool DoorObject::Enter(Player* player) {
 	Stage* nextStage = Singleton::stageMap->Get(stageId.c_str());
 	if(nextStage != NULL) {
 
+		Singleton::gameLoop->currentStage->Unspawn();
 		Singleton::gameLoop->currentStage = nextStage;
 		nextStage->PositionPlayer();
+		nextStage->Spawn();
 
 		return true;
 	}

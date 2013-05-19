@@ -64,3 +64,8 @@ void SoundEffect::Stop() {
 
 	sound->stop();
 }
+
+bool SoundEffect::IsPlaying() {
+
+	return sound->getStatus() == sf::Sound::Playing;
+}

@@ -31,17 +31,25 @@ class Player : public AccelerableObject {
 		void Terminate();
 
 		void OnCollision(GameObject& other);
+		bool CheckCollision(const GameObject& other);
 
 		void HandleLogic();
 		void Render();
 		void Ressurrect();
+		void Recover();
 
 		void ShowPowerUps();
 
 		void GetNumberPower(NumberPower& other);
 
+		bool IsDying();
+
 		friend class PlayerShot;
 		friend class GamePanel;
+
+		double lastGroundedX;
+		double lastGroundedY;
+
 	protected:
 		SpriteFace* CreateSpriteFace();
 
@@ -55,6 +63,9 @@ class Player : public AccelerableObject {
 		int maxDoubleJumps;
 
 		int shortDistance;
+
+		int lifes;
+		int lastEnergy;
 
 	private:
 		void IncreasePower(const int power);
@@ -79,10 +90,22 @@ class Player : public AccelerableObject {
 		bool holdingJump;
 
 		bool walking;
+		bool untouchable;
 
 		bool accelerationChanged;
 		bool fireChanged;
 		bool jumpChanged;
+
+		bool blinker;
+
+		sf::Clock clockUntouchable;
+		sf::Clock clockBlink;
+		sf::Clock clockUntouchableSound;
+
+		int untouchableMiliSeconds;
+		int blinkMiliSeconds;
+		int untouchableSoundMiliSeconds;
+
 		Projectile::Direction nextShotDirection;
 		SoundEffect* sfxStep;
 		SoundEffect* sfxStrongLaser;
@@ -90,6 +113,9 @@ class Player : public AccelerableObject {
 		SoundEffect* sfxDeath;
 		SoundEffect* sfxPowerup;
 		SoundEffect* sfxPortal;
+		SoundEffect* sfxUntouchable;
+		SoundEffect* sfxNewLife;
+		SoundEffect* sfxHurt;
 
 		DoorObject* door;
 };

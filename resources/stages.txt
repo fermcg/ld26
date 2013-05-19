@@ -64,17 +64,18 @@ OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 STAGE01:0,0-198x50
 @color=50,120,170
 !#=BRICK+TEAL,BRICK+BROWN
-!~=CRACK+TEAL
+!~=<CRACK+TEAL
 !L=BRICK+TEAL,TREE+LEFT
 !T=BRICK+TEAL,TREE+TOP
 !R=BRICK+TEAL,TREE+RIGHT
 !J=BRICK+TEAL,TREE+JUNCTION
 !U=BRICK+TEAL,TREE+TRUNK
 !O=BRICK+TEAL,TREE+ROOT
+!I=SMART+ICE
 !X=DEATH
 !*=SPIKES
-!E=BOUNCER>-1.0:0.0
-!N=BOUNCER>0.0:1.0
+!E=<BOUNCER>-1.0:0.0
+!N=<BOUNCER>0.0:1.0
 !D=DOOR>STAGE02
 [
 ######################################################################################################################################################################################################
@@ -89,8 +90,8 @@ STAGE01:0,0-198x50
 #                                                                                                                            U#        #                                   N     *                   #
 #                                                                                                                            U#        #                                        ##           E       #
 #                                                                                                             LTTTTJTTTTR    U#        #                                  #####  *                   #
-# P                                 r7                                                                             U         U#        #                                                             #
-# p                                                                             LTTJTTR     LTTJTTR      LTTJTTR   U         U#        #                                               ###   E       #
+#P                                  r7                                                                             U         U#        #                                                             #
+#p                                                                              LTTJTTR     LTTJTTR      LTTJTTR   U         U#        #                                               ###   E       #
 ####     b3                                             r4       g4                U           U            U      U         U#        #********                                                     #
 #######                         E                  ###   #   ##   #   ##   ###     U    b6     U            U      U         U#     ############                                                 #####
 #############                                      ###                     ###     U           U            U      U         U#                                                             ###      #
@@ -131,11 +132,11 @@ STAGE01:0,0-198x50
 STAGE02:0,0-40x10
 @color=120,10,10
 !#=BRICK+TEAL,BRICK+COLORS
-!~=CRACK+TEAL,BRICK+BLINK
+!~=<CRACK+TEAL,BRICK+BLINK
 !X=DEATH
 !*=SPIKES
-!E=BOUNCER>-1.0:0.0
-!N=BOUNCER>0.0:1.0
+!E=<BOUNCER>-1.0:0.0
+!N=<BOUNCER>0.0:1.0
 !D=DOOR>STAGE03
 [
 ########################################
@@ -158,46 +159,46 @@ STAGE03:0,0-80x41
 !J=BRICK+TEAL,MUSHROOM+JUNCTION
 !U=BRICK+TEAL,MUSHROOM+TRUNK
 !O=BRICK+TEAL,MUSHROOM+ROOT
-!~=CRACK+TEAL
+!~=<CRACK+TEAL
 !X=DEATH
 !*=SPIKES
-!E=BOUNCER>-1.0:0.0
-!N=BOUNCER>0.0:1.0
+!E=<BOUNCER>-1.0:0.0
+!N=<BOUNCER>0.0:1.0
 !M=DOOR>MENU
 [
 ################################################################################
-#P                                                                             #
-#p                                                                      b9     #
-######   ##    LTTTTTJTTTTTR                                       LTTTJTTTR   #
-######               U                                             #   U   #   #
-######   b3          U                                             #   U   #   #
+#P                                   N     N     N     N   N    E              #
+#p                                    N     N     N      N     E        b9     #
+######   ##    LTTTTTJTTTTTR           N     N     N    N N   E    LTTTJTTTR   #
+######               U                  N     N     N              #   U   #   #
+######   b3          U                   N     N     N N   N       #   U   #   #
 ######  #########   LJR           ##################################   U   #   #
 ######    #     #    U            #                                    O   #   #
 #         #     #    U            ######################################## #   #
-#         #     #****O************#      g4  b5                          # #   #
+#         #     #****O************#      g4  b5                  E       # #   #
 #   ###############################                                      # #   #
-#   #                 #          ~                       ##############  ###   #
-#   #                 #          ~     ~##############   #            #  r3    #
+#   #                 #   E      ~                       ##############  ###   #
+#   #                 #        E ~  N  ~##############   #            #  r3    #
 #   #                 #      #####     ###############***#            #        #
-#   # #####           #      #         #             #####            ##########
+#   # #####           # N    #         #             #####            ##########
 #   #                 #      #         #                                       #
 #   #                 #      #         #                                       #
 #   #                 #      #         #########################################
-#   #                 #      #*********#******       *       *     *      *****#
-#   #                 #      ###########                                       #
+#   #                 #   N  #*********#******       *       *     *      *****#
+#   #                 #      ###########   E                                   #
 #   #                 #                                                        #
 #   #                 #                                ***                     #
-#   #                 ########################     ###########   ###           #
+#   #                 ########################     ###########   ###  E        #
 #   #                                        #*********************#        ####
 #   #                                        #                     #           #
 #   #                                        #                     ####        #
-#   #                                        #      LJR            #         * #
-#   #                                        #       U             #        ####
-#   #                                        #       U             #           #
+#   #                                        #      LJR      E     #         * #
+#   #                                        # E     U             #        ####
+#   #                                        #    E  U             #           #
 #   #                                        #       U             #        b3 #
 #   #                                        #       U         #######         #
 #   #                                        # M     U         ~               #
-#   #                                        # m     O         ~       ~    LJR#
+#   #                                        # mN    O         ~       ~    LJR#
 #   #   #####################                #LJR    LTTTTTJTTTTTR     #     U #
 #   #                                        # O     ######U#######****#**** O #
 #   #                                        ##############U####################

@@ -4,7 +4,7 @@ EnemyBouncer::EnemyBouncer(const double xSpeed, const double ySpeed)
 : Enemy("EnemyBouncer", "Enemy Bouncer") {
 	
 	unbreakable = true;
-	lethal = true;
+	lethal = false;
 	solid = false;
 	isBouncer = true;
 	gravity = false;
@@ -16,6 +16,8 @@ EnemyBouncer::EnemyBouncer(const double xSpeed, const double ySpeed)
 	
 	bAcceleration = 0.007;
 	maxSpeed = 3.0;
+
+	damage = 1500;
 	
 	xMaxSpeed = maxSpeed;
 	yMaxSpeed = maxSpeed;

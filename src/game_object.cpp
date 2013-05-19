@@ -25,6 +25,12 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 	boundingBox.width = 0;
 	boundingBox.height = 0;
 
+	xAdjust = 1.0;
+	yAdjust = 1.0;
+	xAdjustAcceleration = 1.0;
+	yAdjustAcceleration = 1.0;
+
+
 	scoreValue = 0;
 	
 	maxEnergy = 1;
@@ -37,13 +43,18 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 	unbreakable = false;
 	lethal = false;
 	preRender = false;
+	respawn = false;
+	stationary = false;
 
 	stage = NULL;
 	isProjectile = false;
 	isDoor = false;
 	isPlayer = false;
 	isBouncer = false;
+	isPickable = false;
+	isHurting = false;
 	mirrored = false;
+	smartBricks = false;
 }
 GameObject::~GameObject() {
 
@@ -66,7 +77,7 @@ void GameObject::Init() throw() {
 	w = sprite->rect.width;
 	h = sprite->rect.height;
 
-	Singleton::gameLoop->score += scoreValue;
+	//Singleton::gameLoop->score += scoreValue;
 	this->BaseSystem::Init();
 }
 
@@ -97,7 +108,7 @@ void GameObject::Terminate() {
 		spriteFace = NULL;
 	}
 
-	Singleton::gameLoop->score -= scoreValue;
+	//Singleton::gameLoop->score += scoreValue;
 	this->BaseSystem::Terminate();
 }
 
@@ -148,6 +159,11 @@ void GameObject::OnCollision(GameObject& other) {
 		if(!unbreakable) {
 
 			dead = true;
+
+			if (!isPlayer) {
+
+				Singleton::gameLoop->score += scoreValue;
+			}
 		}
 	}
 }
@@ -333,6 +349,34 @@ bool GameObject::Merge(GameObject* other) {
 void GameObject::ChangeFace(const string &objectFace) {
 	
 	this->objectFace = objectFace;
+}
+
+SpriteFace* GameObject::CreateSmartBricksFace(const char* prefixId) {
+
+	string brickId = prefixId;
+
+	SpriteFace* face = new SpriteFace((brickId + " Face").c_str());
+
+
+	brickId += "+";
+	face->RegisterFace(SpriteFace::top_left    , (brickId + "TLEFT").c_str());
+	face->RegisterFace(SpriteFace::up          , (brickId + "UP").c_str());
+	face->RegisterFace(SpriteFace::top_right   , (brickId + "TRIGHT").c_str());
+	face->RegisterFace(SpriteFace::full_up     , (brickId + "FUP").c_str());
+	face->RegisterFace(SpriteFace::left        , (brickId + "LEFT").c_str());
+	face->RegisterFace(SpriteFace::front       , (brickId + "FRONT").c_str());
+	face->RegisterFace(SpriteFace::right       , (brickId + "RIGHT").c_str());
+	face->RegisterFace(SpriteFace::vertical    , (brickId + "VERTICAL").c_str());
+	face->RegisterFace(SpriteFace::bottom_left , (brickId + "BLEFT").c_str());
+	face->RegisterFace(SpriteFace::down        , (brickId + "DOWN").c_str());
+	face->RegisterFace(SpriteFace::bottom_right, (brickId + "BRIGHT").c_str());
+	face->RegisterFace(SpriteFace::full_down   , (brickId + "FDOWN").c_str());
+	face->RegisterFace(SpriteFace::full_left   , (brickId + "FLEFT").c_str());
+	face->RegisterFace(SpriteFace::horizontal  , (brickId + "HORIZONTAL").c_str());
+	face->RegisterFace(SpriteFace::full_right  , (brickId + "FRIGHT").c_str());
+	face->RegisterFace(SpriteFace::full_front  , (brickId + "FFRONT").c_str());
+
+	return face;
 }
 
 void GameObject::GetCollisionBox(int& x0, int& y0, int& xf, int& yf) const {

@@ -3,8 +3,10 @@
 LethalBlock::LethalBlock(const char* name, const char* objectId) : BrickObject(name, objectId) {
 
 	lethal = true;
+	isHurting = true;
 	damage = 10000;
 	solid = false;
+	stationary = false;
 	scoreValue = 1000;
 }
 

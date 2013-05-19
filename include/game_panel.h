@@ -18,9 +18,12 @@ class GamePanel : public BaseSystem {
 		sf::View view;
 
 	private:
+		void ShowLives();
 		void ShowEnergyBar();
 		void ShowPowerUps();
 		void ShowScore();
+
+		void ShowNumber(const sf::Vector2f& position, Sprite* numberSprite, const unsigned int number);
 
 		Sprite* greenBar;
 		Sprite* redBar;
@@ -30,6 +33,10 @@ class GamePanel : public BaseSystem {
 		Sprite* greenNumbers;
 		Sprite* blueNumbers;
 
+		Sprite* life;
+		Sprite* charLowerX;
+
+		sf::Vector2f livesPosition;
 		sf::IntRect energyBarRect;
 		sf::IntRect powerUpsRect;
 		sf::Vector2f scorePosition;

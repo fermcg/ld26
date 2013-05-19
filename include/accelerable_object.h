@@ -43,6 +43,10 @@ class AccelerableObject : public GameObject {
 		bool grounded;
 		bool gravity;
 
+		double xBreakingAdjust;
+		double yBreakingAdjust;
+		double xAccelerationAdjust;
+		double yAccelerationAdjust;
 	private:
 		bool neverLeaveScreen;
 };
