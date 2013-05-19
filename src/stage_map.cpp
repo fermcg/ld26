@@ -249,7 +249,7 @@ void StageMap::LoadStage() {
 
 	int preMergeCount = 0;
 
-	size_t i, j;
+	int i, j;
 	for(j = 0; j < stage->ySize; j++) {
 
 //		objectMatrix[j].reserve(stage->w);
@@ -350,7 +350,7 @@ void StageMap::LoadStage() {
 
 						for (int ii = -1; ii <= 1; ii++) {
 
-							if (jj == -1 && ii != 0 || jj == 1 && ii != 0 || ii == 0 && jj == 0) {
+							if ((jj == -1 && ii != 0) || (jj == 1 && ii != 0) || (ii == 0 && jj == 0)) {
 
 								// won't check corners or center.
 								continue;

@@ -616,7 +616,7 @@ Stage::Spawned::Spawned(const string& objectClass, const string& objectFace) : G
 Stage::Spawned::~Spawned() {
 }
 
-void Stage::Spawned::Init() {
+void Stage::Spawned::Init() throw() {
 
 	// bypass all the way to GameObject Inits on purpose
 	BaseSystem::Init();

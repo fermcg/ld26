@@ -54,7 +54,7 @@ protected:
 		Spawned(const string& objectClass, const string& objectFace);
 		~Spawned();
 
-		void Init();
+		void Init() throw();
 		void Terminate();
 
 		void StageInit();
