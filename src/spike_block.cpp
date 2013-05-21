@@ -9,6 +9,7 @@ SpikeBlock::SpikeBlock() : LethalBlock("SpikeBlock", "SpikeBlock") {
 	
 //	preRender = true;
 	mirrored = true;
+	verticalSolid = true;
 }
 
 SpikeBlock::~SpikeBlock() {

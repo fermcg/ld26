@@ -39,6 +39,7 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 
 	dead = false;
 	solid = false;
+	verticalSolid = false;
 
 	unbreakable = false;
 	lethal = false;
@@ -170,7 +171,7 @@ void GameObject::OnCollision(GameObject& other) {
 
 void GameObject::HoldMeBack(AccelerableObject& other) {
 
-	if(!solid && !other.isBouncer) {
+	if(!solid && !verticalSolid && !other.isBouncer) {
 
 		return;
 	}
@@ -231,7 +232,7 @@ void GameObject::HoldMeBack(AccelerableObject& other) {
 
 		//	other.newY--;
 			double d = (double)(thisY0 - otherYf);
-			if(d > -4.0) {
+			if(d > -4.0 && !verticalSolid) {
 
 				other.newY += d;
 				zeroY = true;
@@ -243,7 +244,7 @@ void GameObject::HoldMeBack(AccelerableObject& other) {
 
 		//	other.newY++;
 			double d = (double)(thisYf - otherY0);
-			if(d < 4.0) {
+			if(d < 4.0 && !verticalSolid) {
 
 				other.newY += d;
 				zeroY = true;
@@ -260,7 +261,7 @@ void GameObject::HoldMeBack(AccelerableObject& other) {
 			other.xSpeed = 0.0;
 //			other.xAcceleration = 0.0;
 		}
-		if(zeroY) {
+		if(zeroY && !verticalSolid) {
 
 			other.ySpeed = 0.0;
 			other.yAcceleration = 0.0;

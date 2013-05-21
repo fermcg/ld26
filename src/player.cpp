@@ -20,7 +20,7 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	yMinSpeed = 0.0;
 	yMaxSpeed = 3.0;
 
-	xBreaking = 0.07;
+	xBreaking = 0.13;
 	yBreaking = 0.10;
 
 	fireIsOn = false;
@@ -77,8 +77,11 @@ Player::Player() : AccelerableObject("Player", "Player") {
 	doubleJumps = 0;
 	doubleJumpsNow = 0;
 
+	nextLife = 0;
+
 	shortDistance = 4;
 	nextShotDirection = Projectile::down;
+	nextLife = 20000;
 }
 
 Player::~Player() {
@@ -89,6 +92,7 @@ void Player::Ressurrect() {
 
 	dead = false;
 	lifes = 3;
+	nextLife = 20000;
 	Recover();
 }
 
@@ -122,6 +126,7 @@ void Player::Init() throw() {
 	sfxPortal = Singleton::soundEffectsMap->Get("PORTAL");
 	sfxUntouchable = Singleton::soundEffectsMap->Get("UNTOUCHABLE");
 	sfxNewLife = Singleton::soundEffectsMap->Get("NEWLIFE");
+	sfxFullEnergy = Singleton::soundEffectsMap->Get("FULLENERGY");
 	sfxHurt = Singleton::soundEffectsMap->Get("HURT");
 
 	SetNeverLeaveScreen(false);
@@ -207,6 +212,11 @@ void Player::HandleLogic() {
 		return;
 	}
 
+	if (Singleton::gameLoop->score > nextLife) {
+
+		LifeUp();
+		nextLife += 40000;
+	}
 	if (untouchable) {
 
 		if (clockUntouchable.getElapsedTime().asMilliseconds() >= untouchableMiliSeconds) { // end of untouchable...
@@ -307,6 +317,26 @@ void Player::GetNumberPower(NumberPower& other) {
 	}
 	//Singleton::gameLoop->score += other.scoreValue;
 	sfxPowerup->Play();
+}
+
+void Player::LifeUp() {
+
+	lifes++;
+	if (lifes >= 100) {
+		lifes = 99;
+	} else {
+		sfxNewLife->Play();
+	}
+}
+
+void Player::EnergyUp(const int energy) {
+
+	this->energy += energy;
+	if (this->energy > maxEnergy) {
+
+		this->energy = maxEnergy;
+	}
+	sfxFullEnergy->Play();
 }
 
 void Player::IncreasePower(const int power) {

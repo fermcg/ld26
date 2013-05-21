@@ -41,6 +41,8 @@ class Player : public AccelerableObject {
 		void ShowPowerUps();
 
 		void GetNumberPower(NumberPower& other);
+		void LifeUp();
+		void EnergyUp(const int energy);
 
 		bool IsDying();
 
@@ -66,6 +68,7 @@ class Player : public AccelerableObject {
 
 		int lifes;
 		int lastEnergy;
+		int nextLife;
 
 	private:
 		void IncreasePower(const int power);
@@ -115,6 +118,7 @@ class Player : public AccelerableObject {
 		SoundEffect* sfxPortal;
 		SoundEffect* sfxUntouchable;
 		SoundEffect* sfxNewLife;
+		SoundEffect* sfxFullEnergy;
 		SoundEffect* sfxHurt;
 
 		DoorObject* door;

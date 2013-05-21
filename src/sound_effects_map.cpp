@@ -25,6 +25,7 @@ void SoundEffectsMap::Init() {
 	LoadSound("PORTAL", "Portal.wav");
 	LoadSound("UNTOUCHABLE", "Untouchable.wav");
 	LoadSound("NEWLIFE", "NewLife.wav");
+	LoadSound("FULLENERGY", "FullEnergy.wav");
 	LoadSound("HURT", "Hurt.wav");
 }
 

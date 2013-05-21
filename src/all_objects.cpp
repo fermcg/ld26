@@ -13,6 +13,8 @@
 #include "lethal_empty_block.h"
 #include "spike_block.h"
 #include "number_power.h"
+#include "new_life.h"
+#include "fill_energy.h"
 #include "enemy_bouncer.h"
 #include "accelerable_object.h"
 
@@ -197,6 +199,15 @@ GameObject* AllObjects::CreateObject(const string& objectClass,
 	} else if(objectClass == "SPIKES") {
 
 		object = new SpikeBlock();
+	} else if(objectClass == "NEWLIFE") {
+
+		object = new NewLife();
+	} else if(objectClass == "PORK") {
+
+		object = new FillEnergy("PORK", 10000);
+	} else if(objectClass == "TOMATO") {
+
+		object = new FillEnergy("TOMATO", 2000);
 	} else if(objectClass.substr(0, 8) == "BOUNCER>") {
 
 		size_t pos = objectClass.find(":", 8);

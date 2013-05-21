@@ -38,6 +38,7 @@ void NumberPower::OnCollision(GameObject& other) {
 
 		(reinterpret_cast< Player& >(other)).GetNumberPower(*this);
 	} else if(other.isProjectile) {
+		return;
 	}
 
 	this->PowerUp::OnCollision(other);

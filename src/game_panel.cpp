@@ -100,8 +100,17 @@ void GamePanel::ShowEnergyBar() {
 
 	sf::IntRect greenRect = energyBarRect;
 
+
 	double factor = (double)Singleton::player->energy / (double)Singleton::player->maxEnergy;
-	cout << "factor: " << factor << endl;
+
+	if (factor > 1.0) {
+
+		factor = 1.0;
+	}
+	if (factor < 0.0) {
+
+		factor = 0.0;
+	}
 	greenRect.width = (int)((double)energyBarRect.width * factor);
 	greenBar->sRect.width = greenRect.width;
 	greenBar->RenderCopy(&greenRect);

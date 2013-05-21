@@ -165,6 +165,7 @@
     <ClCompile Include="..\src\enemy_bouncer.cpp" />
     <ClCompile Include="..\src\energy_bar.cpp" />
     <ClCompile Include="..\src\exceptions.cpp" />
+    <ClCompile Include="..\src\fill_energy.cpp" />
     <ClCompile Include="..\src\game_loop.cpp" />
     <ClCompile Include="..\src\game_object.cpp" />
     <ClCompile Include="..\src\game_panel.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="..\src\lethal_block.cpp" />
     <ClCompile Include="..\src\lethal_empty_block.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\new_life.cpp" />
     <ClCompile Include="..\src\number_power.cpp" />
     <ClCompile Include="..\src\player.cpp" />
     <ClCompile Include="..\src\player_shot.cpp" />
@@ -211,6 +213,7 @@
     <ClInclude Include="..\include\energy_bar.h" />
     <ClInclude Include="..\include\exceptions.h" />
     <ClInclude Include="..\include\exit_codes.h" />
+    <ClInclude Include="..\include\fill_energy.h" />
     <ClInclude Include="..\include\game_loop.h" />
     <ClInclude Include="..\include\game_object.h" />
     <ClInclude Include="..\include\game_panel.h" />
@@ -219,6 +222,7 @@
     <ClInclude Include="..\include\lethal_block.h" />
     <ClInclude Include="..\include\lethal_empty_block.h" />
     <ClInclude Include="..\include\macros.h" />
+    <ClInclude Include="..\include\new_life.h" />
     <ClInclude Include="..\include\number_power.h" />
     <ClInclude Include="..\include\player.h" />
     <ClInclude Include="..\include\player_shot.h" />

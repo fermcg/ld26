@@ -42,6 +42,7 @@ class GameObject : public BaseSystem {
 		bool unbreakable;
 		bool lethal;
 		bool solid;
+		bool verticalSolid;
 		bool mirrored;
 		bool smartBricks;
 		bool preRender;
