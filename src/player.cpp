@@ -336,6 +336,8 @@ void Player::EnergyUp(const int energy) {
 
 		this->energy = maxEnergy;
 	}
+	this->lastEnergy = this->energy;
+
 	sfxFullEnergy->Play();
 }
 
