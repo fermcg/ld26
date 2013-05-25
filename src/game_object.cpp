@@ -232,7 +232,7 @@ void GameObject::HoldMeBack(AccelerableObject& other) {
 
 		//	other.newY--;
 			double d = (double)(thisY0 - otherYf);
-			if(d > -4.0 && !verticalSolid) {
+			if(d > -4.0 && (!verticalSolid || other.isBouncer)) {
 
 				other.newY += d;
 				zeroY = true;
@@ -244,7 +244,7 @@ void GameObject::HoldMeBack(AccelerableObject& other) {
 
 		//	other.newY++;
 			double d = (double)(thisYf - otherY0);
-			if(d < 4.0 && !verticalSolid) {
+			if(d < 4.0 && (!verticalSolid || other.isBouncer)) {
 
 				other.newY += d;
 				zeroY = true;
