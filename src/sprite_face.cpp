@@ -100,3 +100,8 @@ void SpriteFace::ChangeFace(const Facing facing) {
 		this->GetSequence()->ResetFrame();
 	}
 }
+
+void SpriteFace::SetBlinker(bool* blinker) {
+
+	this->blinker = blinker;
+}

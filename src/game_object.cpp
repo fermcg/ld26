@@ -147,9 +147,11 @@ void GameObject::HandleLogic() {
 			this->OnCollision(*Singleton::player);
 		}
 
-//	} else {
-//
-//		stage->LoopCheckForCollision(*this);
+	} else {
+
+		if (isProjectile) {
+			Singleton::gameLoop->currentStage->LoopCheckForCollision(*this);
+		}
 	}
 }
 
@@ -378,6 +380,24 @@ SpriteFace* GameObject::CreateSmartBricksFace(const char* prefixId) {
 	face->RegisterFace(SpriteFace::full_front  , (brickId + "FFRONT").c_str());
 
 	return face;
+}
+
+SpriteFace* GameObject::CreateWalkingCharFace(const char* prefixId) {
+	string characterId = prefixId;
+
+	SpriteFace* face = new SpriteFace((characterId + " Face").c_str());
+
+	characterId += "+";
+	face->RegisterFace(SpriteFace::right    , (characterId + "RIGHT").c_str());
+	face->RegisterFace(SpriteFace::left     , (characterId + "LEFT").c_str());
+	face->RegisterFace(SpriteFace::front    , (characterId + "FRONT").c_str());
+	face->RegisterFace(SpriteFace::alt_front, (characterId + "ALT+FRONT").c_str());
+	face->RegisterFace(SpriteFace::alt_right, (characterId + "ALT+RIGHT").c_str());
+	face->RegisterFace(SpriteFace::alt_left , (characterId + "ALT+LEFT").c_str());
+	face->RegisterFace(SpriteFace::dying    , (characterId + "DEATH").c_str());
+
+	return face;
+
 }
 
 void GameObject::GetCollisionBox(int& x0, int& y0, int& xf, int& yf) const {

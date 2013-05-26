@@ -165,34 +165,38 @@ bool Stage::LoopCheckForCollision(GameObject& gameObject) {
 
 	bool result = false;
 
-/*	int xPosition;
-	int yPosition;
-	int xStop;
-	int yStop;
+	if (gameObject.isProjectile) {
 
-	GetMatrixRegion(gameObject, xPosition, yPosition, xStop, yStop);
+		int xPosition;
+		int yPosition;
+		int xStop;
+		int yStop;
 
-	for(int j = yPosition;j < yStop; j++) {
+		GetMatrixRegion(gameObject, xPosition, yPosition, xStop, yStop);
+
+		for(int j = yPosition;j < yStop; j++) {
 		
-		for(int i = xPosition; i < xStop; i++) {
+			for(int i = xPosition; i < xStop; i++) {
 
-			if (stageMatrix[j][i] != NULL) {
+				if (stageMatrix[j][i] != NULL) {
 
-				StageCell::iterator it;
-				for (it = stageMatrix[j][i]->begin(); it != stageMatrix[j][i]->end(); it++) {
+					StageCell::iterator it;
+					for (it = stageMatrix[j][i]->begin(); it != stageMatrix[j][i]->end(); it++) {
 
-					if ((*it)->CheckCollision(gameObject)) {
-						(*it)->TakeThisHit(gameObject.damage);
-						gameObject.TakeThisHit((*it)->damage);
+						if ((*it)->CheckCollision(gameObject)) {
+							(*it)->TakeThisHit(gameObject.damage);
+							gameObject.TakeThisHit((*it)->damage);
 
-						(*it)->OnCollision(gameObject);
-						gameObject.OnCollision(*(*it));
-						result = true;
+							(*it)->OnCollision(gameObject);
+							gameObject.OnCollision(*(*it));
+							result = true;
+						}
 					}
 				}
 			}
 		}
-	}*/
+	}
+
 	StageCell::iterator it;
 	for (it = nonStationary.begin(); it != nonStationary.end(); it++) {
 		if ((*it)->CheckCollision(gameObject)) {

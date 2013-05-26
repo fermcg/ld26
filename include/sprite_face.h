@@ -27,9 +27,9 @@ public:
 		full_front,
 		horizontal,
 		vertical,
-		jumping_front,
-		jumping_left,
-		jumping_right,
+		alt_front,
+		alt_left,
+		alt_right,
 		dying,
 		opened,
 		closed,
@@ -53,6 +53,8 @@ public:
 	void RegisterFace(const Facing facing, const char* spriteId) throw();
 	//SpriteSequence* spriteSequence);
 	void ChangeFace(const Facing facing);
+
+	void SetBlinker(bool* blinker);
 
 	
 	typedef map<Facing, SpriteSequence*> MapOfFaces;

@@ -12,7 +12,7 @@ Projectile::~Projectile() {
 
 void Projectile::HandleLogic() {
 
-	if(y < -100.0 || y > 3000.0) {
+/*	if(y < -100.0 || y > 3000.0) {
 
 		dead = true;
 	}
@@ -20,7 +20,7 @@ void Projectile::HandleLogic() {
 	if(x < -100.0 || x > 3000.0) {
 
 		dead = true;
-	}
+	}*/
 
 	this->AccelerableObject::HandleLogic();
 }

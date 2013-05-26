@@ -24,13 +24,8 @@ void SpriteMap::Init() {
 	// Sprites from "SPRITES" texture map.
 	// This could be loaded from a file or resource...
 	Texture* spritesTexture = Singleton::textureMap->Get("SPRITES");
-	LoadSprite("PLAYER+RIGHT", spritesTexture, sf::IntRect(0, 0, 32, 16), sf::IntRect(0, 0, 8, 16));
-	LoadSprite("PLAYER+LEFT", spritesTexture, sf::IntRect(32, 0, 32, 16), sf::IntRect(0, 0, 8, 16));
-	LoadSprite("PLAYER+FRONT", spritesTexture, sf::IntRect(64, 0, 8, 16));
-	LoadSprite("PLAYER+JUMP+FRONT", spritesTexture, sf::IntRect(72, 0, 8, 16));
-	LoadSprite("PLAYER+JUMP+RIGHT", spritesTexture, sf::IntRect(80, 0, 8, 16));
-	LoadSprite("PLAYER+JUMP+LEFT", spritesTexture, sf::IntRect(88, 0, 8, 16));
-	LoadSprite("PLAYER+DEATH", spritesTexture, sf::IntRect(64, 0, 16, 16), sf::IntRect(0, 0, 8, 16));
+	LoadWalkingCharacter("PLAYER", spritesTexture, sf::IntRect(0, 0, 8, 16));
+	LoadWalkingCharacter("DOG", spritesTexture, sf::IntRect(0, 168, 8, 8));
 	LoadSprite("PLAYER+SHOT", spritesTexture, sf::IntRect(96, 0, 32, 16), sf::IntRect(0, 0, 8, 8));
 	// Scene
 	LoadSprite("BRICK+TEAL", spritesTexture, sf::IntRect(24, 40, 8, 8));
@@ -143,10 +138,40 @@ void SpriteMap::LoadSprite(const char* spriteId, Texture* texture,
 	(*this)[spriteId] = sprite;
 }
 
+void SpriteMap::LoadWalkingCharacter(const char* prefixId, Texture* texture,
+									 const sf::IntRect& firstRect) {
+
+	string characterId = prefixId;
+	characterId += "+";
+
+	sf::IntRect rect = firstRect;
+	sf::IntRect unitRect = firstRect;
+
+	unitRect.left = 0;
+	unitRect.top = 0;
+
+	rect.width = 4 * firstRect.width;
+	LoadSprite((characterId + "RIGHT").c_str(), texture, rect, unitRect);
+	rect.left += rect.width;
+	LoadSprite((characterId + "LEFT").c_str(), texture, rect, unitRect);
+	rect.left += rect.width;
+	rect.width = firstRect.width;
+	sf::IntRect deathRect = rect;
+	LoadSprite((characterId + "FRONT").c_str(), texture, rect);
+	rect.left += rect.width;
+	LoadSprite((characterId + "ALT+FRONT").c_str(), texture, rect);
+	rect.left += rect.width;
+	LoadSprite((characterId + "ALT+RIGHT").c_str(), texture, rect);
+	rect.left += rect.width;
+	LoadSprite((characterId + "ALT+LEFT").c_str(), texture, rect);
+
+	deathRect.width = 2 * firstRect.width;
+	LoadSprite((characterId + "DEATH").c_str(), texture, deathRect, unitRect);
+}
 void SpriteMap::LoadSmartBricks(const char* prefixId, Texture* texture,
-								const sf::Vector2u position) {
-	string brickId = prefixId;
-	brickId += "+";
+								const sf::Vector2u& position) {
+	string characterId = prefixId;
+	characterId += "+";
 
 	sf::IntRect rect;
 
@@ -156,41 +181,41 @@ void SpriteMap::LoadSmartBricks(const char* prefixId, Texture* texture,
 	rect.width = BrickObject::Width;
 	rect.height = BrickObject::Height;
 
-	LoadSprite((brickId + "TLEFT").c_str(), texture, rect);
+	LoadSprite((characterId + "TLEFT").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "UP").c_str(), texture, rect);
+	LoadSprite((characterId + "UP").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "TRIGHT").c_str(), texture, rect);
+	LoadSprite((characterId + "TRIGHT").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "FUP").c_str(), texture, rect);
+	LoadSprite((characterId + "FUP").c_str(), texture, rect);
 	rect.left = position.x;
 	rect.top += rect.height;
 
-	LoadSprite((brickId + "LEFT").c_str(), texture, rect);
+	LoadSprite((characterId + "LEFT").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "FRONT").c_str(), texture, rect);
+	LoadSprite((characterId + "FRONT").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "RIGHT").c_str(), texture, rect);
+	LoadSprite((characterId + "RIGHT").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "VERTICAL").c_str(), texture, rect);
+	LoadSprite((characterId + "VERTICAL").c_str(), texture, rect);
 	rect.left = position.x;
 	rect.top += rect.height;
 
-	LoadSprite((brickId + "BLEFT").c_str(), texture, rect);
+	LoadSprite((characterId + "BLEFT").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "DOWN").c_str(), texture, rect);
+	LoadSprite((characterId + "DOWN").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "BRIGHT").c_str(), texture, rect);
+	LoadSprite((characterId + "BRIGHT").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "FDOWN").c_str(), texture, rect);
+	LoadSprite((characterId + "FDOWN").c_str(), texture, rect);
 	rect.left = position.x;
 	rect.top += rect.height;
 
-	LoadSprite((brickId + "FLEFT").c_str(), texture, rect);
+	LoadSprite((characterId + "FLEFT").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "HORIZONTAL").c_str(), texture, rect);
+	LoadSprite((characterId + "HORIZONTAL").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "FRIGHT").c_str(), texture, rect);
+	LoadSprite((characterId + "FRIGHT").c_str(), texture, rect);
 	rect.left += rect.width;
-	LoadSprite((brickId + "FFRONT").c_str(), texture, rect);
+	LoadSprite((characterId + "FFRONT").c_str(), texture, rect);
 }

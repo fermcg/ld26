@@ -65,7 +65,7 @@ class GameObject : public BaseSystem {
 		virtual SpriteFace* CreateSpriteFace() = 0;
 
 		SpriteFace* CreateSmartBricksFace(const char* prefixId);
-
+		SpriteFace* CreateWalkingCharFace(const char* prefixId);
 		int w;
 		int h;
 		double x;

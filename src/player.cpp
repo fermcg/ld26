@@ -248,21 +248,21 @@ void Player::HandleLogic() {
 		if (grounded) {
 			spriteFace->ChangeFace(SpriteFace::right);
 		} else {
-			spriteFace->ChangeFace(SpriteFace::jumping_right);
+			spriteFace->ChangeFace(SpriteFace::alt_right);
 		}
 	} else if(xAcceleration < 0.0) {
 		
 		if (grounded) {
 			spriteFace->ChangeFace(SpriteFace::left);
 		} else {
-			spriteFace->ChangeFace(SpriteFace::jumping_left);
+			spriteFace->ChangeFace(SpriteFace::alt_left);
 		}
 	} else if(downIsOn || xAcceleration == 0.0) {
 
 		if (grounded) {
 			spriteFace->ChangeFace(SpriteFace::front);
 		} else {
-			spriteFace->ChangeFace(SpriteFace::jumping_front);
+			spriteFace->ChangeFace(SpriteFace::alt_front);
 		}
 	}
 
@@ -370,16 +370,12 @@ void Player::IncreaseJump(const int doubleJumps) {
 
 SpriteFace* Player::CreateSpriteFace() {
 
-	SpriteFace* face = new SpriteFace("Player Face", &blinker);
+	SpriteFace* face = CreateWalkingCharFace("PLAYER");
 
-	face->RegisterFace(SpriteFace::front, "PLAYER+FRONT");
-	face->RegisterFace(SpriteFace::left, "PLAYER+LEFT");
-	face->RegisterFace(SpriteFace::right, "PLAYER+RIGHT");
-	face->RegisterFace(SpriteFace::jumping_front, "PLAYER+JUMP+FRONT");
-	face->RegisterFace(SpriteFace::jumping_left, "PLAYER+JUMP+LEFT");
-	face->RegisterFace(SpriteFace::jumping_right, "PLAYER+JUMP+RIGHT");
-	face->RegisterFace(SpriteFace::dying, "PLAYER+DEATH");
+	if (face != NULL) {
 
+		face->SetBlinker(&blinker);
+	}
 	return face;
 }
 

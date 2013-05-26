@@ -26,5 +26,8 @@ class SpriteMap : public BaseSystem, map< string, Sprite* > {
 		void LoadSprite(const char* spriteId, Texture* texture,
 						const sf::IntRect& rect, const sf::IntRect& sRect);
 		void LoadSmartBricks(const char* prefixId, Texture* texture,
-							 const sf::Vector2u position);
+							 const sf::Vector2u& position);
+		void LoadWalkingCharacter(const char* prefixId, Texture* texture,
+								  const sf::IntRect& firstRect);
+
 };
