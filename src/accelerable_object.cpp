@@ -29,7 +29,7 @@ AccelerableObject::AccelerableObject(const char* name, const char* objectId) : G
 	gAcceleration = 0.0;
 	jAcceleration = 0.0;
 
-	neverLeaveScreen = false;
+	neverLeaveArea = false;
 
 	minX = 0.0;
 	minY = 0.0;
@@ -203,7 +203,7 @@ void AccelerableObject::HandleLogic() {
 			yAccelerationAdjust = 1.0;
 		}
 	}
-	if(neverLeaveScreen) {
+	if(neverLeaveArea) {
 
 		if(x < minX) {
 
@@ -224,10 +224,10 @@ void AccelerableObject::HandleLogic() {
 	this->GameObject::HandleLogic();
 }
 
-void AccelerableObject::SetNeverLeaveScreen(const bool neverLeaveScreen) {
+void AccelerableObject::SetNeverLeaveArea(const bool neverLeaveArea) {
 
-	this->neverLeaveScreen = neverLeaveScreen;
-	if(neverLeaveScreen) {
+	this->neverLeaveArea = neverLeaveArea;
+	if(neverLeaveArea) {
 
 		int width = Singleton::screen->window->getSize().x;
 		int height = Singleton::screen->window->getSize().y;

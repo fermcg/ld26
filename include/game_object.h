@@ -51,7 +51,12 @@ class GameObject : public BaseSystem {
 		bool isProjectile;
 		bool isDoor;
 		bool isPlayer;
+
+		bool isEnemy;
 		bool isBouncer;
+		bool isDog;
+		bool isAlien;
+
 		bool isPickable;
 		bool isHurting;
 

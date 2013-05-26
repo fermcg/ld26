@@ -162,7 +162,9 @@
     <ClCompile Include="..\src\door_object.cpp" />
     <ClCompile Include="..\src\empty_block.cpp" />
     <ClCompile Include="..\src\enemy.cpp" />
+    <ClCompile Include="..\src\enemy_alien.cpp" />
     <ClCompile Include="..\src\enemy_bouncer.cpp" />
+    <ClCompile Include="..\src\enemy_dog.cpp" />
     <ClCompile Include="..\src\energy_bar.cpp" />
     <ClCompile Include="..\src\exceptions.cpp" />
     <ClCompile Include="..\src\fill_energy.cpp" />
@@ -206,6 +208,8 @@
     <ClInclude Include="..\include\config.h" />
     <ClInclude Include="..\include\config_map.h" />
     <ClInclude Include="..\include\config_section.h" />
+    <ClInclude Include="..\include\enemy_alien.h" />
+    <ClInclude Include="..\include\enemy_dog.h" />
     <ClInclude Include="..\include\door_object.h" />
     <ClInclude Include="..\include\empty_block.h" />
     <ClInclude Include="..\include\enemy.h" />

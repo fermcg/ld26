@@ -129,9 +129,17 @@ void Player::Init() throw() {
 	sfxFullEnergy = Singleton::soundEffectsMap->Get("FULLENERGY");
 	sfxHurt = Singleton::soundEffectsMap->Get("HURT");
 
-	SetNeverLeaveScreen(false);
+	SetNeverLeaveArea(false);
 	x = minX + (maxX - minX) / 2.0;
 	y = maxY;
+
+	Sprite* sprite = this->spriteFace->GetSequence()->GetSprite();
+	if (sprite->sRect.width != 8) {
+		boundingBox.width += sprite->sRect.width - 8;
+	}
+	if (sprite->sRect.height != 16) {
+		boundingBox.height += sprite->sRect.height - 16;
+	}
 }
 
 void Player::Terminate() {

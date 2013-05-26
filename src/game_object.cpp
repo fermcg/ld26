@@ -51,7 +51,12 @@ GameObject::GameObject(const char* name, const char* objectId) : BaseSystem(name
 	isProjectile = false;
 	isDoor = false;
 	isPlayer = false;
+
+	isEnemy = false;
 	isBouncer = false;
+	isDog = false;
+	isAlien = false;
+
 	isPickable = false;
 	isHurting = false;
 	mirrored = false;

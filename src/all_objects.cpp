@@ -16,6 +16,8 @@
 #include "new_life.h"
 #include "fill_energy.h"
 #include "enemy_bouncer.h"
+#include "enemy_dog.h"
+#include "enemy_alien.h"
 #include "accelerable_object.h"
 
 using namespace std;
@@ -208,6 +210,12 @@ GameObject* AllObjects::CreateObject(const string& objectClass,
 	} else if(objectClass == "TOMATO") {
 
 		object = new FillEnergy("TOMATO", 2000);
+	} else if(objectClass == "DOG") {
+
+		object = new EnemyDog();
+	} else if(objectClass == "ALIEN") {
+
+		object = new EnemyAlien();
 	} else if(objectClass.substr(0, 8) == "BOUNCER>") {
 
 		size_t pos = objectClass.find(":", 8);

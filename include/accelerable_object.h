@@ -14,7 +14,7 @@ class AccelerableObject : public GameObject {
 		friend class GameObject;
 		friend class Screen;
 	protected:
-		void SetNeverLeaveScreen(const bool neverLeaveScreen);
+		void SetNeverLeaveArea(const bool neverLeaveArea);
 
 		double xMinSpeed;
 		double xMaxSpeed;
@@ -47,6 +47,6 @@ class AccelerableObject : public GameObject {
 		double yBreakingAdjust;
 		double xAccelerationAdjust;
 		double yAccelerationAdjust;
-	private:
-		bool neverLeaveScreen;
+
+		bool neverLeaveArea;
 };

@@ -24,8 +24,12 @@ void SpriteMap::Init() {
 	// Sprites from "SPRITES" texture map.
 	// This could be loaded from a file or resource...
 	Texture* spritesTexture = Singleton::textureMap->Get("SPRITES");
-	LoadWalkingCharacter("PLAYER", spritesTexture, sf::IntRect(0, 0, 8, 16));
-	LoadWalkingCharacter("DOG", spritesTexture, sf::IntRect(0, 168, 8, 8));
+//	LoadWalkingCharacter("PLAYER", spritesTexture, sf::IntRect(0, 0, 8, 16));
+	// Play as farmer
+//	LoadWalkingCharacter("PLAYER", spritesTexture, sf::IntRect(0, 176, 8, 16));
+	// Play as dog
+	LoadWalkingCharacter("PLAYER", spritesTexture, sf::IntRect(0, 168, 8, 8));
+
 	LoadSprite("PLAYER+SHOT", spritesTexture, sf::IntRect(96, 0, 32, 16), sf::IntRect(0, 0, 8, 8));
 	// Scene
 	LoadSprite("BRICK+TEAL", spritesTexture, sf::IntRect(24, 40, 8, 8));
@@ -69,8 +73,20 @@ void SpriteMap::Init() {
 	LoadSprite("ENERGY+R", spritesTexture, sf::IntRect(0, 72, 80, 8));
 	LoadSprite("ENERGY+G", spritesTexture, sf::IntRect(0, 80, 80, 8));
 
-	// Bouncer
+	// Enemies
 	LoadSprite("BOUNCER", spritesTexture, sf::IntRect(56, 32, 16, 16), sf::IntRect(0,0,8,8));
+
+	LoadSprite("MOTHERSHIP", spritesTexture, sf::IntRect(0, 192, 32, 16), sf::IntRect(0,0,16,8));
+	LoadSprite("MOTHERSHIP+DEATH", spritesTexture, sf::IntRect(32, 192, 16, 16), sf::IntRect(0,0,16,8));
+
+	LoadSprite("ALIEN", spritesTexture, sf::IntRect(0, 208, 16, 16), sf::IntRect(0,0,8,8));
+	LoadSprite("ALIEN+DEATH", spritesTexture, sf::IntRect(16, 208, 8, 16), sf::IntRect(0,0,8,8));
+	LoadSprite("ALIEN+SHOT", spritesTexture, sf::IntRect(24, 208, 8, 16), sf::IntRect(0,0,8,8));
+
+	LoadWalkingCharacter("DOG", spritesTexture, sf::IntRect(0, 168, 8, 8));
+
+	LoadWalkingCharacter("FARMER", spritesTexture, sf::IntRect(0, 176, 8, 16));
+
 	//	LoadSprite("ENEMY", spritesTexture, sf::IntRect(0, 64, 32, 32), 4);
 	//	LoadSprite("ENEMY+SHOT", spritesTexture, sf::IntRect(0, 96, 32, 32), 4);
 

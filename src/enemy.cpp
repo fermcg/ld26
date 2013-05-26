@@ -4,6 +4,7 @@ Enemy::Enemy(const char* name, const char* objectId)
 : AccelerableObject(name, objectId) {
 
 	isHurting = true;
+	isEnemy = true;
 }
 
 Enemy::~Enemy() {
